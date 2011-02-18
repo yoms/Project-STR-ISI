@@ -2,13 +2,12 @@
 #include <QRect>
 #include <QPainter>
 #define SIZEX 0
-#define SIZEY 2
 Drawable::Drawable()
 {
 }
 void Drawable::drawElemScen(QPainter *painter, int X, int Y, int size)
 {
         QRectF rect(SIZEX,SIZEX,size,size);
-        rect.moveCenter(rect.center() + QPointF(12*X, 12*Y));
+        rect.moveCenter(rect.center() + QPointF(X, Y));
         painter->drawRect(rect);
 }

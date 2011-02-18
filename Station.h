@@ -3,8 +3,14 @@
 #include "Drawable.h"
 class Station : public Drawable
 {
+    enum Type
+    {
+        Terminus,
+        NonTerminus
+    };
+    Type typeStation;
 public:
-    Station();
+    Station(Station::Type);
     void draw(QPainter *);
 };
 

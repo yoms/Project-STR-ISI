@@ -1,7 +1,7 @@
 #include "Station.h"
 #include <QPainter>
 #define SIZE_STATION 5
-Station::Station()
+Station::Station(Station::Type t):typeStation(t)
 {
 }
 void Station::draw(QPainter *painter)

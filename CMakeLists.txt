@@ -12,6 +12,7 @@ set(project_SRCS
     TramWidget.cpp
     TramWindow.cpp
     Tram.cpp
+    Trajet.cpp
     Drawable.cpp
     Porte.cpp
     Traction.cpp
@@ -31,6 +32,7 @@ SET(project_MOC_HDRS
     TramWidget.h
     TramWindow.h
     Tram.h
+    Trajet.h
     Drawable.h
     Porte.h
     Traction.h
