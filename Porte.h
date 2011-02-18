@@ -7,6 +7,14 @@ public:
     Porte();
     void ouvrir();
     void fermer();
+    enum Etat {
+        OUVERT = 0,
+        FERME,
+        BLOQUE
+    };
+    Etat etat();
+private:
+    Etat m_etat;
 };
 
 #endif // PORTE_H
