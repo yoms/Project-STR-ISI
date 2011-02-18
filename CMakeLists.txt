@@ -13,6 +13,17 @@ set(project_SRCS
     TramWindow.cpp
     Tram.cpp
     Drawable.cpp
+    Porte.cpp
+    Traction.cpp
+    Borne.cpp
+    Composteur.cpp
+    BorneAchat.cpp
+    Feu.cpp
+    Station.cpp
+    Obstacle.cpp
+    Personne.cpp
+    Chauffeur.cpp
+    Thread.cpp
 )
 
 SET(project_MOC_HDRS
@@ -20,6 +31,17 @@ SET(project_MOC_HDRS
     TramWindow.h
     Tram.h
     Drawable.h
+    Porte.h
+    Traction.h
+    Borne.h
+    Composteur.h
+    BorneAchat.h
+    Feu.h
+    Station.h
+    Obstacle.h
+    Personne.h
+    Chauffeur.h
+    Thread.h
 )
 
 QT4_WRAP_CPP(project_MOC_SRCS ${project_MOC_HDRS})
