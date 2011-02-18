@@ -3,3 +3,11 @@
 Porte::Porte()
 {
 }
+
+void Porte::ouvrir() {
+
+}
+
+void Porte::fermer() {
+
+}

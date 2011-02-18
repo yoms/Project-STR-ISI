@@ -5,6 +5,8 @@ class Porte
 {
 public:
     Porte();
+    void ouvrir();
+    void fermer();
 };
 
 #endif // PORTE_H
