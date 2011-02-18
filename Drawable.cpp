@@ -6,9 +6,9 @@
 Drawable::Drawable()
 {
 }
-void Drawable::drawElemScen(QPainter *painter, int X, int Y)
+void Drawable::drawElemScen(QPainter *painter, int X, int Y, int size)
 {
-        QRectF rect(SIZEX,SIZEX,SIZEY,SIZEY);
+        QRectF rect(SIZEX,SIZEX,size,size);
         rect.moveCenter(rect.center() + QPointF(12*X, 12*Y));
         painter->drawRect(rect);
 }

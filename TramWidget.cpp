@@ -1,5 +1,6 @@
 #include "TramWidget.h"
 #include "Tram.h"
+#include "Station.h"
 #include <QtGui/QPaintEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
@@ -17,13 +18,16 @@ TramWidget::TramWidget(QWidget *parent)
         connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 
         pixmap.fill(Qt::black);
+        Station* s = new Station;
+        qDebug() << "station";
+        QPoint p2(10,10);
+        s->setCoordonnee(p2);
         itemList << new Tram(timer,this);
-        itemList << new Tram(timer,this);
-        ((Tram*)itemList[1])->setCoor(QPoint(5,5));
-        foreach(Drawable* t, itemList)
-        {
-            QTimer::singleShot(0,(Tram*)t,SLOT(start()));
-        }
+        itemList << s;
+        QPoint p(5,5);
+
+        ((Tram*)itemList[0])->setCoordonnee(p);
+        QTimer::singleShot(0,((Tram*)itemList[0]),SLOT(start()));
 
         timer->start(300);
 }
@@ -34,7 +38,7 @@ void TramWidget::paintEvent(QPaintEvent *event)
 {
     qDebug() << "paintEvent";
         QPainter painter(this);
-        pixmap.fill(Qt::black);
+        pixmap.fill(Qt::white);
         painter.drawPixmap(0,0,pixmap);
 
         foreach(Drawable* d, itemList)
