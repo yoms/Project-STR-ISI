@@ -5,6 +5,7 @@ class Obstacle
 {
 public:
     Obstacle();
+    bool indiquerPassage();
 };
 
 #endif // OBSTACLE_H
