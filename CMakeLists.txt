@@ -24,6 +24,7 @@ set(project_SRCS
     Personne.cpp
     Chauffeur.cpp
     Thread.cpp
+    Carte.cpp
 )
 
 SET(project_MOC_HDRS
@@ -42,6 +43,7 @@ SET(project_MOC_HDRS
     Personne.h
     Chauffeur.h
     Thread.h
+    Carte.h
 )
 
 QT4_WRAP_CPP(project_MOC_SRCS ${project_MOC_HDRS})
