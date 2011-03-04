@@ -2,6 +2,7 @@
 #include "Tram.h"
 #include "Station.h"
 #include "Trajet.h"
+#include <math.h>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
@@ -17,30 +18,56 @@ TramWidget::TramWidget(QWidget *parent)
 
         m_timer = new QTimer(this);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
+        connect(m_timer, SIGNAL(timeout()), this, SLOT(nextStep()));
 
         setupTrajet();
 
-        Tram * tram = new Tram(m_timer,this);
-        m_itemList << tram;
+        Tram * tram = new Tram;
+        m_drawableList << tram;
+        m_stepableList << tram;
 
         tram->setTrajet(m_trajetList[0]);
+        tram->start();
 
-        QTimer::singleShot(0,(tram),SLOT(start()));
-
-        m_timer->start(300);
+        m_timer->start(50);
 }
+void TramWidget::nextStep()
+{
+    foreach(Stepable* d, m_stepableList)
+    {
+        d->nextStep();
+    }
+}
+
 void TramWidget::setupTrajet()
 {
     QList<QPoint> tra;
+    QPoint last;
 
-    for(int i = 0; i < 130; i++)
+    for(int i = 25; i < 155; i++)
             tra << QPoint(i,25);
+
+    last = tra.last();
+    for(double i = 3; i > 0; i -= 0.10)
+            tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+
+    last = tra.last();
+    for(double i = 3; i < 6; i += 0.10)
+            tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+
+    last = tra.last();
+    for(int i = 1; i < 155; i++)
+            tra << QPoint(last.x()+i,last.y());
+
+    last = tra.last();
+    for(double i = 3; i > 1.3; i -= 0.10)
+            tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
     m_trajetList << traj;
     foreach(Trajet* t , m_trajetList)
-        m_itemList << t;
+        m_drawableList << t;
 
 }
 
@@ -52,7 +79,7 @@ void TramWidget::paintEvent(QPaintEvent *event)
         m_pixmap.fill(Qt::white);
         painter.drawPixmap(0,0,m_pixmap);
 
-        foreach(Drawable* d, m_itemList)
+        foreach(Drawable* d, m_drawableList)
         {
             d->draw(&painter);
         }

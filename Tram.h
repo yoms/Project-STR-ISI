@@ -1,25 +1,23 @@
 #ifndef TRAM_H
 #define TRAM_H
-#include <QThread>
 #include <QPoint>
 #include <QObject>
 #include <QtCore/QTimer>
 #include <QtCore/QTime>
 #include "Drawable.h"
+#include "Thread.h"
+#include "Stepable.h"
 class QPainter;
 class Trajet;
-class Tram : public QThread, public Drawable
+class Tram : public Thread, public Drawable, public Stepable
 {
-Q_OBJECT
-    QTimer* m_timer;
     Trajet* m_trajet;
 public:
-    Tram(QTimer * timer, QObject * parent = 0);
+    Tram();
     void draw(QPainter *);
     void run();
     void setTrajet(Trajet*);
-public slots:
-    void nextRound();
+    virtual void nextStep();
 };
 
 #endif // TRAM_H

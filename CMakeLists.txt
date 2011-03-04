@@ -26,6 +26,7 @@ set(project_SRCS
     Chauffeur.cpp
     Thread.cpp
     Carte.cpp
+    Stepable.cpp
 )
 
 SET(project_MOC_HDRS

@@ -1,5 +1,6 @@
 #include <QtGui/QWidget>
 #include "Drawable.h"
+#include "Stepable.h"
 #include "Trajet.h"
 
 #ifndef TRAMWIDGET_H_
@@ -15,13 +16,17 @@ public:
 protected:
         void paintEvent(QPaintEvent *event);
 
+private slots:
+        void nextStep();
+
 private:
         void setupTrajet();
 
         QTimer *m_timer;
         QList<Trajet*> m_trajetList;
         QPixmap m_pixmap;
-        QList<Drawable*> m_itemList;
+        QList<Drawable*> m_drawableList;
+        QList<Stepable*> m_stepableList;
 };
 
 #endif /* TRAMWIDGET_H_ */

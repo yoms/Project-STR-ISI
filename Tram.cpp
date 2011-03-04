@@ -6,13 +6,13 @@
 #define SIZE 3
 #define SIZE_TRAM 4
 
-Tram::Tram(QTimer *timer, QObject *parent):Drawable(),QThread(parent),m_timer(timer)
+
+Tram::Tram():Drawable(),Thread(),Stepable()
 {
-    connect(this->m_timer, SIGNAL(timeout()), this, SLOT(nextRound()));
+
 }
 void Tram::run()
 {
-
     forever;
 }
 void Tram::setTrajet(Trajet *t)
@@ -21,7 +21,7 @@ void Tram::setTrajet(Trajet *t)
     this->m_coordonnee = this->m_trajet->trajet().first();
 }
 
-void Tram::nextRound()
+void Tram::nextStep()
 {
     this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
 }
