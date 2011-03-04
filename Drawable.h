@@ -12,7 +12,7 @@ public:
     void drawElemScen(QPainter*, int, int, int);
 
     QPoint coordonnee(){return m_coordonnee;}
-    void setCoordonnee(QPoint &p){m_coordonnee = p;}
+    void setCoordonnee(QPoint p){m_coordonnee = p;}
 };
 
 #endif // DRAWABLE_H

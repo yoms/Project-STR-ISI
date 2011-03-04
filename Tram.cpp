@@ -7,7 +7,7 @@
 #define SIZE_TRAM 4
 
 
-Tram::Tram():Drawable(),Thread(),Stepable()
+Tram::Tram():Drawable(),Stepable()
 {
 
 }
