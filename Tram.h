@@ -15,7 +15,7 @@
 
 class QPainter;
 class Trajet;
-class Tram : public Thread, public Drawable, public Stepable
+class Tram : public Drawable, public Stepable
 {
     Trajet* m_trajet;
 public:

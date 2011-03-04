@@ -1,7 +1,7 @@
 #ifndef STEPABLE_H
 #define STEPABLE_H
-
-class Stepable
+#include "Thread.h"
+class Stepable : public Thread
 {
 public:
     Stepable();

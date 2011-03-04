@@ -33,22 +33,6 @@ set(project_SRCS
 SET(project_MOC_HDRS
     TramWidget.h
     TramWindow.h
-    Tram.h
-    Trajet.h
-    Drawable.h
-    Porte.h
-    Traction.h
-    Borne.h
-    Composteur.h
-    BorneAchat.h
-    Feu.h
-    Station.h
-    Obstacle.h
-    Personne.h
-    Chauffeur.h
-    Thread.h
-    Carte.h
-    ArretUrgence.h
 )
 
 QT4_WRAP_CPP(project_MOC_SRCS ${project_MOC_HDRS})

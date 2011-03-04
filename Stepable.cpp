@@ -1,5 +1,5 @@
 #include "Stepable.h"
 
-Stepable::Stepable()
+Stepable::Stepable() : Thread()
 {
 }

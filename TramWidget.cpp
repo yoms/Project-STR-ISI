@@ -43,16 +43,20 @@ void TramWidget::setupTrajet()
 {
     QList<QPoint> tra;
     QPoint last;
+    double radius = 0.05;
+    Station* s1 = new Station(Station::Terminus);
+    s1->setCoordonnee(QPoint(25,30));
+    m_drawableList << s1;
 
     for(int i = 25; i < 155; i++)
             tra << QPoint(i,25);
 
     last = tra.last();
-    for(double i = 3; i > 0; i -= 0.10)
+    for(double i = 3; i > 0; i -= radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
     last = tra.last();
-    for(double i = 3; i < 6; i += 0.10)
+    for(double i = 3; i < 6; i += radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
     last = tra.last();
@@ -60,8 +64,14 @@ void TramWidget::setupTrajet()
             tra << QPoint(last.x()+i,last.y());
 
     last = tra.last();
-    for(double i = 3; i > 1.3; i -= 0.10)
+    for(double i = 3; i > 1.3; i -= radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+
+
+    last = tra.last();
+    Station* s2 = new Station(Station::Terminus);
+    s2->setCoordonnee(last+QPoint(5,-3));
+    m_drawableList << s2;
 
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
