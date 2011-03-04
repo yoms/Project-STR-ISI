@@ -42,3 +42,33 @@ void Tram::draw(QPainter *painter)
     painter->setBrush(QBrush(Qt::darkGray));
     painter->restore();
 }
+
+void Tram::stop()
+{
+
+}
+
+void Tram::speedUp()
+{
+
+}
+
+void Tram::slowDown()
+{
+
+}
+
+void Tram::turnAround()
+{
+
+}
+
+void Tram::openDoors()
+{
+
+}
+
+void Tram::closeDoors()
+{
+
+}

@@ -5,6 +5,7 @@ class Composteur
 {
 public:
     Composteur();
+    void punchTicket();
 };
 
 #endif // COMPOSTEUR_H
