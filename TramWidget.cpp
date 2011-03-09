@@ -25,19 +25,12 @@ TramWidget::TramWidget(QWidget *parent)
 
         Tram * tram = new Tram;
         m_drawableList << tram;
-        m_stepableList << tram;
+        tram->start();
 
         tram->setTrajet(m_trajetList[0]);
         tram->start();
 
         m_timer->start(50);
-}
-void TramWidget::nextStep()
-{
-    foreach(Stepable* d, m_stepableList)
-    {
-        d->nextStep();
-    }
 }
 
 void TramWidget::setupTrajet()
@@ -56,12 +49,14 @@ void TramWidget::setupTrajet()
     for(double i = 3; i > 0; i -= radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
+    last = tra.last();
+
     Feu* feu = new Feu;
-    feu->setCoordonnee(tra.last()+QPoint(3,3));
+    feu->setCoordonnee(tra.last()+QPoint(0,3));
     m_drawableList << feu;
+    feu->setLieu(last);
     feu->start();
 
-    last = tra.last();
     for(double i = 3; i < 6; i += radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
@@ -82,6 +77,7 @@ void TramWidget::setupTrajet()
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
     m_trajetList << traj;
+    traj->addObstacle(feu);
     foreach(Trajet* t , m_trajetList)
         m_drawableList << t;
 

@@ -2,9 +2,9 @@
 #include <QPainter>
 #include <QBrush>
 #define SIZE_FEU 3
-Feu::Feu():Thread(),m_etat(Feu::ARRET)
+Feu::Feu():Thread(),m_etat(Feu::PASSAGE)
 {
-    m_timer = new Timer(1);
+    m_timer = new Timer(3);
     m_timer->addListener(this);
     m_timer->start();
 }

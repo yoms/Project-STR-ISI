@@ -15,10 +15,6 @@ public:
 
 protected:
         void paintEvent(QPaintEvent *event);
-
-private slots:
-        void nextStep();
-
 private:
         void setupTrajet();
 

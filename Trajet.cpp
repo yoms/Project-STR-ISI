@@ -1,6 +1,7 @@
 #include "Trajet.h"
 #include <QPainter>
 #define SIZE_POINT_TRAJET 2
+#define DISTANCE_VISION 2
 Trajet::Trajet()
 {
 }
@@ -29,6 +30,31 @@ QList<QPoint> Trajet::trajet()
 void Trajet::setTrajet(QList<QPoint> & lp)
 {
     this->m_trajet = lp;
+}
+Obstacle* Trajet::obstacleExist(QPoint monEmplacement)
+{
+    foreach(Obstacle* o, m_obstacle)
+    {
+        for(int i = 0; i < DISTANCE_VISION; i++)
+        {
+            int indexof = m_trajet.indexOf(monEmplacement)+i < m_trajet.size()
+                                ? m_trajet.indexOf(monEmplacement)+i
+                                : m_trajet.indexOf(monEmplacement);
+            if(o->lieu() == m_trajet[indexof])
+                return o;
+        }
+    }
+    return NULL;
+}
+
+void Trajet::setObstacle(QList<Obstacle *> o)
+{
+    m_obstacle = o;
+}
+
+void Trajet::addObstacle(Obstacle *o)
+{
+    m_obstacle << o;
 }
 
 QPoint Trajet::next(QPoint& p)

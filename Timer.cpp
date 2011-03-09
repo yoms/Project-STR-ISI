@@ -5,10 +5,10 @@ Timer::Timer(int sec, int mSec, int nSec): Thread()
     // Define the timer specification
     // One second till first occurrence
     this->m_timerSpecs.it_value.tv_sec = sec;
-    this->m_timerSpecs.it_value.tv_nsec = mSec*1000 + nSec;
+    this->m_timerSpecs.it_value.tv_nsec = mSec*1000000 + nSec;
     // and then all 3 seconds a timer alarm
     this->m_timerSpecs.it_interval.tv_sec = sec;
-    this->m_timerSpecs.it_interval.tv_nsec = mSec*1000 + nSec;
+    this->m_timerSpecs.it_interval.tv_nsec = mSec*1000000 + nSec;
 
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
