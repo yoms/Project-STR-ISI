@@ -19,18 +19,16 @@ TramWidget::TramWidget(QWidget *parent)
 
         m_timer = new QTimer(this);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
-        connect(m_timer, SIGNAL(timeout()), this, SLOT(nextStep()));
+
+        m_timer->start(50);
 
         setupTrajet();
 
         Tram * tram = new Tram;
         m_drawableList << tram;
-        tram->start();
-
         tram->setTrajet(m_trajetList[0]);
         tram->start();
 
-        m_timer->start(50);
 }
 
 void TramWidget::setupTrajet()

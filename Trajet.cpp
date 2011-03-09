@@ -1,7 +1,7 @@
 #include "Trajet.h"
 #include <QPainter>
 #define SIZE_POINT_TRAJET 2
-#define DISTANCE_VISION 2
+#define DISTANCE_VISION 10
 Trajet::Trajet()
 {
 }
