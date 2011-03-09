@@ -1,7 +1,8 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 #include <QPoint>
-class Obstacle
+#include "Drawable.h"
+class Obstacle : public Drawable
 {
     QPoint m_lieu;
 public:

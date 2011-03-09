@@ -17,13 +17,8 @@ class QPainter;
 class Trajet;
 class Tram : public Drawable, public Thread, public TimerListener
 {
-    Timer* m_timer;
-    Trajet* m_trajet;
-    enum Etat{MARCHE,ARRET,MARCHEAVUE};
-    int m_nbTick;
-    int m_vitesse;
-    Etat m_etat;
 public:
+    enum Etat{MARCHE,ARRET,MARCHEAVUE};
     Tram();
     void tick();
     void draw(QPainter *);
@@ -35,6 +30,14 @@ public:
     void openDoors();
     void closeDoors();
     void setTrajet(Trajet*);
+    int vitesse(){return m_vitesse;}
+    Tram::Etat etat(){return m_etat;}
+private:
+    Timer* m_timer;
+    Trajet* m_trajet;
+    int m_nbTick;
+    int m_vitesse;
+    Etat m_etat;
 };
 
 #endif // TRAM_H

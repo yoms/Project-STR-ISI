@@ -1,4 +1,5 @@
 #include <QtGui/QWidget>
+#include <QList>
 #include "Drawable.h"
 #include "Stepable.h"
 #include "Trajet.h"
@@ -12,6 +13,7 @@ class TramWidget : public QWidget  {
 public:
         explicit TramWidget(QWidget *parent = 0);
         virtual ~TramWidget();
+        void setDrawableList(QList<Drawable* > &d){m_drawableList = d;}
 
 protected:
         void paintEvent(QPaintEvent *event);
@@ -19,10 +21,8 @@ private:
         void setupTrajet();
 
         QTimer *m_timer;
-        QList<Trajet*> m_trajetList;
         QPixmap m_pixmap;
-        QList<Drawable*> m_drawableList;
-        QList<Stepable*> m_stepableList;
+        QList<Drawable* > m_drawableList;
 };
 
 #endif /* TRAMWIDGET_H_ */

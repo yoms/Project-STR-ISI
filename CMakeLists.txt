@@ -11,6 +11,7 @@ set(project_SRCS
     main.cpp
     TramWidget.cpp
     TramWindow.cpp
+    TramPropertiesWidget.cpp
     Tram.cpp
     Trajet.cpp
     Drawable.cpp
@@ -33,6 +34,7 @@ set(project_SRCS
 
 SET(project_MOC_HDRS
     TramWidget.h
+    TramPropertiesWidget.h
     TramWindow.h
 )
 
@@ -40,6 +42,7 @@ QT4_WRAP_CPP(project_MOC_SRCS ${project_MOC_HDRS})
 
 SET(project_UIS
     tramwindow.ui
+    trampropertieswidget.ui
 )
 
 
