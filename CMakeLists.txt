@@ -30,9 +30,11 @@ set(project_SRCS
     Stepable.cpp
     ArretUrgence.cpp
     Timer.cpp
+    ObstacleWidget.cpp
 )
 
 SET(project_MOC_HDRS
+    ObstacleWidget.h
     TramWidget.h
     TramPropertiesWidget.h
     TramWindow.h
@@ -43,6 +45,7 @@ QT4_WRAP_CPP(project_MOC_SRCS ${project_MOC_HDRS})
 SET(project_UIS
     tramwindow.ui
     trampropertieswidget.ui
+    obstaclewidget.ui
 )
 
 

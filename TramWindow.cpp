@@ -6,6 +6,7 @@
 #include "Feu.h"
 #include "Trajet.h"
 #include "TramPropertiesWidget.h"
+#include "ObstacleWidget.h"
 #include <math.h>
 
 TramWindow::TramWindow(QWidget *parent) :
@@ -19,8 +20,6 @@ TramWindow::TramWindow(QWidget *parent) :
     m_tramList << tram;
     tram->setTrajet(m_trajetList[0]);
     tram->start();
-    TramPropertiesWidget* tramPW = new TramPropertiesWidget(tram);
-    ui->m_propertiesLayout->addWidget(tramPW);
     setupDrawingWidget();
 
 }
@@ -29,14 +28,21 @@ void TramWindow::setupDrawingWidget()
     QList<Drawable*> d;
 
     for(int i = 0; i < m_obstacleList.size(); i++)
+    {
         d << m_obstacleList[i];
+        ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i]);
+        ui->m_propertiesLayout->addWidget(obstacleW);
+    }
     for(int i = 0; i < m_stationList.size(); i++)
         d << m_stationList[i];
     for(int i = 0; i < m_trajetList.size(); i++)
         d << m_trajetList[i];
     for(int i = 0; i < m_tramList.size(); i++)
+    {
         d << m_tramList[i];
-
+        TramPropertiesWidget* tramPW = new TramPropertiesWidget(m_tramList[i]);
+        ui->m_propertiesLayout->addWidget(tramPW);
+    }
     ui->widget->setDrawableList(d);
 }
 
@@ -68,6 +74,13 @@ void TramWindow::setupTrajet()
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
 
     last = tra.last();
+
+    Feu* feu2 = new Feu;
+    feu2->setCoordonnee(tra.last()+QPoint(0,3));
+    m_obstacleList << feu2;
+    feu2->setLieu(last);
+    feu2->start();
+
     for(int i = 1; i < 155; i++)
             tra << QPoint(last.x()+i,last.y());
 
@@ -84,7 +97,10 @@ void TramWindow::setupTrajet()
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
     m_trajetList << traj;
-    traj->addObstacle(feu);
+
+    foreach(Obstacle* o, m_obstacleList)
+        traj->addObstacle(o);
+
     foreach(Trajet* t , m_trajetList)
         m_trajetList << t;
 
