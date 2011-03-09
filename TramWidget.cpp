@@ -1,6 +1,7 @@
 #include "TramWidget.h"
 #include "Tram.h"
 #include "Station.h"
+#include "Feu.h"
 #include "Trajet.h"
 #include <math.h>
 #include <QtGui/QPaintEvent>
@@ -54,6 +55,11 @@ void TramWidget::setupTrajet()
     last = tra.last();
     for(double i = 3; i > 0; i -= radius)
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+
+    Feu* feu = new Feu;
+    feu->setCoordonnee(tra.last()+QPoint(3,3));
+    m_drawableList << feu;
+    feu->start();
 
     last = tra.last();
     for(double i = 3; i < 6; i += radius)

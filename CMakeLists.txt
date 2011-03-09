@@ -28,6 +28,7 @@ set(project_SRCS
     Carte.cpp
     Stepable.cpp
     ArretUrgence.cpp
+    Timer.cpp
 )
 
 SET(project_MOC_HDRS
