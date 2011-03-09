@@ -27,8 +27,6 @@ Timer::Timer(int sec, int mSec, int nSec): Thread()
     {
         qDebug() << "impossible de creer le handle";
     }
-
-    qDebug() << "martine";
 }
 
 void Timer::addListener(TimerListener* tl)
@@ -38,11 +36,6 @@ void Timer::addListener(TimerListener* tl)
 void Timer::removeListener(TimerListener *tl)
 {
     m_listenerList.removeAll(tl);
-}
-
-void Timer::wait(int sec, int mSec, int nSec)
-{
-
 }
 void Timer::tick()
 {

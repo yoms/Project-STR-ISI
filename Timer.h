@@ -2,8 +2,8 @@
 #define TIMER_H
 #include "Thread.h"
 #include <QList>
-#include <unistd.h>
 #include <signal.h>
+#include <sys/wait.h>
 class TimerListener
 {
 public:
@@ -22,12 +22,12 @@ public:
     Timer(int sec, int mSec = 0, int nSec = 0);
     void addListener(TimerListener* tl);
     void removeListener(TimerListener* tl);
-    static void wait(int sec, int mSec = 0, int nSec = 0);
     void tick();
     void run();
     void stop();
 private:
     static void _alarmFunction(int sigNumb, siginfo_t *si, void *uc);
+    static void _waitingFunction(int sigNumb, siginfo_t *si, void *uc);
     Timer(){}
 };
 
