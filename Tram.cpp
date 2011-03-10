@@ -44,12 +44,12 @@ void Tram::run()
                             if(o->lieu() == this->m_trajet->next(this->m_coordonnee))
                                 m_etat = Tram::ARRET;
                             this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+                            slowDown();
                         }
                         else
                         {
                             this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
                         }
-                        slowDown();
                     }
                 }
                 break;
