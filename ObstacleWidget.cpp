@@ -20,6 +20,7 @@ ObstacleWidget::~ObstacleWidget()
 
 void ObstacleWidget::updateObstacleInformation()
 {
+    this->ui->m_nom->setText(m_obstacle->nom());
     if(m_obstacle->indiquerPassage())
     {
         this->ui->m_etat->setCheckState(Qt::Unchecked);
