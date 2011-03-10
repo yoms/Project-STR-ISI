@@ -19,7 +19,7 @@ public:
         ARRET,
     };
 
-private:
+protected:
     void setEtat(Etat);
     Etat m_etat;
     Timer* m_timer;

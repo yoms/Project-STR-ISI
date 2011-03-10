@@ -25,7 +25,7 @@ private:
     QList<Trajet*> m_trajetList;
     QList<Tram*> m_tramList;
     QList<Obstacle*> m_obstacleList;
-    QList<Station*> m_stationList;
+//    QList<Station*> m_stationList;
 
     Ui::TramWindow *ui;
 };

@@ -1,13 +1,14 @@
 #include "Station.h"
 #include <QPainter>
+#include <QDebug>
 #define SIZE_STATION 5
-Station::Station(Station::Type t):typeStation(t)
+Station::Station(Station::Type t):m_typeStation(t)
 {
 }
 void Station::draw(QPainter *painter)
 {
     painter->save();
-    if(typeStation == Station::Terminus)
+    if(m_typeStation == Station::Terminus)
     {
         painter->setPen(Qt::green);
         painter->setBrush(QBrush(Qt::green));
@@ -23,4 +24,20 @@ void Station::draw(QPainter *painter)
     painter->setPen(Qt::darkGray);
     painter->setBrush(QBrush(Qt::darkGray));
     painter->restore();
+}
+
+bool Station::indiquerPassage() {
+    switch(this->m_typeStation)
+    {
+    case Station::Terminus:
+        return false;
+    case Station::NonTerminus:
+        switch(this->m_etat)
+        {
+        case Feu::ARRET:
+            return false;
+        case Feu::PASSAGE:
+            return true;
+        }
+    }
 }

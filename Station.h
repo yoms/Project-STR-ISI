@@ -1,7 +1,8 @@
 #ifndef STATION_H
 #define STATION_H
 #include "Drawable.h"
-class Station : public Drawable
+#include "Feu.h"
+class Station : public Feu
 {
 public:
     enum Type
@@ -11,8 +12,9 @@ public:
     };
     Station(Station::Type);
     void draw(QPainter *);
+    bool indiquerPassage();
 private:
-    Type typeStation;
+    Type m_typeStation;
 };
 
 #endif // STATION_H

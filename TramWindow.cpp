@@ -33,8 +33,8 @@ void TramWindow::setupDrawingWidget()
         ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i]);
         ui->m_propertiesLayout->addWidget(obstacleW);
     }
-    for(int i = 0; i < m_stationList.size(); i++)
-        d << m_stationList[i];
+//    for(int i = 0; i < m_stationList.size(); i++)
+//        d << m_stationList[i];
     for(int i = 0; i < m_trajetList.size(); i++)
         d << m_trajetList[i];
     for(int i = 0; i < m_tramList.size(); i++)
@@ -53,10 +53,18 @@ void TramWindow::setupTrajet()
     double radius = 0.05;
     Station* s1 = new Station(Station::Terminus);
     s1->setCoordonnee(QPoint(25,30));
-    m_stationList << s1;
+    s1->setNom("Depart");
+    m_obstacleList << s1;
 
     for(int i = 25; i < 155; i++)
             tra << QPoint(i,25);
+
+    last = tra.last();
+    Station* s3 = new Station(Station::NonTerminus);
+    s3->setCoordonnee(QPoint(120,30));
+    s3->setLieu(QPoint(120,25));
+    s3->setNom("Fonbeauzard");
+    m_obstacleList << s3;
 
     last = tra.last();
     for(double i = 3; i > 0; i -= radius)
@@ -68,6 +76,7 @@ void TramWindow::setupTrajet()
     feu->setCoordonnee(tra.last()+QPoint(0,3));
     m_obstacleList << feu;
     feu->setLieu(last);
+    feu->setNom("Feu1");
     feu->start();
 
     for(double i = 3; i < 6; i += radius)
@@ -79,6 +88,7 @@ void TramWindow::setupTrajet()
     feu2->setCoordonnee(tra.last()+QPoint(0,3));
     m_obstacleList << feu2;
     feu2->setLieu(last);
+    feu2->setNom("Feu2");
     feu2->start();
 
     for(int i = 1; i < 155; i++)
@@ -90,9 +100,12 @@ void TramWindow::setupTrajet()
 
 
     last = tra.last();
+
     Station* s2 = new Station(Station::Terminus);
     s2->setCoordonnee(last+QPoint(5,-3));
-    m_stationList << s2;
+    s2->setLieu(last);
+    s2->setNom("Arrivee");
+    m_obstacleList << s2;
 
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
