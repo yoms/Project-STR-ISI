@@ -57,6 +57,12 @@ void TramWindow::setupTrajet()
     double radius = 0.05;
 
 
+    Station* s1 = new Station(Station::NonTerminus);
+        s1->setCoordonnee(last + QPoint(0,5));
+        s1->setLieu(last);
+        s1->setNom("haut gauche");
+        m_obstacleList << s1;
+
     for(double i = 0; i < 50; i++)
         tra << QPoint(last.x()+i, last.y());
 
@@ -93,13 +99,27 @@ void TramWindow::setupTrajet()
     for(double i = 1; i < 50; i++)
         tra << QPoint(last.x()+i, last.y());
 
+
+    last = tra.last();
+    Station* s2 = new Station(Station::NonTerminus);
+        s2->setCoordonnee(last + QPoint(0,5));
+        s2->setLieu(last);
+        s2->setNom("haut droite");
+        m_obstacleList << s2;
+
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
     m_trajetList << traj;
-
+//----------------------------------------------------------------------------------------------------------------------------------
     tra.clear();
 
     last = QPoint(25,217);
+
+    Station* s3 = new Station(Station::NonTerminus);
+        s3->setCoordonnee(last + QPoint(0,5));
+        s3->setLieu(last);
+        s3->setNom("bas gauche");
+        m_obstacleList << s3;
 
     for(double i = 0; i < 50; i++)
         tra << QPoint(last.x()+i, last.y());
@@ -136,6 +156,13 @@ void TramWindow::setupTrajet()
     for(double i = 1; i < 50; i++)
         tra << QPoint(last.x()+i, last.y());
 
+
+    last = tra.last();
+    Station* s4 = new Station(Station::NonTerminus);
+        s4->setCoordonnee(last + QPoint(0,5));
+        s4->setLieu(last);
+        s4->setNom("bas droite");
+        m_obstacleList << s4;
 
     Trajet* traj2 = new Trajet;
     traj2->setTrajet(tra);

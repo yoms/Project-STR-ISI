@@ -25,7 +25,7 @@ TramWidget::~TramWidget() {
 void TramWidget::paintEvent(QPaintEvent *event)
 {
         QPainter painter(this);
-        m_pixmap.fill(Qt::white);
+        m_pixmap.fill(Qt::black);
         painter.drawPixmap(0,0,m_pixmap);
 
         for(int i = 0; i < m_drawableList.size(); i++)
