@@ -21,6 +21,7 @@ set(project_SRCS
     Composteur.cpp
     BorneAchat.cpp
     Feu.cpp
+    FeuStation.cpp
     Station.cpp
     Obstacle.cpp
     Personne.cpp

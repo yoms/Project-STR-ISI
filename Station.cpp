@@ -26,13 +26,14 @@ void Station::draw(QPainter *painter)
     painter->restore();
 }
 
-bool Station::indiquerPassage() {
+bool Station::indiquerPassage()
+{
     switch(this->m_typeStation)
     {
     case Station::Terminus:
         return false;
     case Station::NonTerminus:
-        switch(this->m_etat)
+        switch(this->m_feuStation->etat())
         {
         case Feu::ARRET:
             return false;
@@ -40,4 +41,10 @@ bool Station::indiquerPassage() {
             return true;
         }
     }
+}
+
+
+void Station::addFeuStation(FeuStation *f)
+{
+    m_feuStation = f;
 }

@@ -8,16 +8,17 @@
 class Feu : public Obstacle, public Thread, public TimerListener
 {
 public:
-    Feu();
-    bool indiquerPassage();
-    void draw(QPainter *);
-    void run();
-    void tick();
 
     enum Etat {
         PASSAGE = 0,
         ARRET,
     };
+    Feu();
+    bool indiquerPassage();
+    void draw(QPainter *);
+    void run();
+    void tick();
+    Feu::Etat etat();
 
 protected:
     void setEtat(Etat);
