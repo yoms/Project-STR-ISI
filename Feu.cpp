@@ -61,3 +61,7 @@ bool Feu::indiquerPassage() {
 void Feu::setEtat(Feu::Etat etat) {
     this->m_etat = etat;
 }
+
+Feu::Etat Feu::etat() {
+    return this->m_etat;
+}

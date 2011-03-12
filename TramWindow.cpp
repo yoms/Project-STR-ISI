@@ -4,6 +4,7 @@
 #include "Tram.h"
 #include "Station.h"
 #include "Feu.h"
+#include "FeuStation.h"
 #include "Trajet.h"
 #include "TramPropertiesWidget.h"
 #include "ObstacleWidget.h"
@@ -33,8 +34,8 @@ void TramWindow::setupDrawingWidget()
         ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i]);
         ui->m_propertiesLayout->addWidget(obstacleW);
     }
-//    for(int i = 0; i < m_stationList.size(); i++)
-//        d << m_stationList[i];
+    for(int i = 0; i < m_stationList.size(); i++)
+        d << m_stationList[i];
     for(int i = 0; i < m_trajetList.size(); i++)
         d << m_trajetList[i];
     for(int i = 0; i < m_tramList.size(); i++)
@@ -54,7 +55,16 @@ void TramWindow::setupTrajet()
     Station* s1 = new Station(Station::Terminus);
     s1->setCoordonnee(QPoint(25,30));
     s1->setNom("Depart");
-    m_obstacleList << s1;
+    m_stationList << s1;
+
+    FeuStation* feuS1 = new FeuStation;
+    feuS1->setCoordonnee(QPoint(25,30));
+    m_obstacleList << feuS1;
+    feuS1->setLieu(QPoint(25,25));
+    feuS1->setNom("FeuS1");
+    feuS1->addStation(s1);
+    s1->addFeuStation(feuS1);
+    feuS1->start();
 
     for(int i = 25; i < 155; i++)
             tra << QPoint(i,25);
@@ -62,9 +72,17 @@ void TramWindow::setupTrajet()
     last = tra.last();
     Station* s3 = new Station(Station::NonTerminus);
     s3->setCoordonnee(QPoint(120,30));
-    s3->setLieu(QPoint(120,25));
     s3->setNom("Fonbeauzard");
-    m_obstacleList << s3;
+    m_stationList << s3;
+
+    FeuStation* feuS2 = new FeuStation;
+    feuS2->setCoordonnee(QPoint(120,30));
+    m_obstacleList << feuS2;
+    feuS2->setLieu(QPoint(120,25));
+    feuS2->setNom("FeuS2");
+    feuS2->addStation(s3);
+    s3->addFeuStation(feuS2);
+    feuS2->start();
 
     last = tra.last();
     for(double i = 3; i > 0; i -= radius)
@@ -103,9 +121,16 @@ void TramWindow::setupTrajet()
 
     Station* s2 = new Station(Station::Terminus);
     s2->setCoordonnee(last+QPoint(5,-3));
-    s2->setLieu(last);
-    s2->setNom("Arrivee");
-    m_obstacleList << s2;
+    m_stationList << s2;
+
+    FeuStation* feuS3 = new FeuStation;
+    feuS3->setCoordonnee(last+QPoint(5,-3));
+    m_obstacleList << feuS3;
+    feuS3->setLieu(last);
+    feuS3->setNom("FeuS3");
+    feuS3->addStation(s2);
+    s2->addFeuStation(feuS3);
+    feuS3->start();
 
     Trajet* traj = new Trajet;
     traj->setTrajet(tra);
