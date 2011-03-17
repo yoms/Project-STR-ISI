@@ -53,3 +53,8 @@ bool Thread::isRunning()
 {
     return m_running;
 }
+
+void Thread::addMessage(Message * m)
+{
+    this->m_bal.append(m);
+}

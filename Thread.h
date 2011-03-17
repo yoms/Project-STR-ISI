@@ -2,6 +2,8 @@
 #define THREAD_H
 
 #include "pthread.h"
+#include "Message.h"
+#include <QList>
 
 class Thread
 {
@@ -14,6 +16,7 @@ public:
     virtual void join();
     bool isRunning();
     virtual void run() = 0;
+    void addMessage(Message*);
 
 private:
     Thread(const Thread&);
@@ -22,6 +25,7 @@ private:
 
 protected:
     bool m_running;
+    QList<Message*> m_bal;
 
 private:
     pthread_t m_thread;

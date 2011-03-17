@@ -32,6 +32,7 @@ set(project_SRCS
     ArretUrgence.cpp
     Timer.cpp
     ObstacleWidget.cpp
+    Message.cpp
 )
 
 SET(project_MOC_HDRS
