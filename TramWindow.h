@@ -17,7 +17,7 @@ class TramWindow : public QMainWindow
 
 public:
     explicit TramWindow(QWidget *parent = 0);
-    ~TramWindow();
+    virtual ~TramWindow();
     void setupTrajet();
     void setupDrawingWidget();
 
