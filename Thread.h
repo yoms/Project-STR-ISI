@@ -2,11 +2,16 @@
 #define THREAD_H
 
 #include "pthread.h"
+class Message;
 #include "Message.h"
 #include <QList>
 
 class Thread
 {
+    enum typeMessage {
+        Passage
+    };
+
 public:
     Thread(int id = 0);
     virtual ~Thread();
