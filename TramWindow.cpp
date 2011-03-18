@@ -28,6 +28,28 @@ TramWindow::TramWindow(QWidget *parent) :
     setupDrawingWidget();
 
 }
+TramWindow::~TramWindow()
+{
+
+    delete ui;
+    for(int i = 0; i < m_trajetList.size(); i++)
+    {
+        delete m_trajetList[i];
+    }
+    for(int i = 0; i < m_tramList.size(); i++)
+    {
+        delete m_tramList[i];
+    }
+    for(int i = 0; i < m_obstacleList.size(); i++)
+    {
+        delete m_obstacleList[i];
+    }
+    for(int i = 0; i < m_stationList.size(); i++)
+    {
+        delete m_stationList[i];
+    }
+}
+
 void TramWindow::setupDrawingWidget()
 {
     QList<Drawable*> d;
@@ -35,7 +57,7 @@ void TramWindow::setupDrawingWidget()
     for(int i = 0; i < m_obstacleList.size(); i++)
     {
         d << m_obstacleList[i];
-        ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i]);
+        ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i],this);
         ui->m_propertiesLayout->addWidget(obstacleW);
     }
     for(int i = 0; i < m_stationList.size(); i++)
@@ -45,7 +67,7 @@ void TramWindow::setupDrawingWidget()
     for(int i = 0; i < m_tramList.size(); i++)
     {
         d << m_tramList[i];
-        TramPropertiesWidget* tramPW = new TramPropertiesWidget(m_tramList[i]);
+        TramPropertiesWidget* tramPW = new TramPropertiesWidget(m_tramList[i],this);
         ui->m_propertiesLayout->addWidget(tramPW);
     }
     ui->widget->setDrawableList(d);
@@ -205,8 +227,4 @@ void TramWindow::setupTrajet()
     foreach(Trajet* t , m_trajetList)
         m_trajetList << t;
 
-}
-TramWindow::~TramWindow()
-{
-    delete ui;
 }
