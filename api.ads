@@ -3,13 +3,13 @@ with Interfaces.C; use Interfaces;
 
 package API is 
 
-Function Flip_Flop1 return integer;
+procedure Flip_Flop1;
 pragma Export
-(Convention    => C,
+(Convention    => CPP,
  Entity        => Flip_Flop1,
  External_Name => "Flip_Flop1" );
 procedure Initialize_API; 
 procedure Finalize_Api; 
-pragma Export (C, Initialize_API); 
-pragma Export (C, Finalize_API); 
+pragma Export (CPP, Initialize_API); 
+pragma Export (CPP, Finalize_API); 
 end API; 
