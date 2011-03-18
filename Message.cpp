@@ -1,11 +1,10 @@
 #include "Message.h"
 
-Message::Message(Thread * t)
+Message::Message(Thread * t):m_sender(t)
 {
-    this->m_sender = t;
 }
 
-Message::setSender(Thread * t){
+void Message::setSender(Thread * t){
     this->m_sender = t;
 }
 
