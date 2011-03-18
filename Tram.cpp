@@ -19,6 +19,15 @@ Tram::Tram():Drawable(),Thread()
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
 
+    sigemptyset(&this->m_signalAction.sa_mask);
+    this->m_signalAction.sa_flags = SA_SIGINFO;
+    this->m_signalAction.sa_sigaction = Tram::_obstacleFunction;
+
+    if (sigaction(SIGUSR1, &this->m_signalAction, NULL))
+    {
+        qDebug() << "impossible de creer le handle";
+    }
+
 }
 void Tram::run()
 {
@@ -39,17 +48,21 @@ void Tram::run()
                     }
                     else
                     {
-                        if(!o->indiquerPassage())
-                        {
-                            if(o->lieu() == this->m_trajet->next(this->m_coordonnee))
-                                m_etat = Tram::ARRET;
-                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-                            slowDown();
-                        }
-                        else
-                        {
-                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-                        }
+
+                        Message * m = new Message (this);
+                        o->addMessage(m);
+                        this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+//                        if(!o->indiquerPassage())
+//                        {
+//                            if(o->lieu() == this->m_trajet->next(this->m_coordonnee))
+//                                m_etat = Tram::ARRET;
+//                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+//                            slowDown();
+//                        }
+//                        else
+//                        {
+//                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+//                        }
                     }
                 }
                 break;
@@ -131,4 +144,25 @@ void Tram::openDoors()
 void Tram::closeDoors()
 {
 
+}
+
+void Tram::changeEtat(){
+    switch(m_etat)
+    {
+    case Tram::MARCHE:
+        {
+            m_etat = Tram::ARRET;
+            slowDown();
+        }
+    case Tram::ARRET:
+        {
+            m_etat = Tram::MARCHE;
+        }
+    }
+}
+
+void Tram::_obstacleFunction(int sigNumb, siginfo_t *si, void *uc)
+{
+    Tram * ptrTram = reinterpret_cast<Tram *> (si->si_value.sival_ptr);
+    ptrTram->changeEtat();
 }

@@ -7,6 +7,8 @@
 #include "Drawable.h"
 #include "Thread.h"
 #include "Timer.h"
+#include <signal.h>
+#include <sys/wait.h>
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -32,7 +34,11 @@ public:
     void setTrajet(Trajet*);
     int vitesse(){return m_vitesse;}
     Tram::Etat etat(){return m_etat;}
+    void changeEtat();
 private:
+    static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
+private:
+    struct sigaction m_signalAction;
     Timer* m_timer;
     Trajet* m_trajet;
     int m_nbTick;
