@@ -6,12 +6,17 @@ class Thread;
 class Message
 {
 public:
-    Message(Thread*);
+    enum TypeMessage {
+        Passage
+    };
+    Message(Thread*, TypeMessage);
     ~Message(){}
     Thread * sender();
     void setSender(Thread*);
+    TypeMessage type();
 private:
     Thread * m_sender;
+    TypeMessage m_type;
     Message(){}
 };
 
