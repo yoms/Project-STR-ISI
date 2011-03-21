@@ -14,6 +14,9 @@ public:
     QPoint lieu(){return m_lieu;}
     void setLieu(QPoint l){m_lieu = l;}
     virtual QString className(){ return QString("Obstacle");}
+private:
+    static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
+
 };
 
 #endif // OBSTACLE_H

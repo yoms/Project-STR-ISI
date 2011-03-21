@@ -1,6 +1,7 @@
 #include "Feu.h"
 #include <QPainter>
 #include <QBrush>
+#include <QDebug>
 #define SIZE_FEU 3
 Feu::Feu():m_etat(Feu::PASSAGE)
 {
@@ -36,7 +37,15 @@ void Feu::run()
 {
     for(;;)
     {
-        sleep(1);
+        if(m_newMessage > 0) {
+            qDebug()<<"m_newMessage "<<m_newMessage;
+            if(m_etat == Feu::ARRET) {
+                for(int i = (m_bal.size() - m_newMessage) ; i < m_bal.size() ; i++) {
+                    pthread_kill(m_bal.at(i)->sender()->threadid(), SIGUSR1);
+                }
+            }
+            m_newMessage = 0;
+        }
     }
 }
 
@@ -52,6 +61,9 @@ bool Feu::indiquerPassage() {
 
 void Feu::setEtat(Feu::Etat etat) {
     this->m_etat = etat;
+    for(int i = 0 ; i < m_bal.size() ; i++) {
+        pthread_kill(m_bal.at(i)->sender()->threadid(), SIGUSR1);
+    }
 }
 
 Feu::Etat Feu::etat() {

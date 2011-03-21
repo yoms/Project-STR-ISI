@@ -7,6 +7,8 @@
 #include "Drawable.h"
 #include "ThreadMessage.h"
 #include "Timer.h"
+#include "Obstacle.h"
+
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -36,12 +38,14 @@ public:
     virtual QString className(){ return QString("Tram");}
 private:
     static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
+    void isCrossed();
 private:
     Trajet* m_trajet;
     int m_nbTick;
     int m_vitesse;
     pthread_mutex_t m_mutex;
     Etat m_etat;
+    QList<Obstacle*> m_obstacles;
 };
 
 #endif // TRAM_H

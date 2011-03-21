@@ -17,6 +17,7 @@ public:
     bool isRunning();
     virtual void run() = 0;
     virtual QString className(){ return QString("Thread");}
+    pthread_t threadid();
 
 private:
     Thread(const Thread&);

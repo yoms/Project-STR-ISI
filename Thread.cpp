@@ -24,11 +24,12 @@ void *_threadFunc(void *obj)
 
 void Thread::start()
 {
-    qDebug() << "Starting thread "<< this->className() <<" :" << this->m_thread ;
     if (this->m_running)
         qDebug() << "Thread already started "<< this->className() <<" :" << this->m_thread ;
     else if (pthread_create(&this->m_thread, &this->m_attr, _threadFunc, static_cast<void *>(this)) != 0)
         qDebug() << "Error when creating thread "<< this->className() <<" :" << this->m_thread ;
+
+    qDebug() << "Starting thread "<< this->className() <<" :" << this->m_thread ;
 }
 
 void Thread::stop()
@@ -52,4 +53,8 @@ void Thread::join()
 bool Thread::isRunning()
 {
     return m_running;
+}
+
+pthread_t Thread::threadid() {
+    return m_thread;
 }

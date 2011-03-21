@@ -18,9 +18,10 @@ public:
     void run();
     Feu::Etat etat();
     virtual QString className(){ return QString("Feu");}
+    void tick(){}
+    void setEtat(Etat);
 
 protected:
-    void setEtat(Etat);
     Etat m_etat;
 };
 

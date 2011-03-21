@@ -10,6 +10,7 @@
 #define VITESSE_MAX 5
 #define ACCELERATION 3
 #include <pthread.h>
+#include <signal.h>
 #include <time.h>
 
 Tram::Tram():Drawable(),ThreadMessage()
@@ -21,6 +22,8 @@ Tram::Tram():Drawable(),ThreadMessage()
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
     this->m_signalAction.sa_sigaction = Tram::_obstacleFunction;
+
+
     if (sigaction(SIGUSR1, &this->m_signalAction, NULL))
     {
         qDebug() << "impossible de creer le handle";
@@ -35,6 +38,7 @@ void Tram::run()
         if(m_nbTick == m_vitesse-1)
         {
             this->m_nbTick = ++m_nbTick%m_vitesse;
+            qDebug() << "Etat du tram avant switch : " << m_etat << " | etat Arret : " << Tram::ARRET;
             switch(m_etat)
             {
             case Tram::MARCHE:
@@ -42,14 +46,19 @@ void Tram::run()
                     Obstacle* o;
                     if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
                     {
+                        isCrossed();
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
                         speedUp();
                     }
                     else
                     {
-
-                        Message * m = new Message (this, Message::Passage);
-                        o->addMessage(m);
+                        qDebug()<<"Obstacle "<<o->nom();
+                        if(!m_obstacles.contains(o)) {
+                            isCrossed();
+                            Message * m = new Message (this, Message::Passage);
+                            o->addMessage(m);
+                            this->m_obstacles.append(o);
+                        }
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
 //                        if(!o->indiquerPassage())
 //                        {
@@ -72,12 +81,11 @@ void Tram::run()
                     if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
                     {
                         qDebug() << "Arret pas d'obstacle, en avant MARCHE!";
-                        m_etat = Tram::MARCHE;
                     }
                     else
                     {
                         qDebug() << "Arret un obstacle, indiquer passage!";
-                        m_etat = o->indiquerPassage() ? Tram::MARCHE : Tram::ARRET;
+                        slowDown();
                     }
                 }
                 break;
@@ -147,6 +155,7 @@ void Tram::closeDoors()
 }
 
 void Tram::changeEtat(){
+    qDebug()<<"changeEtat : "<<m_etat;
     switch(m_etat)
     {
     case Tram::MARCHE:
@@ -154,15 +163,22 @@ void Tram::changeEtat(){
             m_etat = Tram::ARRET;
             slowDown();
         }
-    case Tram::ARRET:
-        {
-            m_etat = Tram::MARCHE;
-        }
+        break;
     }
+    qDebug()<<"changeEtat : "<<m_etat;
 }
 
 void Tram::_obstacleFunction(int sigNumb, siginfo_t *si, void *uc)
 {
     Tram * ptrTram = reinterpret_cast<Tram *> (si->si_value.sival_ptr);
+    qDebug()<<"Handle tram ";
     ptrTram->changeEtat();
+}
+
+void Tram::isCrossed() {
+    if(!m_obstacles.isEmpty()){
+        qDebug()<<"isCrossed";
+        pthread_kill(m_obstacles.first()->threadid(), SIGUSR1);
+        m_obstacles.removeFirst();
+    }
 }

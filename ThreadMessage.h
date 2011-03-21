@@ -6,6 +6,7 @@ class Message;
 #include <QList>
 #include <signal.h>
 #include <sys/wait.h>
+#include "pthread.h"
 
 class ThreadMessage : public Thread
 {
@@ -19,8 +20,11 @@ protected:
     void removeMessage();
 protected:
     struct sigaction m_signalAction;
-private:
+protected:
     QList<Message*> m_bal;
+    int m_newMessage;
+private:
+    pthread_mutex_t m_mutex;
 };
 
 #endif // THREADMESSAGE_H
