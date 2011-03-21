@@ -17,7 +17,7 @@ Tram::Tram():Drawable(),ThreadMessage()
     m_etat = Tram::MARCHE;
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
-    m_mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_init(&m_mutex,NULL);
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
     this->m_signalAction.sa_sigaction = Tram::_obstacleFunction;
