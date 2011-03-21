@@ -49,6 +49,8 @@ void Tram::run()
                             o->addMessage(m);
                             this->m_obstacles.append(o);
                         }
+                        if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
+                            this->m_trajet = this->m_trajet->retour();
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
 //                        if(!o->indiquerPassage())
 //                        {
