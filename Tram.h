@@ -37,7 +37,7 @@ public:
     void changeEtat();
     virtual QString className(){ return QString("Tram");}
 private:
-    static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
+    void newMessage();
     void isCrossed();
 private:
     Trajet* m_trajet;

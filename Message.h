@@ -1,7 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
-class Thread;
-#include "Thread.h"
+class ThreadMessage;
+#include "ThreadMessage.h"
 
 class Message
 {
@@ -9,13 +9,13 @@ public:
     enum TypeMessage {
         Passage
     };
-    Message(Thread*, TypeMessage);
+    Message(ThreadMessage*, TypeMessage);
     ~Message(){}
-    Thread * sender();
-    void setSender(Thread*);
+    ThreadMessage * sender();
+    void setSender(ThreadMessage*);
     TypeMessage type();
 private:
-    Thread * m_sender;
+    ThreadMessage * m_sender;
     TypeMessage m_type;
     Message(){}
 };

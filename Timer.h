@@ -13,7 +13,6 @@ public:
 class Timer : public Thread
 {
     timer_t m_timerID;
-    sigset_t m_sigBlockSet;
     struct sigevent m_signalEvent;
     struct sigaction m_signalAction;
     struct itimerspec m_timerSpecs;

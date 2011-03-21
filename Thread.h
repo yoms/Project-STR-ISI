@@ -1,8 +1,10 @@
 #ifndef THREAD_H
 #define THREAD_H
 
-#include "pthread.h"
+#include <pthread.h>
 #include <QString>
+#include <QMap>
+
 
 class Thread
 {
@@ -30,6 +32,7 @@ protected:
 private:
     pthread_t m_thread;
     pthread_attr_t m_attr;
+
 
 };
 
