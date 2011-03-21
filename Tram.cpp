@@ -35,7 +35,6 @@ void Tram::run()
                     Obstacle* o;
                     if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
                     {
-                        isCrossed();
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
                         speedUp();
                     }
@@ -43,7 +42,6 @@ void Tram::run()
                     {
                         qDebug()<<"Obstacle "<<o->nom();
                         if(!m_obstacles.contains(o)) {
-                            isCrossed();
                             Message * m = new Message (this, Message::Passage);
                             o->addMessage(m);
                             this->m_obstacles.append(o);
@@ -155,9 +153,3 @@ void Tram::newMessage()
     changeEtat();
 }
 
-void Tram::isCrossed() {
-    if(!m_obstacles.isEmpty()){
-        pthread_kill(m_obstacles.first()->threadid(), (int)m_obstacles.first());
-        m_obstacles.removeFirst();
-    }
-}

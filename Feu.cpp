@@ -42,6 +42,7 @@ void Feu::run()
 }
 void Feu::newMessage()
 {
+
     Message* m = m_messageList.takeFirst();
     if(m_etat == Feu::ARRET) {
             m->sender()->addMessage(new Message(this,Message::Passage));

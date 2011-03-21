@@ -38,7 +38,6 @@ public:
     virtual QString className(){ return QString("Tram");}
 private:
     void newMessage();
-    void isCrossed();
 private:
     Trajet* m_trajet;
     int m_nbTick;
