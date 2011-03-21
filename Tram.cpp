@@ -46,9 +46,11 @@ void Tram::run()
                     Obstacle* o;
                     if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
                     {
-                        isCrossed();
+                        if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
+                            this->m_trajet = this->m_trajet->retour();
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
                         speedUp();
+
                     }
                     else
                     {

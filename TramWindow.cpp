@@ -9,6 +9,7 @@
 #include "TramPropertiesWidget.h"
 #include "ObstacleWidget.h"
 #include <math.h>
+#include <QDebug>
 
 TramWindow::TramWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,7 +25,7 @@ TramWindow::TramWindow(QWidget *parent) :
     tram->start();
     Tram * tram2 = new Tram;
     m_tramList << tram2;
-    tram2->setTrajet(m_trajetList[1]);
+    tram2->setTrajet(m_trajetList[2 ]);
     tram2->start();
     setupDrawingWidget();
     for(int i = 0; i < m_tramList.size(); i++)
@@ -37,23 +38,34 @@ TramWindow::TramWindow(QWidget *parent) :
 }
 TramWindow::~TramWindow()
 {
+    delete ui;
+    for(int i = 0; i < m_obstacleWidgetList.size(); i++)
+    {
+        delete m_obstacleWidgetList[i];
+    }
+    for(int i = 0; i < m_tramPropertiesWidgetList.size(); i++)
+    {
+        delete m_tramPropertiesWidgetList[i];
+    }
     for(int i = 0; i < m_obstacleList.size(); i++)
     {
+        m_obstacleList[i]->stop();
         delete m_obstacleList[i];
-    }
-    for(int i = 0; i < m_trajetList.size(); i++)
-    {
-        delete m_trajetList[i];
     }
     for(int i = 0; i < m_tramList.size(); i++)
     {
+        m_tramList[i]->stop();
         delete m_tramList[i];
+    }
+    qDebug() << "martine";
+    for(int i = 0; i < m_trajetList.size(); i++)
+    {
+        delete m_trajetList[i];
     }
     for(int i = 0; i < m_stationList.size(); i++)
     {
         delete m_stationList[i];
     }
-    delete ui;
 }
 
 void TramWindow::setupDrawingWidget()
@@ -63,8 +75,8 @@ void TramWindow::setupDrawingWidget()
     for(int i = 0; i < m_obstacleList.size(); i++)
     {
         d << m_obstacleList[i];
-        ObstacleWidget* obstacleW = new ObstacleWidget(m_obstacleList[i],this);
-        ui->m_propertiesLayout->addWidget(obstacleW);
+        m_obstacleWidgetList << new ObstacleWidget(m_obstacleList[i]);
+        ui->m_propertiesLayout->addWidget(m_obstacleWidgetList.last());
     }
     for(int i = 0; i < m_stationList.size(); i++)
         d << m_stationList[i];
@@ -73,15 +85,15 @@ void TramWindow::setupDrawingWidget()
     for(int i = 0; i < m_tramList.size(); i++)
     {
         d << m_tramList[i];
-        TramPropertiesWidget* tramPW = new TramPropertiesWidget(m_tramList[i],this);
-        ui->m_propertiesLayout->addWidget(tramPW);
+        m_tramPropertiesWidgetList << new TramPropertiesWidget(m_tramList[i]);
+        ui->m_propertiesLayout->addWidget(m_tramPropertiesWidgetList.last());
     }
     ui->widget->setDrawableList(d);
 }
 
 void TramWindow::setupTrajet()
 {
-    QList<QPoint> tra;
+    QList<QPoint> tra, traret;
     QPoint last(25,25);
     double radius = 0.05;
     Station* s1 = new Station(Station::NonTerminus);
@@ -100,7 +112,10 @@ void TramWindow::setupTrajet()
 
 
     for(double i = 0; i < 50; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     Feu * f1 = new Feu;
@@ -113,36 +128,60 @@ void TramWindow::setupTrajet()
 
     last = tra.last();
     for(double i = 3; i > 1.5; i -= radius)
+    {
             tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+            traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
+    {
             tra << QPoint(last.x(), last.y()+i);
+            traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = -1.5; i < 0; i += radius)
+    {
             tra << QPoint(last.x()+25+25*sin(i), last.y()+25*cos(i));
+            traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 75; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
 
     last = tra.last();
     for(double i = 0; i < 1.5; i += radius)
+    {
             tra << QPoint(last.x()+1+25*sin(i), last.y()-25+25*cos(i));
+            traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
+    {
         tra << QPoint(last.x(), last.y()-i);
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 4.5; i > 3; i -= radius)
+    {
             tra << QPoint(last.x()+25+25*sin(i), last.y()+3+25*cos(i));
+            traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
 
     last = tra.last();
@@ -164,8 +203,14 @@ void TramWindow::setupTrajet()
     traj->setTrajet(tra);
     traj->setObstacle(m_obstacleList);
     m_trajetList << traj;
+    Trajet* trajret = new Trajet;
+    trajret->setTrajet(traret);
+    m_trajetList << trajret;
+    traj->setRetour(trajret);
+    trajret->setRetour(traj);
 //----------------------------------------------------------------------------------------------------------------------------------
     tra.clear();
+    traret.clear();
 
     last = QPoint(25,217);
 
@@ -184,39 +229,66 @@ void TramWindow::setupTrajet()
         feuS3->start();
 
     for(double i = 0; i < 50; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 0; i < 1.5; i += radius)
-            tra << QPoint(last.x()+1+25*sin(i), last.y()-25+25*cos(i));
+    {
+        tra << QPoint(last.x()+1+25*sin(i), last.y()-25+25*cos(i));
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
-            tra << QPoint(last.x(), last.y()-i);
+    {
+        tra << QPoint(last.x(), last.y()-i);
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 4.5; i > 3; i -= radius)
-            tra << QPoint(last.x()+25+25*sin(i), last.y()+3+25*cos(i));
+    {
+        tra << QPoint(last.x()+25+25*sin(i), last.y()+3+25*cos(i));
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 75; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 3; i > 1.5; i -= radius)
-            tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+    {
+        tra << QPoint(last.x()+25*sin(i), last.y()+25+25*cos(i));
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
-            tra << QPoint(last.x(), last.y()+i);
+    {
+        tra << QPoint(last.x(), last.y()+i);
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = -1.5; i < 0; i += radius)
+    {
             tra << QPoint(last.x()+25+25*sin(i), last.y()+25*cos(i));
+        traret.prepend(tra.last());
+    }
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
+    {
         tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last());
+    }
 
 
     last = tra.last();
@@ -239,6 +311,12 @@ void TramWindow::setupTrajet()
     traj2->setObstacle(m_obstacleList);
     m_trajetList << traj2;
 
+    Trajet* trajret2 = new Trajet;
+    trajret2->setTrajet(traret);
+    m_trajetList << trajret2;
+
+    traj2->setRetour(trajret2);
+    trajret2->setRetour(traj2);
 
 
     foreach(Trajet* t , m_trajetList)

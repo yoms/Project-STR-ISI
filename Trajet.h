@@ -8,8 +8,11 @@ class Trajet : public Drawable
 {
     QList<QPoint> m_trajet;
     QList<Obstacle*> m_obstacle;
+    Trajet* m_trajetRetour;
 public:
     Trajet();
+    void setRetour(Trajet* t){m_trajetRetour = t;}
+    Trajet* retour(){return m_trajetRetour;}
     void draw(QPainter *);
     QList<QPoint> trajet();
     void setTrajet(QList<QPoint> &);

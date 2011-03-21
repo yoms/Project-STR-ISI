@@ -7,6 +7,8 @@
 #include "Tram.h"
 #include "Station.h"
 #include "Timer.h"
+#include "ObstacleWidget.h"
+#include "TramPropertiesWidget.h"
 
 namespace Ui {
     class TramWindow;
@@ -26,6 +28,8 @@ private:
     QList<Trajet*> m_trajetList;
     QList<Tram*> m_tramList;
     QList<Obstacle*> m_obstacleList;
+    QList<ObstacleWidget*> m_obstacleWidgetList;
+    QList<TramPropertiesWidget*> m_tramPropertiesWidgetList;
     QList<Station*> m_stationList;
 
     Ui::TramWindow *ui;

@@ -22,6 +22,7 @@ class Tram : public Drawable, public ThreadMessage, public TimerListener
 public:
     enum Etat{MARCHE,ARRET,MARCHEAVUE};
     Tram();
+    virtual ~Tram(){}
     void tick();
     void draw(QPainter *);
     void run();
