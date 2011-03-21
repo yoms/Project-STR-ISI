@@ -8,7 +8,7 @@ class Thread
 {
 
 public:
-    Thread(int id = 0);
+    Thread();
     virtual ~Thread();
 
     virtual void start();
@@ -29,7 +29,6 @@ protected:
 private:
     pthread_t m_thread;
     pthread_attr_t m_attr;
-    int m_threadid;
 
 };
 
