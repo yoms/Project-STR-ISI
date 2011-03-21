@@ -5,6 +5,7 @@ class BorneAchat
 {
 public:
     BorneAchat();
+    bool giveTicket();
 };
 
 #endif // BORNEACHAT_H
