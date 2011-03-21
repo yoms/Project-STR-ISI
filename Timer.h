@@ -25,6 +25,7 @@ public:
     void tick();
     void run();
     void stop();
+    virtual QString className(){ return QString("Timer");}
 private:
     static void _alarmFunction(int sigNumb, siginfo_t *si, void *uc);
     static void _waitingFunction(int sigNumb, siginfo_t *si, void *uc);

@@ -33,13 +33,14 @@ public:
     int vitesse(){return m_vitesse;}
     Tram::Etat etat(){return m_etat;}
     void changeEtat();
+    virtual QString className(){ return QString("Tram");}
 private:
     static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
 private:
-    Timer* m_timer;
     Trajet* m_trajet;
     int m_nbTick;
     int m_vitesse;
+    pthread_mutex_t m_mutex;
     Etat m_etat;
 };
 

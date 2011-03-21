@@ -4,6 +4,10 @@ Personne::Personne()
 {
 }
 
+void run()
+{
+
+}
 void Personne::buyTicket()
 {
 }

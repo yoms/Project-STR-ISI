@@ -9,21 +9,18 @@
 #define VITESSE_MIN 40
 #define VITESSE_MAX 5
 #define ACCELERATION 3
-
+#include <pthread.h>
+#include <time.h>
 
 Tram::Tram():Drawable(),ThreadMessage()
 {
-    m_timer = new Timer(0,20);
-    m_timer->addListener(this);
-    m_timer->start();
     m_etat = Tram::MARCHE;
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
-
+    m_mutex = PTHREAD_MUTEX_INITIALIZER;
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
     this->m_signalAction.sa_sigaction = Tram::_obstacleFunction;
-
     if (sigaction(SIGUSR1, &this->m_signalAction, NULL))
     {
         qDebug() << "impossible de creer le handle";
@@ -32,8 +29,9 @@ Tram::Tram():Drawable(),ThreadMessage()
 }
 void Tram::run()
 {
-    forever
+    for(;;)
     {
+        pthread_mutex_lock(&m_mutex);
         if(m_nbTick == m_vitesse-1)
         {
             this->m_nbTick = ++m_nbTick%m_vitesse;
@@ -96,6 +94,7 @@ void Tram::setTrajet(Trajet *t)
 void Tram::tick()
 {
    this->m_nbTick = ++m_nbTick%m_vitesse;
+   pthread_mutex_unlock(&m_mutex);
 }
 
 void Tram::draw(QPainter *painter)
