@@ -30,8 +30,10 @@ TramWindow::TramWindow(QWidget *parent) :
 }
 TramWindow::~TramWindow()
 {
-
-    delete ui;
+    for(int i = 0; i < m_obstacleList.size(); i++)
+    {
+        delete m_obstacleList[i];
+    }
     for(int i = 0; i < m_trajetList.size(); i++)
     {
         delete m_trajetList[i];
@@ -40,14 +42,11 @@ TramWindow::~TramWindow()
     {
         delete m_tramList[i];
     }
-    for(int i = 0; i < m_obstacleList.size(); i++)
-    {
-        delete m_obstacleList[i];
-    }
     for(int i = 0; i < m_stationList.size(); i++)
     {
         delete m_stationList[i];
     }
+    delete ui;
 }
 
 void TramWindow::setupDrawingWidget()
