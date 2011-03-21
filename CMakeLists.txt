@@ -72,9 +72,13 @@ SET(project_UIS
 
 set( ada_SRCS
 api
+borneachat
+composteur
 )
 set( staticada_LIBS
 staticapi
+staticborneachat
+staticcomposteur
 )
 
 ADA_COMPILE_LINK( ${ada_SRCS})
