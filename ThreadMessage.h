@@ -16,15 +16,18 @@ public:
     ThreadMessage();
     void addMessage(Message*);
 protected:
-    static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
     void removeMessage();
+    virtual void newMessage() = 0;
+private:
+    static void _newmessage(int sigNumb, siginfo_t *si, void *uc);
+
 protected:
-    struct sigaction m_signalAction;
-protected:
-    QList<Message*> m_bal;
-    int m_newMessage;
+    QList<Message*> m_messageList;
 private:
     pthread_mutex_t m_mutex;
+    timer_t m_timerID;
+    struct sigevent m_signalEvent;
+    struct sigaction m_signalAction;
+    struct itimerspec m_timerSpecs;
 };
-
 #endif // THREADMESSAGE_H

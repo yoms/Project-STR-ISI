@@ -1,10 +1,10 @@
 #include "Message.h"
 
-Message::Message(Thread * t, Message::TypeMessage type):m_sender(t), m_type(type)
+Message::Message(ThreadMessage *t , TypeMessage type):m_sender(t), m_type(type)
 {
 }
 
-void Message::setSender(Thread * t){
+void Message::setSender(ThreadMessage * t){
     this->m_sender = t;
 }
 
@@ -12,6 +12,6 @@ Message::TypeMessage Message::type(){
     return this->m_type;
 }
 
-Thread * Message::sender(){
+ThreadMessage * Message::sender(){
     return this->m_sender;
 }

@@ -20,6 +20,7 @@ public:
     virtual QString className(){ return QString("Feu");}
     void tick(){}
     void setEtat(Etat);
+    void newMessage();
 
 protected:
     Etat m_etat;

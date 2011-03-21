@@ -37,15 +37,14 @@ void Feu::run()
 {
     for(;;)
     {
-        if(m_newMessage > 0) {
-            qDebug()<<"m_newMessage "<<m_newMessage;
-            if(m_etat == Feu::ARRET) {
-                for(int i = (m_bal.size() - m_newMessage) ; i < m_bal.size() ; i++) {
-                    pthread_kill(m_bal.at(i)->sender()->threadid(), SIGUSR1);
-                }
-            }
-            m_newMessage = 0;
-        }
+        sleep(1);
+    }
+}
+void Feu::newMessage()
+{
+    Message* m = m_messageList.takeFirst();
+    if(m_etat == Feu::ARRET) {
+            m->sender()->addMessage(new Message(this,Message::Passage));
     }
 }
 
@@ -61,9 +60,6 @@ bool Feu::indiquerPassage() {
 
 void Feu::setEtat(Feu::Etat etat) {
     this->m_etat = etat;
-    for(int i = 0 ; i < m_bal.size() ; i++) {
-        pthread_kill(m_bal.at(i)->sender()->threadid(), SIGUSR1);
-    }
 }
 
 Feu::Etat Feu::etat() {

@@ -1,5 +1,21 @@
 #include "Thread.h"
 #include <QDebug>
+QMap<pthread_t,Thread*> threadMap;
+pthread_mutex_t mutexThreadMap = PTHREAD_MUTEX_INITIALIZER;
+
+void addNewThread(pthread_t p,Thread* t)
+{
+    pthread_mutex_lock(&mutexThreadMap);
+    threadMap[p] = t;
+    pthread_mutex_unlock(&mutexThreadMap);
+}
+Thread* getThreadPointer(pthread_t p)
+{
+    pthread_mutex_lock(&mutexThreadMap);
+    Thread* t = threadMap[p];
+    pthread_mutex_unlock(&mutexThreadMap);
+    return t;
+}
 
 Thread::Thread() :m_running(false) {
     size_t stacksize;
@@ -15,6 +31,7 @@ void *_threadFunc(void *obj)
 {
     void *retval = 0;
     Thread *thread = static_cast<Thread *> (obj);
+    addNewThread(pthread_self(), thread);
     thread->m_running = true;
     thread->run();
     thread->m_running = false;
