@@ -9,16 +9,14 @@ class Message;
 
 class ThreadMessage : public Thread
 {
-    enum typeMessage {
-        Passage
-    };
+
 
 public:
     ThreadMessage();
     void addMessage(Message*);
-
 protected:
     static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
+    void removeMessage();
 protected:
     struct sigaction m_signalAction;
 private:

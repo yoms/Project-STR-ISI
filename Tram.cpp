@@ -50,7 +50,7 @@ void Tram::run()
                     else
                     {
 
-                        Message * m = new Message (this);
+                        Message * m = new Message (this, Message::Passage);
                         o->addMessage(m);
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
 //                        if(!o->indiquerPassage())
