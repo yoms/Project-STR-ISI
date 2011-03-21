@@ -10,6 +10,7 @@ public:
     FeuStation();
     bool indiquerPassage();
     void addStation(Station*);
+    void tick(){}
 private:
     Station* m_station;
 };

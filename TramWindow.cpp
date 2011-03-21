@@ -14,6 +14,7 @@ TramWindow::TramWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::TramWindow)
 {
+    m_timer = new Timer(0,20);
     ui->setupUi(this);
 
     setupTrajet();
@@ -26,6 +27,12 @@ TramWindow::TramWindow(QWidget *parent) :
     tram2->setTrajet(m_trajetList[1]);
     tram2->start();
     setupDrawingWidget();
+    for(int i = 0; i < m_tramList.size(); i++)
+        m_timer->addListener(m_tramList[i]);
+    for(int i = 0; i < m_obstacleList.size(); i++)
+        m_timer->addListener(m_obstacleList[i]);
+
+    m_timer->start();
 
 }
 TramWindow::~TramWindow()

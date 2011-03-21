@@ -2,6 +2,7 @@
 #define THREAD_H
 
 #include "pthread.h"
+#include <QString>
 
 class Thread
 {
@@ -15,6 +16,7 @@ public:
     virtual void join();
     bool isRunning();
     virtual void run() = 0;
+    virtual QString className(){ return QString("Thread");}
 
 private:
     Thread(const Thread&);

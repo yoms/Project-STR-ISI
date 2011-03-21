@@ -4,7 +4,7 @@
 #include "Obstacle.h"
 #include "Drawable.h"
 #include "Timer.h"
-class Feu : public Obstacle, public TimerListener
+class Feu : public Obstacle
 {
 public:
 
@@ -16,13 +16,12 @@ public:
     bool indiquerPassage();
     void draw(QPainter *);
     void run();
-    void tick();
     Feu::Etat etat();
+    virtual QString className(){ return QString("Feu");}
 
 protected:
     void setEtat(Etat);
     Etat m_etat;
-    Timer* m_timer;
 };
 
 #endif // FEU_H

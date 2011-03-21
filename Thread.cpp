@@ -18,22 +18,22 @@ void *_threadFunc(void *obj)
     thread->m_running = true;
     thread->run();
     thread->m_running = false;
-    qDebug() << "Exiting thread :" + thread->m_threadid;
+    qDebug() << "Exiting "<< thread->className() <<" :" << thread->m_threadid;
     return retval;
 }
 
 void Thread::start()
 {
-    qDebug() << "Starting thread: " + this->m_threadid ;
+    qDebug() << "Starting thread "<< this->className() <<" :" << this->m_threadid ;
     if (this->m_running)
-        qDebug() << "Thread already started: " + this->m_threadid ;
+        qDebug() << "Thread already started "<< this->className() <<" :" << this->m_threadid ;
     else if (pthread_create(&this->m_thread, &this->m_attr, _threadFunc, static_cast<void *>(this)) != 0)
-        qDebug() << "Error when creating thread: " + this->m_threadid ;
+        qDebug() << "Error when creating thread "<< this->className() <<" :" << this->m_threadid ;
 }
 
 void Thread::stop()
 {
-    qDebug() << "Stopping thread: " + m_threadid ;
+    qDebug() << "Stopping thread: " << m_threadid ;
     pthread_cancel(m_thread);
     m_running = false;
 }
