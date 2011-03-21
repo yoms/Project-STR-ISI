@@ -53,8 +53,3 @@ bool Thread::isRunning()
 {
     return m_running;
 }
-
-void Thread::addMessage(Message* m)
-{
-    m_bal << m;
-}

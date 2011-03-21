@@ -1,8 +1,10 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 #include <QPoint>
+#include "ThreadMessage.h"
 #include "Drawable.h"
-class Obstacle : public Drawable
+
+class Obstacle : public Drawable, public ThreadMessage
 {
     QPoint m_lieu;
 public:

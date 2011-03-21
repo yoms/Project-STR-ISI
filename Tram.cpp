@@ -1,5 +1,6 @@
 #include "Tram.h"
 #include "Trajet.h"
+#include "Message.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -10,7 +11,7 @@
 #define ACCELERATION 3
 
 
-Tram::Tram():Drawable(),Thread()
+Tram::Tram():Drawable(),ThreadMessage()
 {
     m_timer = new Timer(0,20);
     m_timer->addListener(this);

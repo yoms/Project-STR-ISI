@@ -2,15 +2,9 @@
 #define THREAD_H
 
 #include "pthread.h"
-class Message;
-#include "Message.h"
-#include <QList>
 
 class Thread
 {
-    enum typeMessage {
-        Passage
-    };
 
 public:
     Thread(int id = 0);
@@ -21,7 +15,6 @@ public:
     virtual void join();
     bool isRunning();
     virtual void run() = 0;
-    void addMessage(Message*);
 
 private:
     Thread(const Thread&);
@@ -30,7 +23,6 @@ private:
 
 protected:
     bool m_running;
-    QList<Message*> m_bal;
 
 private:
     pthread_t m_thread;

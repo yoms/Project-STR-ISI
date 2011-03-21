@@ -5,10 +5,8 @@
 #include <QtCore/QTimer>
 #include <QtCore/QTime>
 #include "Drawable.h"
-#include "Thread.h"
+#include "ThreadMessage.h"
 #include "Timer.h"
-#include <signal.h>
-#include <sys/wait.h>
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -17,7 +15,7 @@
 
 class QPainter;
 class Trajet;
-class Tram : public Drawable, public Thread, public TimerListener
+class Tram : public Drawable, public ThreadMessage, public TimerListener
 {
 public:
     enum Etat{MARCHE,ARRET,MARCHEAVUE};
@@ -38,7 +36,6 @@ public:
 private:
     static void _obstacleFunction(int sigNumb, siginfo_t *si, void *uc);
 private:
-    struct sigaction m_signalAction;
     Timer* m_timer;
     Trajet* m_trajet;
     int m_nbTick;

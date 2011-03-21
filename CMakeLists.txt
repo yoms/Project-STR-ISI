@@ -46,6 +46,7 @@ set(project_SRCS
     Personne.cpp
     Chauffeur.cpp
     Thread.cpp
+    ThreadMessage.cpp
     Carte.cpp
     Stepable.cpp
     ArretUrgence.cpp

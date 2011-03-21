@@ -3,9 +3,8 @@
 
 #include "Obstacle.h"
 #include "Drawable.h"
-#include "Thread.h"
 #include "Timer.h"
-class Feu : public Obstacle, public Thread, public TimerListener
+class Feu : public Obstacle, public TimerListener
 {
 public:
 
