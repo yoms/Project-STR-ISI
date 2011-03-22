@@ -25,7 +25,11 @@ Thread::Thread() :m_running(false) {
     pthread_attr_setstacksize(&m_attr, stacksize);
 }
 
-Thread::~Thread() { }
+Thread::~Thread()
+{
+    this->join();
+    this->stop();
+}
 
 void *_threadFunc(void *obj)
 {
@@ -51,7 +55,6 @@ void Thread::start()
 
 void Thread::stop()
 {
-    qDebug() << "Stopping thread "<< this->className() <<" :"<< m_thread ;
     pthread_cancel(m_thread);
     m_running = false;
 }

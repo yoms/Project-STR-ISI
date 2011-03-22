@@ -19,6 +19,7 @@ class Timer : public Thread
     QList<TimerListener*> m_listenerList;
 public:
     Timer(int sec, int mSec = 0, int nSec = 0);
+    virtual ~Timer();
     void addListener(TimerListener* tl);
     void removeListener(TimerListener* tl);
     void tick();

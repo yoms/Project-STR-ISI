@@ -57,3 +57,7 @@ void Timer::_alarmFunction(int sigNumb, siginfo_t *si, void *uc)
     Timer * ptrTimer = reinterpret_cast<Timer *> (si->si_value.sival_ptr);
     ptrTimer->tick();
 }
+Timer::~Timer()
+{
+
+}

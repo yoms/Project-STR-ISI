@@ -39,6 +39,7 @@ TramWindow::TramWindow(QWidget *parent) :
 TramWindow::~TramWindow()
 {
     delete ui;
+    delete m_timer;
     for(int i = 0; i < m_obstacleWidgetList.size(); i++)
     {
         delete m_obstacleWidgetList[i];
@@ -47,24 +48,22 @@ TramWindow::~TramWindow()
     {
         delete m_tramPropertiesWidgetList[i];
     }
+    for(int i = 0; i < m_stationList.size(); i++)
+    {
+        delete m_stationList[i];
+    }
     for(int i = 0; i < m_obstacleList.size(); i++)
     {
-        m_obstacleList[i]->stop();
         delete m_obstacleList[i];
     }
     for(int i = 0; i < m_tramList.size(); i++)
     {
-        m_tramList[i]->stop();
         delete m_tramList[i];
     }
-    qDebug() << "martine";
     for(int i = 0; i < m_trajetList.size(); i++)
     {
-        delete m_trajetList[i];
-    }
-    for(int i = 0; i < m_stationList.size(); i++)
-    {
-        delete m_stationList[i];
+        if(m_trajetList[i] != NULL)
+            delete m_trajetList[i];
     }
 }
 

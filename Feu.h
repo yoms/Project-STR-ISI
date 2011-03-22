@@ -13,6 +13,7 @@ public:
         ARRET,
     };
     Feu();
+    virtual ~Feu(){}
     bool indiquerPassage();
     void draw(QPainter *);
     void run();

@@ -11,6 +11,7 @@ class Trajet : public Drawable
     Trajet* m_trajetRetour;
 public:
     Trajet();
+    ~Trajet(){}
     void setRetour(Trajet* t){m_trajetRetour = t;}
     Trajet* retour(){return m_trajetRetour;}
     void draw(QPainter *);
