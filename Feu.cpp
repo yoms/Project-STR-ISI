@@ -25,7 +25,6 @@ void Feu::draw(QPainter * painter)
         }
     break;
     }
-
     drawElemScen(painter, m_coordonnee.x(), m_coordonnee.y(), SIZE_FEU);
 
     painter->setPen(Qt::darkGray);
@@ -46,19 +45,21 @@ void Feu::newMessage()
     Message* m = m_messageList.takeFirst();
     switch(m->type()){
     case Message::Demande:
-        {
-            if(m_etat == Feu::ARRET) {
-                    m->sender()->addMessage(new Message(this,Message::Arret));
-            sleep(5);
-            m_etat == Feu::PASSAGE;
-            m->sender()->addMessage(new Message(this, Message::Passage));
-            }
+    {
+        if(m_etat == Feu::ARRET) {
+
+        m->sender()->addMessage(new Message(this,Message::Arret));
+        sleep(5);
+        m_etat = Feu::PASSAGE;
+        m->sender()->addMessage(new Message(this, Message::Passage));
+
         }
-        break;
+    }
+    break;
     case Message::EstPasse:
-        {
-            m_etat == Feu::ARRET;
-        }
+    {
+        m_etat = Feu::ARRET;
+    }
     }
 }
 
