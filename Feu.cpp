@@ -42,24 +42,28 @@ void Feu::run()
 void Feu::newMessage()
 {
 
-    Message* m = m_messageList.takeFirst();
-    switch(m->type()){
-    case Message::Demande:
+    while(m_messageList.size())
     {
-        if(m_etat == Feu::ARRET) {
-
-        m->sender()->addMessage(new Message(this,Message::Arret));
-        sleep(5);
-        m_etat = Feu::PASSAGE;
-        m->sender()->addMessage(new Message(this, Message::Passage));
-
+        Message* m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+            case Message::Demande:
+            {
+                if(m_etat == Feu::ARRET) {
+                    m->sender()->addMessage(new Message(this,Message::Arret));
+                    sleep(5);
+                    m_etat = Feu::PASSAGE;
+                    m->sender()->addMessage(new Message(this, Message::Passage));
+                }
+            }
+            break;
+            case Message::EstPasse:
+            {
+                sleep(5);
+                m_etat = Feu::ARRET;
+            }
+            break;
         }
-    }
-    break;
-    case Message::EstPasse:
-    {
-        m_etat = Feu::ARRET;
-    }
     }
 }
 

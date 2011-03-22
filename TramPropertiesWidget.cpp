@@ -22,10 +22,10 @@ void TramPropertiesWidget::updateTramInformation()
     this->ui->m_vitesse->setText(QString::number(m_tram->vitesse()));
     switch(m_tram->etat())
     {
-    case Tram::MARCHE:
+    case Tram::Marche:
         this->ui->m_etat->setText("Marche");
         break;
-    case Tram::ARRET:
+    case Tram::Arret:
         this->ui->m_etat->setText("Arret");
         break;
     }

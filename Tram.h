@@ -20,12 +20,19 @@ class Trajet;
 class Tram : public Drawable, public ThreadMessage, public TimerListener
 {
 public:
-    enum Etat{MARCHE,ARRET,MARCHEAVUE};
+    enum Etat{
+        Acceleration,
+        Desceleration,
+        Marche,
+        Arret,
+        MarcheAVue};
     Tram();
     virtual ~Tram(){}
     void tick();
     void draw(QPainter *);
     void run();
+    void detectionObstacle();
+    void avancer();
     void stop();
     void speedUp();
     void slowDown();
@@ -35,7 +42,6 @@ public:
     void setTrajet(Trajet*);
     int vitesse(){return m_vitesse;}
     Tram::Etat etat(){return m_etat;}
-    void changeEtat();
     virtual QString className(){ return QString("Tram");}
 private:
     void newMessage();

@@ -21,7 +21,6 @@ ThreadMessage::ThreadMessage()
     {
         qDebug() << "impossible de creer le handle";
     }
-    qDebug() << "Thread pointer :"<< this;
 }
 
 
@@ -40,7 +39,6 @@ void ThreadMessage::removeMessage(){
 void ThreadMessage::_newmessage(int sigNumb, siginfo_t *si, void *uc)
 {
     ThreadMessage* t = (ThreadMessage*)getThreadPointer(pthread_self());
-    qDebug() << t->className() << " : " << getThreadPointer(pthread_self());
     t->newMessage();
 
 }

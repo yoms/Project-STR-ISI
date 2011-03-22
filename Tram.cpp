@@ -15,7 +15,7 @@
 
 Tram::Tram():Drawable(),ThreadMessage()
 {
-    m_etat = Tram::MARCHE;
+    m_etat = Tram::Acceleration;
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
@@ -25,76 +25,64 @@ void Tram::run()
     for(;;)
     {
         pthread_mutex_lock(&m_mutex);
+        detectionObstacle();
         if(m_nbTick == m_vitesse-1)
         {
             this->m_nbTick = ++m_nbTick%m_vitesse;
             switch(m_etat)
             {
-            case Tram::MARCHE:
+            case Tram::Acceleration:
                 {
-                    Obstacle* o;
-                    if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
-                    {
-                        while(!m_obstacles.isEmpty()){
-                           Obstacle * oBuff = m_obstacles.first();
-                           m_obstacles.removeFirst();
-                           Message * m = new Message (this, Message::EstPasse);
-                           oBuff->addMessage(m);
-                        }
-                        if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
-                            this->m_trajet = this->m_trajet->retour();
-                        this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-                        speedUp();
-
-                    }
-                    else
-                    {
-                        if(m_obstacles.contains(o) && m_obstacles.size() > 1){
-                            Obstacle * oBuff = m_obstacles.first();
-                            m_obstacles.removeFirst();
-                            Message * m = new Message (this, Message::EstPasse);
-                            oBuff->addMessage(m);
-                        }
-                        qDebug()<<"Obstacle "<<o->nom();
-                        if(!m_obstacles.contains(o)) {
-                            Message * m = new Message (this, Message::Demande);
-                            o->addMessage(m);
-                            this->m_obstacles.append(o);
-                        }
-                        if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
-                            this->m_trajet = this->m_trajet->retour();
-                        this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-//                        if(!o->indiquerPassage())
-//                        {
-//                            if(o->lieu() == this->m_trajet->next(this->m_coordonnee))
-//                                m_etat = Tram::ARRET;
-//                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-//                            slowDown();
-//                        }
-//                        else
-//                        {
-//                            this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
-//                        }
-                    }
+                    speedUp();
+                    avancer();
                 }
                 break;
-            case Tram::ARRET:
+            case Tram::Desceleration:
+                {
+                    slowDown();
+                    avancer();
+                }
+                break;
+            case Tram::Marche:
+                {
+                    avancer();
+                }
+                break;
+            case Tram::Arret:
                 {
                     m_vitesse = VITESSE_MIN;
-                    Obstacle* o;
-                    if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
-                    {
-                    }
-                    else
-                    {
-                        slowDown();
-                    }
                 }
                 break;
+
             }
         }
     }
 }
+void Tram::detectionObstacle()
+{
+    Obstacle* o;
+    if((o = m_trajet->obstacleExist(this->m_coordonnee)) != NULL)
+    {
+        o->addMessage(new Message(this,Message::Demande));
+        m_obstacles << o;
+    }
+
+}
+
+void Tram::avancer()
+{
+    for(int i = 0; i < m_obstacles.size(); i++)
+    {
+       if(m_obstacles[i]->lieu() == this->m_trajet->next(this->m_coordonnee))
+        {
+           m_etat = Tram::Arret;
+        }
+   }
+    if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
+                                this->m_trajet = this->m_trajet->retour();
+    this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+}
+
 void Tram::setTrajet(Trajet *t)
 {
     this->m_trajet=t;
@@ -131,12 +119,18 @@ void Tram::stop()
 
 void Tram::speedUp()
 {
-    m_vitesse = m_vitesse > VITESSE_MAX ? m_vitesse - ACCELERATION : m_vitesse;
+    if(m_vitesse < VITESSE_MAX)
+        m_etat = Tram::Marche;
+    else
+        m_vitesse -= ACCELERATION;
 }
 
 void Tram::slowDown()
 {
-    m_vitesse = m_vitesse < VITESSE_MIN ? m_vitesse + ACCELERATION : m_vitesse;
+    if(m_vitesse > VITESSE_MIN)
+        m_etat = Tram::Arret;
+    else
+        m_vitesse += ACCELERATION;
 }
 
 void Tram::turnAround()
@@ -153,25 +147,27 @@ void Tram::closeDoors()
 {
 
 }
-
-void Tram::changeEtat(){
-    switch(m_etat)
-    {
-    case Tram::MARCHE:
-        {
-            m_etat = Tram::ARRET;
-            slowDown();
-        }
-        break;
-    case Tram::ARRET:
-        {
-            m_etat = Tram::MARCHE;
-            speedUp();
-        }
-    }
-}
 void Tram::newMessage()
 {
-    changeEtat();
+    if(!m_messageList.isEmpty())
+    {
+        Message *m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+        case Message::Arret:
+            {
+                m_etat = Tram::Desceleration;
+            }
+            break;
+        case Message::Passage:
+            {
+
+                m->sender()->addMessage(new Message(this,Message::EstPasse));
+                qDebug()<< "martine";
+                m_etat = Tram::Acceleration;
+            }
+            break;
+        }
+    }
 }
 

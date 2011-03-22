@@ -207,6 +207,7 @@ void TramWindow::setupTrajet()
     m_trajetList << traj;
     Trajet* trajret = new Trajet;
     trajret->setTrajet(traret);
+    trajret->setObstacle(m_obstacleList);
     m_trajetList << trajret;
     traj->setRetour(trajret);
     trajret->setRetour(traj);

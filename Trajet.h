@@ -4,6 +4,7 @@
 #include <QList>
 #include <QPoint>
 #include "Obstacle.h"
+#define DISTANCE_VISION 10
 class Trajet : public Drawable
 {
     QList<QPoint> m_trajet;
