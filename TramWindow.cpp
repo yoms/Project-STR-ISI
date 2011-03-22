@@ -110,6 +110,9 @@ void TramWindow::setupTrajet()
         feuS1->start();
 
 
+
+
+
     for(double i = 0; i < 50; i++)
     {
         tra << QPoint(last.x()+i, last.y());

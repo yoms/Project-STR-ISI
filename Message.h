@@ -7,7 +7,10 @@ class Message
 {
 public:
     enum TypeMessage {
-        Passage
+        Demande,
+        Arret,
+        Passage,
+        EstPasse
     };
     Message(ThreadMessage*, TypeMessage);
     ~Message(){}

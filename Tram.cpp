@@ -35,6 +35,12 @@ void Tram::run()
                     Obstacle* o;
                     if((o = m_trajet->obstacleExist(this->m_coordonnee)) == NULL)
                     {
+                        while(!m_obstacles.isEmpty()){
+                           Obstacle * oBuff = m_obstacles.first();
+                           m_obstacles.removeFirst();
+                           Message * m = new Message (this, Message::EstPasse);
+                           oBuff->addMessage(m);
+                        }
                         if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
                             this->m_trajet = this->m_trajet->retour();
                         this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
@@ -43,9 +49,15 @@ void Tram::run()
                     }
                     else
                     {
+                        if(m_obstacles.contains(o) && m_obstacles.size() > 1){
+                            Obstacle * oBuff = m_obstacles.first();
+                            m_obstacles.removeFirst();
+                            Message * m = new Message (this, Message::EstPasse);
+                            oBuff->addMessage(m);
+                        }
                         qDebug()<<"Obstacle "<<o->nom();
                         if(!m_obstacles.contains(o)) {
-                            Message * m = new Message (this, Message::Passage);
+                            Message * m = new Message (this, Message::Demande);
                             o->addMessage(m);
                             this->m_obstacles.append(o);
                         }
@@ -151,6 +163,11 @@ void Tram::changeEtat(){
             slowDown();
         }
         break;
+    case Tram::ARRET:
+        {
+            m_etat = Tram::MARCHE;
+            speedUp();
+        }
     }
 }
 void Tram::newMessage()
