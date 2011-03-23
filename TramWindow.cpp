@@ -181,12 +181,12 @@ void TramWindow::setupTrajet()
     }
 
     last = tra.last();
-    Feu * f2 = new Feu;
+    FeuStation * f2 = new FeuStation;
     f2->setCoordonnee(last+QPoint(0,-5));
     m_obstacleList << f2;
     f2->setLieu(last);
     f2->setNom("F2");
-    f2->setEtat(Feu::PASSAGE);
+    f2->setEtat(Feu::ARRET);
     f2->setSyncLight(f1);
     f2->start();
 

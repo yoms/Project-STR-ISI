@@ -51,9 +51,9 @@ void Feu::newMessage()
             {
                 if(m_etat == Feu::ARRET) {
                     m->sender()->addMessage(new Message(this,Message::Arret));
-                    sleep(5);
-                    m_etat = Feu::PASSAGE;
-                    m->sender()->addMessage(new Message(this, Message::Passage));
+//                    sleep(5);
+//                    m_etat = Feu::PASSAGE;
+//                    m->sender()->addMessage(new Message(this, Message::Passage));
                 }
             }
             break;

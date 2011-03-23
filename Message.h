@@ -11,7 +11,8 @@ public:
         Arret,
         Passage,
         EstPasse,
-        Libre
+        Libre,
+        DoorClosed
     };
     Message(ThreadMessage*, TypeMessage);
     ~Message(){}

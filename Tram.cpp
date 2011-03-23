@@ -20,7 +20,7 @@ Tram::Tram():Drawable(),ThreadMessage()
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
-    m_composteurList.append(new Composteur); // TODO penser à détruire
+   // m_composteurList.append(new Composteur); // TODO penser à détruire
 }
 void Tram::run()
 {
@@ -56,6 +56,13 @@ void Tram::run()
             case Tram::Arret:
                 {
                     m_vitesse = VITESSE_MIN;
+                    if(m_obstacle != NULL){
+                        qDebug() << m_obstacle->className();
+                        if(m_obstacle->className() == "FeuPassage"){
+                            sleep(2);
+                            this->closeDoors();
+                        }
+                    }
                 }
                 break;
 
@@ -149,7 +156,10 @@ void Tram::openDoors()
 
 void Tram::closeDoors()
 {
-
+    if(m_obstacle != NULL){
+        Message* m = new Message(this,Message::DoorClosed);
+        m_obstacle->addMessage(m);
+    }
 }
 void Tram::newMessage()
 {
