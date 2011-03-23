@@ -20,22 +20,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include "TerminalComposting.h"
+#include <QDebug>
 
 extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
+    extern void adaPunchTicket (int);
+    extern void adaCreateComposteur(int);
 }
 
-int main(int argc, char *argv[])
+int TerminalComposting::globalId = 0;
+
+// TODO créer un destructeur qui appelle une fonction adaDeleteTerminalComposting
+
+TerminalComposting::TerminalComposting() : ThreadWithMessages()
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
+    globalId ++;
+    this->id = globalId;
+    adaCreateComposteur(this->id);
+}
+
+void TerminalComposting::run() {}
+
+void TerminalComposting::handleNewMessage()
+{
+
+}
+
+void TerminalComposting::punchTicket()
+{
+    adaPunchTicket(this->id);
 }

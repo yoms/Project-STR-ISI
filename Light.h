@@ -20,51 +20,80 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef OBSTACLE_H
-#define OBSTACLE_H
-#include <QPoint>
-#include "ThreadWithMessages.h"
+#ifndef LIGHT_H
+#define LIGHT_H
+
+#include "Obstacle.h"
 #include "Drawable.h"
 #include "Timer.h"
 
 /**
- * @brief Représente un obstacle.
+ * @brief Représente un feu de signalisation.
  */
-class Obstacle : public Drawable, public ThreadWithMessages, public TimerListener
+class Light : public Obstacle
 {
 public:
+
     /**
-     * @brief Construit un obstacle.
+     * @brief Couleur du feu.
      */
-    Obstacle();
+    enum Color {
+        Green = 0,
+        Red
+    };
     /**
-     * @brief Détruit l'obstacle.
+     * @brief Construit un feu.
      */
-    virtual ~Obstacle(){}
+    Light();
     /**
-     * @brief Indique l'état de l'obstacle.
+     * @brief Détruit le feu.
+     */
+    virtual ~Light(){}
+    /**
+     * @brief Indique l'état du feu.
      * @return vrai si le feu est rouge et faux sinon
      */
-    virtual bool indicateState() = 0;
+    bool indicateState();
     /**
-     * @brief Indique le lieu de l'obstacle.
-     * @return le lieu
+     * @brief Dessine le feu.
      */
-    QPoint place(){return m_place;}
+    void draw(QPainter *);
     /**
-     * @brief Change le lieu de l'obstacle.
-     * @param le nouveau lieu
+     * @brief Représente le comportement du feu.
      */
-    void setPlace(QPoint l){m_place = l;}
+    void run();
     /**
-     * @brief Indique le nom de la classe.
+     * @brief Retourne la couleur du feu.
+     * @return la couleur du feu
+     */
+    Light::Color state();
+    /**
+     * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Obstacle");}
-private:
-    void processNewMessage(){}
-private:
-    QPoint m_place;
+    virtual QString className(){ return QString("Light");}
+    /**
+     * @brief Représente un tour de timer.
+     */
+    void tick(){}
+    /**
+     * @brief Change la couleur d'un feu.
+     * @param color la nouvelle couleur du feu
+     */
+    void setColor(Color);
+    /**
+     * @brief Traite le nouveau message.
+     */
+    void handleNewMessage();
+    /**
+     * @brief Change le feu précédent.
+     * @param light le feu précédent
+     */
+    void setPreviousLight(Light*);
+
+protected:
+    Color m_state;
+    Light * m_previousLight;
 };
 
-#endif // OBSTACLE_H
+#endif // LIGHT_H

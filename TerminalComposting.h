@@ -20,22 +20,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#ifndef TERMINALCOMPOSTING_H
+#define TERMINALCOMPOSTING_H
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
-}
+#include "ThreadWithMessages.h"
 
-int main(int argc, char *argv[])
+/**
+ * @brief Représente un composteur.
+ */
+class TerminalComposting : public ThreadWithMessages
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
-}
+public:
+    /**
+     * @brief Construit un composteur.
+     */
+    TerminalComposting();
+    /**
+     * @brief Représente le comportement d'un composteur.
+     */
+    void run();
+    /**
+     * @brief Composte un ticket.
+     */
+    void punchTicket();
+    /**
+     * @brief TODO
+     */
+    int id;
+private:
+    void handleNewMessage();
+    static int globalId;
+};
+
+#endif // TERMINALCOMPOSTING_H

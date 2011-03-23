@@ -20,22 +20,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#ifndef STATIONLIGHT_H
+#define STATIONLIGHT_H
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
-}
-
-int main(int argc, char *argv[])
+#include "Light.h"
+#include "Station.h"
+class Station;
+/**
+ * @brief Représente un feu station.
+ */
+class StationLight : public Light
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
-}
+public:
+    /**
+     * @brief Construit un feu station.
+     */
+    StationLight();
+    /**
+     * @brief Ajoute la station de rattachement du feu.
+     * @param la station de rattachement
+     */
+    void addStation(Station*);
+    /**
+     * @brief Représente un tour de timer.
+     */
+    void tick(){}
+    /**
+     * @brief Traite le nouveau message.
+     */
+    void handleNewMessage();
+    /**
+     * @brief Change le couleur du stage.
+     * @param la nouvelle couleur du feu
+     */
+    void setColor(Color);
+private:
+    Station* m_station;
+    bool m_free;
+};
+
+#endif // STATIONLIGHT_H

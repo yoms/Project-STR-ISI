@@ -1,7 +1,29 @@
+/*
+ *   Copyright 2011 by Alexandre Mendes <alex.mendes1988@gmail.com>
+ *   Copyright 2011 by Bertrand Pages <pages.bertrand@gmail.com>
+ *   Copyright 2011 by Guillaume Hormiere <hormiere.guillaume@gmail.com>
+ *   Copyright 2011 by Nicolas Noullet <nicolas.noullet@gmail.com>
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU Library General Public License as
+ *   published by the Free Software Foundation; either version 2, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details
+ *
+ *   You should have received a copy of the GNU Library General Public
+ *   License along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include "Tram.h"
-#include "Trajet.h"
+#include "Trip.h"
 #include "Message.h"
-#include "Composteur.h"
+#include "TerminalComposting.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -14,53 +36,53 @@
 #include <signal.h>
 #include <time.h>
 
-Tram::Tram():Drawable(),ThreadMessage()
+Tram::Tram():Drawable(),ThreadWithMessages()
 {
     m_obstacle = NULL;
-    m_etat = Tram::Acceleration;
+    m_state = Tram::Acceleration;
     m_nbTick = 0;
-    m_vitesse = VITESSE_MIN;
+    m_velocity = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
-   // m_composteurList.append(new Composteur); // TODO penser à détruire
+//    m_composteurList.append(new TerminalComposting); // TODO penser à détruire
 }
 void Tram::run()
 {
     for(;;)
     {
         pthread_mutex_lock(&m_mutex);
-        detectionObstacle();
-        if(m_nbTick == m_vitesse-1)
+        obstacleTracking();
+        if(m_nbTick == m_velocity-1)
         {
-            this->m_nbTick = ++m_nbTick%m_vitesse;
-            switch(m_etat)
+            this->m_nbTick = ++m_nbTick%m_velocity;
+            switch(m_state)
             {
             case Tram::Acceleration:
                 {
                     speedUp();
-                    avancer();
+                    move();
                 }
                 break;
             case Tram::Desceleration:
                 {
                     slowDown();
                     if(m_obstacle != NULL)
-                        if(m_obstacle->lieu() == m_trajet->next(m_coordonnee))
-                            m_etat = Tram::Arret;
+                        if(m_obstacle->place() == m_trip->next(m_coordinate))
+                            m_state = Tram::Off;
                     else
-                        avancer();
+                        move();
                 }
                 break;
-            case Tram::Marche:
+            case Tram::On:
                 {
-                    avancer();
+                    move();
                 }
                 break;
-            case Tram::Arret:
+            case Tram::Off:
                 {
-                    m_vitesse = VITESSE_MIN;
+                    m_velocity = VITESSE_MIN;
                     if(m_obstacle != NULL){
                         qDebug() << m_obstacle->className();
-                        if(m_obstacle->className() == "FeuPassage"){
+                        if(m_obstacle->className() == "FeuCross"){
                             sleep(2);
                             this->closeDoors();
                         }
@@ -72,39 +94,39 @@ void Tram::run()
         }
     }
 }
-void Tram::detectionObstacle()
+void Tram::obstacleTracking()
 {
     Obstacle* o;
-    if((o = m_trajet->obstacleExist(this->m_coordonnee)) != NULL)
+    if((o = m_trip->obstacleExist(this->m_coordinate)) != NULL)
     {
         m_obstacle = o;
-        m_obstacle->addMessage(new Message(this,Message::Demande));
+        m_obstacle->addMessage(new Message(this,Message::Request));
     }
     else if(m_obstacle != NULL)
     {
-        qDebug() << m_obstacle->nom();
-        m_obstacle->addMessage(new Message(this,Message::EstPasse));
+        qDebug() << m_obstacle->name();
+        m_obstacle->addMessage(new Message(this,Message::IsCrossed));
         m_obstacle = NULL;
     }
 
 }
 
-void Tram::avancer()
+void Tram::move()
 {
-    if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
-                                this->m_trajet = this->m_trajet->retour();
-    this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
+    if(this->m_trip->next(this->m_coordinate) == m_coordinate)
+                                this->m_trip = this->m_trip->forward();
+    this->m_coordinate = this->m_trip->next(this->m_coordinate);
 }
 
-void Tram::setTrajet(Trajet *t)
+void Tram::setTrip(Trip *t)
 {
-    this->m_trajet=t;
-    this->m_coordonnee = this->m_trajet->trajet().first();
+    this->m_trip=t;
+    this->m_coordinate = this->m_trip->trip().first();
 }
 
 void Tram::tick()
 {
-   this->m_nbTick = ++m_nbTick%m_vitesse;
+   this->m_nbTick = ++m_nbTick%m_velocity;
    pthread_mutex_unlock(&m_mutex);
 }
 
@@ -113,11 +135,11 @@ void Tram::draw(QPainter *painter)
     painter->save();
     painter->setPen(Qt::red);
     painter->setBrush(QBrush(Qt::red));
-    QPoint buff = this->m_coordonnee;
+    QPoint buff = this->m_coordinate;
     for(int i = 0; i < SIZE; i++)
     {
         drawElemScen(painter, buff.x(), buff.y(), SIZE_TRAM);
-        buff = this->m_trajet->previous(buff);
+        buff = this->m_trip->previous(buff);
     }
 
     painter->setPen(Qt::darkGray);
@@ -125,30 +147,20 @@ void Tram::draw(QPainter *painter)
     painter->restore();
 }
 
-void Tram::stop()
-{
-
-}
-
 void Tram::speedUp()
 {
-    if(m_vitesse < VITESSE_MAX)
-        m_etat = Tram::Marche;
+    if(m_velocity < VITESSE_MAX)
+        m_state = Tram::On;
     else
-        m_vitesse -= ACCELERATION;
+        m_velocity -= ACCELERATION;
 }
 
 void Tram::slowDown()
 {
-    if(m_vitesse > VITESSE_MIN)
-        m_etat = Tram::Arret;
+    if(m_velocity > VITESSE_MIN)
+        m_state = Tram::Off;
     else
-        m_vitesse += ACCELERATION;
-}
-
-void Tram::turnAround()
-{
-
+        m_velocity += ACCELERATION;
 }
 
 void Tram::openDoors()
@@ -163,21 +175,21 @@ void Tram::closeDoors()
         m_obstacle->addMessage(m);
     }
 }
-void Tram::newMessage()
+void Tram::handleNewMessage()
 {
     if(!m_messageList.isEmpty())
     {
         Message *m = m_messageList.takeFirst();
         switch(m->type())
         {
-        case Message::Arret:
+        case Message::Stop:
             {
-                m_etat = Tram::Desceleration;
+                m_state = Tram::Desceleration;
             }
             break;
-        case Message::Passage:
+        case Message::Cross:
             {
-                m_etat = Tram::Acceleration;
+                m_state = Tram::Acceleration;
             }
             break;
         }

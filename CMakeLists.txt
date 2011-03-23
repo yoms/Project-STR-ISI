@@ -32,24 +32,19 @@ set(project_SRCS
     TramWindow.cpp
     TramPropertiesWidget.cpp
     Tram.cpp
-    Trajet.cpp
+    Trip.cpp
     Drawable.cpp
-    Porte.cpp
-    Traction.cpp
-    Borne.cpp
-    Composteur.cpp
-    BorneAchat.cpp
-    Feu.cpp
-    FeuStation.cpp
+    Door.cpp
+    TerminalComposting.cpp
+    TerminalPurchasing.cpp
+    Light.cpp
+    StationLight.cpp
     Station.cpp
     Obstacle.cpp
-    Personne.cpp
-    Chauffeur.cpp
+    Person.cpp
     Thread.cpp
-    ThreadMessage.cpp
-    Carte.cpp
-    Stepable.cpp
-    ArretUrgence.cpp
+    ThreadWithMessages.cpp
+    EmergencyStop.cpp
     Timer.cpp
     ObstacleWidget.cpp
     Message.cpp

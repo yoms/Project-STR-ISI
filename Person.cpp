@@ -20,22 +20,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include "Person.h"
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
+Person::Person()
+{
 }
 
-int main(int argc, char *argv[])
+void run()
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
+
+}
+void Person::buyTicket()
+{
+}
+
+void Person::punchTicket()
+{
+}
+
+void Person::getOnTheTram()
+{
+}
+
+void Person::getOffTheTram()
+{
+}
+
+void Person::waitInStation()
+{
+}
+
+void Person::waitInTram()
+{
+}
+
+void vtriggerEmergencyStop()
+{
 }

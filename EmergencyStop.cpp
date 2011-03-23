@@ -20,22 +20,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include "EmergencyStop.h"
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
-}
-
-int main(int argc, char *argv[])
+EmergencyStop::EmergencyStop()
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
 }

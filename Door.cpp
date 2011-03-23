@@ -20,22 +20,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include "Door.h"
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
+Door::Door()
+{
 }
 
-int main(int argc, char *argv[])
-{
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
+void Door::open() {
+    this->m_state = Door::Open;
+}
+
+void Door::close() {
+    this->m_state = Door::Closed;
+}
+
+Door::State Door::state(){
+    return this->m_state;
 }

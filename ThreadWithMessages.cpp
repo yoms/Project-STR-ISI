@@ -20,22 +20,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#include "ThreadWithMessages.h"
+#include <QDebug>
+#define THREAD_SIGNAL SIGUSR1
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
+Thread* getThreadPointer(pthread_t p);
+
+ThreadWithMessages::ThreadWithMessages()
+{
+    pthread_mutex_init(&m_mutex,NULL);
+    sigemptyset(&this->m_signalAction.sa_mask);
+    this->m_signalAction.sa_flags = SA_SIGINFO;
+    this->m_signalAction.sa_sigaction = ThreadWithMessages::_newmessage;
+
+    if (sigaction(THREAD_SIGNAL, &this->m_signalAction, NULL))
+    {
+        qDebug() << "impossible de creer le handle";
+    }
 }
 
-int main(int argc, char *argv[])
+
+void ThreadWithMessages::addMessage(Message* m)
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
+    pthread_mutex_lock(&m_mutex);
+    m_messageList << m;
+    pthread_mutex_unlock(&m_mutex);
+    pthread_kill(this->threadid(), THREAD_SIGNAL);
+}
+
+void ThreadWithMessages::removeMessage(){
+    if(!m_messageList.isEmpty())
+        m_messageList.removeFirst();
+}
+void ThreadWithMessages::_newmessage(int sigNumb, siginfo_t *si, void *uc)
+{
+    ThreadWithMessages* t = (ThreadWithMessages*)getThreadPointer(pthread_self());
+    t->handleNewMessage();
+
 }

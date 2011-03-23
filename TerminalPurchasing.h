@@ -20,22 +20,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#ifndef TERMINALPURCHASING_H
+#define TERMINALPURCHASING_H
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
-}
-
-int main(int argc, char *argv[])
+/**
+ * @brief Représente une borne d'achat.
+ */
+class TerminalPurchasing
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
-}
+public:
+    /**
+     * @brief Représente une borne d'achat.
+     */
+    TerminalPurchasing();
+    /**
+     * @brief Représente une borne d'achat.
+     * @return vrai si le ticket est donné et faux sinon
+     */
+    bool giveTicket();
+};
+
+#endif // TERMINALPURCHASING_H

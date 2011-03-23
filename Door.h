@@ -20,22 +20,42 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramWindow.h"
-#include <QtGui/QApplication>
-#include <QtCore/QTextCodec>
+#ifndef DOOR_H
+#define DOOR_H
 
-extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
-}
-
-int main(int argc, char *argv[])
+/**
+ * @brief La porte d'un tram.
+ */
+class Door
 {
-//    adainit();
-    QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
-    TramWindow w;
-    w.show();
-//    adafinal();
-    return a.exec();
-}
+public:
+    /**
+     * @brief Etat de la porte.
+     */
+    enum State {
+        Open = 0,
+        Closed,
+        Blocked
+    };
+    /**
+     * @brief Construit une porte.
+     */
+    Door();
+    /**
+     * @brief Ouvre la porte.
+     */
+    void open();
+    /**
+     * @brief Ferme la porte.
+     */
+    void close();
+    /**
+     * @brief Retourne l'état de la porte.
+     * @return l'état de la porte
+     */
+    State state();
+private:
+    State m_state;
+};
+
+#endif // DOOR_H
