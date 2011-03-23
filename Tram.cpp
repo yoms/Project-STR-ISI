@@ -40,7 +40,10 @@ void Tram::run()
             case Tram::Desceleration:
                 {
                     slowDown();
-                    avancer();
+                    if(m_obstacle->lieu() == m_trajet->next(m_coordonnee))
+                        m_etat = Tram::Arret;
+                    else
+                        avancer();
                 }
                 break;
             case Tram::Marche:
@@ -63,21 +66,20 @@ void Tram::detectionObstacle()
     Obstacle* o;
     if((o = m_trajet->obstacleExist(this->m_coordonnee)) != NULL)
     {
-        o->addMessage(new Message(this,Message::Demande));
-        m_obstacles << o;
+        m_obstacle = o;
+        m_obstacle->addMessage(new Message(this,Message::Demande));
+    }
+    else if(m_obstacle != NULL)
+    {
+        qDebug() << m_obstacle->nom();
+        m_obstacle->addMessage(new Message(this,Message::EstPasse));
+        m_obstacle = NULL;
     }
 
 }
 
 void Tram::avancer()
 {
-    for(int i = 0; i < m_obstacles.size(); i++)
-    {
-       if(m_obstacles[i]->lieu() == this->m_trajet->next(this->m_coordonnee))
-        {
-           m_etat = Tram::Arret;
-        }
-   }
     if(this->m_trajet->next(this->m_coordonnee) == m_coordonnee)
                                 this->m_trajet = this->m_trajet->retour();
     this->m_coordonnee = this->m_trajet->next(this->m_coordonnee);
@@ -161,9 +163,6 @@ void Tram::newMessage()
             break;
         case Message::Passage:
             {
-
-                m->sender()->addMessage(new Message(this,Message::EstPasse));
-                qDebug()<< "martine";
                 m_etat = Tram::Acceleration;
             }
             break;

@@ -51,7 +51,7 @@ private:
     int m_vitesse;
     pthread_mutex_t m_mutex;
     Etat m_etat;
-    QList<Obstacle*> m_obstacles;
+    Obstacle* m_obstacle;
 };
 
 #endif // TRAM_H

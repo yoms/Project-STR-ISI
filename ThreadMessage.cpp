@@ -6,12 +6,6 @@ Thread* getThreadPointer(pthread_t p);
 
 ThreadMessage::ThreadMessage()
 {
-    qDebug() << this;
-    this->m_timerSpecs.it_value.tv_sec = 0;
-    this->m_timerSpecs.it_value.tv_nsec = 0;
-    this->m_timerSpecs.it_interval.tv_sec = 0;
-    this->m_timerSpecs.it_interval.tv_nsec = 0;
-
     pthread_mutex_init(&m_mutex,NULL);
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
