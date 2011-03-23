@@ -1,11 +1,7 @@
 #include "FeuStation.h"
 
-FeuStation::FeuStation():m_free(false)
+FeuStation::FeuStation():m_free(true)
 {
-}
-
-bool FeuStation::indiquerPassage() {
-    return this->m_station->indiquerPassage();
 }
 
 void FeuStation::addStation(Station* s){
