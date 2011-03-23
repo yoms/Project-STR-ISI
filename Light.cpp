@@ -81,7 +81,6 @@ void Light::handleNewMessage()
             break;
             case Message::IsCrossed:
             {
-                sleep(1);
                 m_state = Light::Red;
                 if(m_previousLight != NULL) {
                     Message * m1 = new Message(this, Message::IsFree);
