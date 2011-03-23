@@ -22,6 +22,7 @@ public:
     explicit TramWindow(QWidget *parent = 0);
     virtual ~TramWindow();
     void setupTrajet();
+    void setupTrajet2();
     void setupDrawingWidget();
 
 private:

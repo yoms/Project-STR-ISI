@@ -18,15 +18,7 @@ TramWindow::TramWindow(QWidget *parent) :
     m_timer = new Timer(0,20);
     ui->setupUi(this);
 
-    setupTrajet();
-    Tram * tram = new Tram;
-    m_tramList << tram;
-    tram->setTrajet(m_trajetList[0]);
-    tram->start();
-    Tram * tram2 = new Tram;
-    m_tramList << tram2;
-    tram2->setTrajet(m_trajetList[2 ]);
-    tram2->start();
+    setupTrajet2();
     setupDrawingWidget();
     for(int i = 0; i < m_tramList.size(); i++)
         m_timer->addListener(m_tramList[i]);
@@ -325,4 +317,70 @@ void TramWindow::setupTrajet()
     foreach(Trajet* t , m_trajetList)
         m_trajetList << t;
 
+    Tram * tram = new Tram;
+    m_tramList << tram;
+    tram->setTrajet(m_trajetList[0]);
+    tram->start();
+    Tram * tram2 = new Tram;
+    m_tramList << tram2;
+    tram2->setTrajet(m_trajetList[2 ]);
+    tram2->start();
+}
+void TramWindow::setupTrajet2()
+{
+    QList<QPoint> tra, traret;
+    QPoint last(25,250);
+    Station* s1 = new Station(Station::NonTerminus);
+    s1->setCoordonnee(last + QPoint(0,-5));
+    s1->setNom("bas droite");
+    m_stationList << s1;
+    for(double i = 0; i < 250; i++)
+    {
+        tra << QPoint(last.x()+i, last.y());
+        traret.prepend(tra.last()+QPoint(0,32));
+    }
+
+    last = tra.last();
+    for(double i = 1; i < 30; i++)
+    {
+        tra << QPoint(last.x(), last.y()+i);
+        traret.append(last+QPoint(-250,31-i));
+    }
+
+    Trajet* traj = new Trajet;
+    traj->setTrajet(tra);
+    traj->setObstacle(m_obstacleList);
+    m_trajetList << traj;
+    Trajet* trajret = new Trajet;
+    trajret->setTrajet(traret);
+    trajret->setObstacle(m_obstacleList);
+    m_trajetList << trajret;
+    traj->setRetour(trajret);
+    trajret->setRetour(traj);
+
+    Tram * tram = new Tram;
+    m_tramList << tram;
+    tram->setTrajet(m_trajetList.first());
+    tram->start();
+
+//    Tram * tram2 = new Tram;
+//    m_tramList << tram2;
+//    tram2->setTrajet(m_trajetList[0]);
+//    tram2->start();
+//    Tram * tram3 = new Tram;
+//    m_tramList << tram3;
+//    tram3->setTrajet(m_trajetList[0]);
+//    tram3->start();
+//    Tram * tram4 = new Tram;
+//    m_tramList << tram4;
+//    tram4->setTrajet(m_trajetList[1]);
+//    tram4->start();
+//    Tram * tram5 = new Tram;
+//    m_tramList << tram5;
+//    tram5->setTrajet(m_trajetList[1]);
+//    tram5->start();
+//    Tram * tram6 = new Tram;
+//    m_tramList << tram6;
+//    tram6->setTrajet(m_trajetList[1]);
+//    tram6->start();
 }

@@ -15,6 +15,7 @@
 
 Tram::Tram():Drawable(),ThreadMessage()
 {
+    m_obstacle = NULL;
     m_etat = Tram::Acceleration;
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
