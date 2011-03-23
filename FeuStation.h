@@ -8,7 +8,6 @@ class FeuStation : public Feu
 {
 public:
     FeuStation();
-    bool indiquerPassage();
     void addStation(Station*);
     void tick(){}
     void newMessage();
