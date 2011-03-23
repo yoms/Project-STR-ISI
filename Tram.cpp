@@ -43,8 +43,9 @@ void Tram::run()
             case Tram::Desceleration:
                 {
                     slowDown();
-                    if(m_obstacle->lieu() == m_trajet->next(m_coordonnee))
-                        m_etat = Tram::Arret;
+                    if(m_obstacle != NULL)
+                        if(m_obstacle->lieu() == m_trajet->next(m_coordonnee))
+                            m_etat = Tram::Arret;
                     else
                         avancer();
                 }

@@ -10,6 +10,7 @@ class Trajet : public Drawable
     QList<QPoint> m_trajet;
     QList<Obstacle*> m_obstacle;
     Trajet* m_trajetRetour;
+    pthread_mutex_t m_mutex;
 public:
     Trajet();
     ~Trajet(){}

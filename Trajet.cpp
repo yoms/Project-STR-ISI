@@ -4,6 +4,7 @@
 #define DISTANCE_VISION 10
 Trajet::Trajet()
 {
+    pthread_mutex_init(&m_mutex,NULL);
 }
 void Trajet::draw(QPainter * painter)
 {
@@ -33,17 +34,24 @@ void Trajet::setTrajet(QList<QPoint> & lp)
 }
 Obstacle* Trajet::obstacleExist(QPoint monEmplacement)
 {
+
+    pthread_mutex_lock(&m_mutex);
     foreach(Obstacle* o, m_obstacle)
     {
         for(int i = 0; i < DISTANCE_VISION; i++)
         {
+
             int indexof = m_trajet.indexOf(monEmplacement)+i < m_trajet.size()
                                 ? m_trajet.indexOf(monEmplacement)+i
                                 : m_trajet.indexOf(monEmplacement);
             if(o->lieu() == m_trajet[indexof])
+            {
+                pthread_mutex_unlock(&m_mutex);
                 return o;
+            }
         }
     }
+    pthread_mutex_unlock(&m_mutex);
     return NULL;
 }
 

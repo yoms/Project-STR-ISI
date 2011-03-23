@@ -349,17 +349,112 @@ void TramWindow::setupTrajet2()
     m_stationList.last()->setCoordonnee(last + QPoint(0,-7));
     m_stationList.last()->setNom("bas droite");
 
+    FeuStation* feustation = new FeuStation;
+    FeuStation* feustation2 = new FeuStation;
+
+    feustation->setCoordonnee(last+QPoint(5,5));
+    feustation->setLieu(last);
+    feustation->setNom("FeuS4");
+    feustation->addStation(m_stationList.last());
+    m_stationList.last()->addFeuStation(feustation);
+    m_obstacleList << feustation;
+    feustation->start();
+
+
     for(double i = 0; i < 250; i++)
     {
         tra << QPoint(last.x()+i, last.y());
         traret.prepend(tra.last()+QPoint(0,32));
     }
-
     last = tra.last();
+    QPoint lastret = traret.last();
+
+    Feu * feu = new Feu;
+    feu->setCoordonnee(last+QPoint(-200,5));
+    m_obstacleList << feu;
+    feu->setLieu(last+QPoint(-200,0));
+    feu->setNom("F1");
+    feu->setEtat(Feu::PASSAGE);
+    feu->setSyncLight(feustation);
+    feu->start();
+
+    Feu * feuret = new Feu;
+    feuret->setCoordonnee(lastret+QPoint(200,5));
+    m_obstacleList << feuret;
+    feuret->setLieu(lastret+QPoint(200,0));
+    feuret->setNom("F1");
+    feuret->setEtat(Feu::PASSAGE);
+    feuret->setSyncLight(feustation2);
+    feuret->start();
+
+    Feu * feu1 = new Feu;
+    feu1->setCoordonnee(last+QPoint(-150,5));
+    m_obstacleList << feu1;
+    feu1->setLieu(last+QPoint(-150,0));
+    feu1->setNom("F2");
+    feu1->setEtat(Feu::PASSAGE);
+    feu1->setSyncLight(feu);
+    feu1->start();
+
+    Feu * feuret1 = new Feu;
+    feuret1->setCoordonnee(lastret+QPoint(150,5));
+    m_obstacleList << feuret1;
+    feuret1->setLieu(lastret+QPoint(150,0));
+    feuret1->setNom("F1");
+    feuret1->setEtat(Feu::PASSAGE);
+    feuret1->setSyncLight(feuret);
+    feuret1->start();
+
+    Feu * feu2 = new Feu;
+    feu2->setCoordonnee(last+QPoint(-100,5));
+    m_obstacleList << feu2;
+    feu2->setLieu(last+QPoint(-100,0));
+    feu2->setNom("F3");
+    feu2->setEtat(Feu::PASSAGE);
+    feu2->setSyncLight(feu1);
+    feu2->start();
+
+    Feu * feuret2 = new Feu;
+    feuret2->setCoordonnee(lastret+QPoint(100,5));
+    m_obstacleList << feuret2;
+    feuret2->setLieu(lastret+QPoint(100,0));
+    feuret2->setNom("F1");
+    feuret2->setEtat(Feu::PASSAGE);
+    feuret2->setSyncLight(feuret1);
+    feuret2->start();
+
+
+    Feu * feu3 = new Feu;
+    feu3->setCoordonnee(last+QPoint(-50,5));
+    m_obstacleList << feu3;
+    feu3->setLieu(last+QPoint(-50,0));
+    feu3->setNom("F3");
+    feu3->setEtat(Feu::PASSAGE);
+    feu3->setSyncLight(feu2);
+    feu3->start();
+
+    Feu * feuret3 = new Feu;
+    feuret3->setCoordonnee(lastret+QPoint(50,5));
+    m_obstacleList << feuret3;
+    feuret3->setLieu(lastret+QPoint(50,0));
+    feuret3->setNom("F1");
+    feuret3->setEtat(Feu::PASSAGE);
+    feuret3->setSyncLight(feuret2);
+    feuret3->start();
+    feustation->setSyncLight(feuret3);
 
     m_stationList << new Station(Station::NonTerminus);
     m_stationList.last()->setCoordonnee(last + QPoint(0,-7));
     m_stationList.last()->setNom("bas droite");
+
+    feustation2->setCoordonnee(last+QPoint(-5,5));
+    feustation2->setLieu(last);
+    feustation2->setNom("FeuS3");
+    feustation2->setSyncLight(feu3);
+    feustation2->addStation(m_stationList.last());
+    m_stationList.last()->addFeuStation(feustation2);
+    m_obstacleList << feustation2;
+    feustation2->start();
 
     for(double i = 1; i < 30; i++)
     {
@@ -383,14 +478,15 @@ void TramWindow::setupTrajet2()
     tram->setTrajet(m_trajetList.first());
     tram->start();
 
-//    Tram * tram2 = new Tram;
-//    m_tramList << tram2;
-//    tram2->setTrajet(m_trajetList[0]);
-//    tram2->start();
-//    Tram * tram3 = new Tram;
-//    m_tramList << tram3;
-//    tram3->setTrajet(m_trajetList[0]);
-//    tram3->start();
+    Tram * tram2 = new Tram;
+    m_tramList << tram2;
+    tram2->setTrajet(m_trajetList.last());
+    tram2->start();
+    Tram * tram3 = new Tram;
+    m_tramList << tram3;
+    tram3->setTrajet(m_trajetList.first());
+    tram3->setCoordonnee(QPoint(80,250));
+    tram3->start();
 //    Tram * tram4 = new Tram;
 //    m_tramList << tram4;
 //    tram4->setTrajet(m_trajetList[1]);
