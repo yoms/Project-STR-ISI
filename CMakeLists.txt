@@ -74,11 +74,13 @@ set( ada_SRCS
 api
 borneachat
 composteur
+gestioncomposteur
 )
 set( staticada_LIBS
 staticapi
 staticborneachat
 staticcomposteur
+staticgestioncomposteur
 )
 
 ADA_COMPILE_LINK( ${ada_SRCS})

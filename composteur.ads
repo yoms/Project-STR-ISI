@@ -1,9 +1,14 @@
-with Interfaces.C; use Interfaces; 
+package composteur is
 
-package Composteur is 
-	procedure punchTicket;
-	pragma Export
-	(Convention    => CPP,
-	 Entity        => punchTicket,
-	 External_Name => "adaPunchTicket");
-end Composteur; 
+   task type ComposteurTask is
+      entry punch;
+   end ComposteurTask;
+
+   type ComposteurTaskAccess is access ComposteurTask;
+
+   type ComposteurObject is
+      record
+         tache:ComposteurTaskAccess;
+      end record;
+
+end composteur;

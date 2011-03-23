@@ -1,11 +1,14 @@
-with Interfaces;
+with Text_IO;  use Text_IO;
 
-package body Composteur is 
-
-	procedure punchTicket is
-			a : integer;
-	begin
-		a:=2;
-	end punchTicket;
-
-end Composteur; 
+package body composteur is
+   task body ComposteurTask is
+   begin
+      Put_line("start composteur");
+      loop
+         accept punch
+         do
+            Put_line("punching ticket");
+         end;
+      end loop;
+   end ComposteurTask;
+end composteur;
