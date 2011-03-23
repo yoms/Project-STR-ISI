@@ -482,15 +482,25 @@ void TramWindow::setupTrajet2()
     m_tramList << tram2;
     tram2->setTrajet(m_trajetList.last());
     tram2->start();
+
     Tram * tram3 = new Tram;
     m_tramList << tram3;
     tram3->setTrajet(m_trajetList.first());
     tram3->setCoordonnee(QPoint(80,250));
     tram3->start();
-//    Tram * tram4 = new Tram;
-//    m_tramList << tram4;
-//    tram4->setTrajet(m_trajetList[1]);
-//    tram4->start();
+
+    Tram * tram4 = new Tram;
+    m_tramList << tram4;
+    tram4->setTrajet(m_trajetList.last());
+    tram4->setCoordonnee(QPoint(80,282));
+    tram4->start();
+
+    Tram * tram5 = new Tram;
+    m_tramList << tram5;
+    tram5->setTrajet(m_trajetList.last());
+    tram5->setCoordonnee(QPoint(151,282));
+    tram5->start();
+
 //    Tram * tram5 = new Tram;
 //    m_tramList << tram5;
 //    tram5->setTrajet(m_trajetList[1]);
