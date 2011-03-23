@@ -59,5 +59,5 @@ void Timer::_alarmFunction(int sigNumb, siginfo_t *si, void *uc)
 }
 Timer::~Timer()
 {
-
+    m_listenerList.clear();
 }

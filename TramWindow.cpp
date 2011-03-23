@@ -344,10 +344,11 @@ void TramWindow::setupTrajet2()
 {
     QList<QPoint> tra, traret;
     QPoint last(25,250);
-    Station* s1 = new Station(Station::NonTerminus);
-    s1->setCoordonnee(last + QPoint(0,-5));
-    s1->setNom("bas droite");
-    m_stationList << s1;
+
+    m_stationList << new Station(Station::NonTerminus);
+    m_stationList.last()->setCoordonnee(last + QPoint(0,-7));
+    m_stationList.last()->setNom("bas droite");
+
     for(double i = 0; i < 250; i++)
     {
         tra << QPoint(last.x()+i, last.y());
@@ -355,6 +356,11 @@ void TramWindow::setupTrajet2()
     }
 
     last = tra.last();
+
+    m_stationList << new Station(Station::NonTerminus);
+    m_stationList.last()->setCoordonnee(last + QPoint(0,-7));
+    m_stationList.last()->setNom("bas droite");
+
     for(double i = 1; i < 30; i++)
     {
         tra << QPoint(last.x(), last.y()+i);
