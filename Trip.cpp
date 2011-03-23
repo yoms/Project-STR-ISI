@@ -23,7 +23,6 @@
 #include "Trip.h"
 #include <QPainter>
 #define SIZE_POINT_TRAJET 2
-#define DISTANCE_VISION 10
 Trip::Trip()
 {
     pthread_mutex_init(&m_mutex,NULL);
@@ -38,7 +37,6 @@ void Trip::draw(QPainter * painter)
     {
         drawElemScen(painter, p.x(), p.y(), SIZE_POINT_TRAJET);
     }
-
 
     painter->setPen(Qt::darkGray);
     painter->setBrush(QBrush(Qt::darkGray));
