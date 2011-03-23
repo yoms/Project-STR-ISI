@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QtCore/QTimer>
 #include <QtCore/QTime>
+#include <QList>
 #include "Drawable.h"
 #include "ThreadMessage.h"
 #include "Timer.h"
 #include "Obstacle.h"
-
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -17,6 +17,7 @@
 
 class QPainter;
 class Trajet;
+class Composteur;
 class Tram : public Drawable, public ThreadMessage, public TimerListener
 {
 public:
@@ -43,6 +44,7 @@ public:
     int vitesse(){return m_vitesse;}
     Tram::Etat etat(){return m_etat;}
     virtual QString className(){ return QString("Tram");}
+    QList<Composteur*> m_composteurList;
 private:
     void newMessage();
 private:

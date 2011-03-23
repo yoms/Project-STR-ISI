@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QDebug>
 #define SIZE_FEU 3
-Feu::Feu():m_etat(Feu::PASSAGE)
+Feu::Feu():m_etat(Feu::PASSAGE),m_syncLight(NULL)
 {
 }
 
@@ -51,16 +51,25 @@ void Feu::newMessage()
             {
                 if(m_etat == Feu::ARRET) {
                     m->sender()->addMessage(new Message(this,Message::Arret));
-                    sleep(5);
-                    m_etat = Feu::PASSAGE;
-                    m->sender()->addMessage(new Message(this, Message::Passage));
+//                    sleep(5);
+//                    m_etat = Feu::PASSAGE;
+//                    m->sender()->addMessage(new Message(this, Message::Passage));
                 }
             }
             break;
             case Message::EstPasse:
             {
-                sleep(5);
+                sleep(1);
                 m_etat = Feu::ARRET;
+                if(m_syncLight != NULL) {
+                    Message * m1 = new Message(this, Message::Libre);
+                    m_syncLight->addMessage(m1);
+                }
+            }
+            break;
+        case Message::Libre:
+            {
+                m_etat = Feu::PASSAGE;
             }
             break;
         }
@@ -83,4 +92,8 @@ void Feu::setEtat(Feu::Etat etat) {
 
 Feu::Etat Feu::etat() {
     return this->m_etat;
+}
+
+void Feu::setSyncLight(Feu * f) {
+    m_syncLight = f;
 }

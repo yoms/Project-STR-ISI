@@ -11,8 +11,11 @@ public:
     bool indiquerPassage();
     void addStation(Station*);
     void tick(){}
+    void newMessage();
+    void setEtat(Etat);
 private:
     Station* m_station;
+    bool m_free;
 };
 
 #endif // FEUSTATION_H
