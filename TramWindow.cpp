@@ -105,6 +105,7 @@ void TramWindow::setupTrajet()
         m_obstacleList << feuS1;
         feuS1->setLieu(last);
         feuS1->setNom("FeuS1");
+//        feuS1->setEtat(Feu::ARRET);
         feuS1->addStation(s1);
         s1->addFeuStation(feuS1);
         feuS1->start();
@@ -125,7 +126,8 @@ void TramWindow::setupTrajet()
     m_obstacleList << f1;
     f1->setLieu(last);
     f1->setNom("F1");
-    f1->setEtat(Feu::ARRET);
+    f1->setEtat(Feu::PASSAGE);
+    f1->setSyncLight(feuS1);
     f1->start();
 
     last = tra.last();
@@ -179,6 +181,16 @@ void TramWindow::setupTrajet()
     }
 
     last = tra.last();
+    Feu * f2 = new Feu;
+    f2->setCoordonnee(last+QPoint(0,-5));
+    m_obstacleList << f2;
+    f2->setLieu(last);
+    f2->setNom("F2");
+    f2->setEtat(Feu::PASSAGE);
+    f2->setSyncLight(f1);
+    f2->start();
+
+    last = tra.last();
     for(double i = 1; i < 50; i++)
     {
         tra << QPoint(last.x()+i, last.y());
@@ -197,6 +209,8 @@ void TramWindow::setupTrajet()
     m_obstacleList << feuS2;
     feuS2->setLieu(last);
     feuS2->setNom("FeuS2");
+    feuS2->setEtat(Feu::ARRET);
+    feuS2->setSyncLight(f2);
     feuS2->addStation(s2);
     s2->addFeuStation(feuS2);
     feuS2->start();

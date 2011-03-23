@@ -10,7 +10,7 @@ public:
 
     enum Etat {
         PASSAGE = 0,
-        ARRET,
+        ARRET
     };
     Feu();
     virtual ~Feu(){}
@@ -22,9 +22,11 @@ public:
     void tick(){}
     void setEtat(Etat);
     void newMessage();
+    void setSyncLight(Feu*);
 
 protected:
     Etat m_etat;
+    Feu * m_syncLight;
 };
 
 #endif // FEU_H
