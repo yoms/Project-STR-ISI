@@ -52,6 +52,9 @@ void Feu::newMessage()
                 if(m_etat == Feu::ARRET) {
                     m->sender()->addMessage(new Message(this,Message::Arret));
                 }
+                else if(m_etat == Feu::PASSAGE) {
+                    m->sender()->addMessage(new Message(this,Message::Passage));
+                }
             }
             break;
             case Message::EstPasse:
