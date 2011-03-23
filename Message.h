@@ -10,7 +10,8 @@ public:
         Demande,
         Arret,
         Passage,
-        EstPasse
+        EstPasse,
+        Libre
     };
     Message(ThreadMessage*, TypeMessage);
     ~Message(){}
