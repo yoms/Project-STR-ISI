@@ -8,6 +8,8 @@ class Message;
 #include <sys/wait.h>
 #include "pthread.h"
 
+// TODO renommer en ThreadWithMessages par ex, un truc plus explicite
+
 class ThreadMessage : public Thread
 {
 
@@ -17,6 +19,7 @@ public:
     void addMessage(Message*);
 protected:
     void removeMessage();
+    // TODO renommer en quelque chose de plus explicite genre handleNewMessage
     virtual void newMessage() = 0;
 private:
     static void _newmessage(int sigNumb, siginfo_t *si, void *uc);

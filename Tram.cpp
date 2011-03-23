@@ -1,6 +1,7 @@
 #include "Tram.h"
 #include "Trajet.h"
 #include "Message.h"
+#include "Composteur.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -19,6 +20,7 @@ Tram::Tram():Drawable(),ThreadMessage()
     m_nbTick = 0;
     m_vitesse = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
+    m_composteurList.append(new Composteur); // TODO penser à détruire
 }
 void Tram::run()
 {

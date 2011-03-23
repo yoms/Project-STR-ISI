@@ -6,12 +6,25 @@ extern "C" {
     extern void adaCreateComposteur(int);
 }
 
-Composteur::Composteur()
+int Composteur::globalId = 0;
+
+// TODO créer un destructeur qui appelle une fonction adaDeleteComposteur
+
+Composteur::Composteur() : ThreadMessage()
 {
-    adaCreateComposteur(0);
+    globalId ++;
+    this->id = globalId;
+    adaCreateComposteur(this->id);
+}
+
+void Composteur::run() {}
+
+void Composteur::newMessage()
+{
+
 }
 
 void Composteur::punchTicket()
 {
-    adaPunchTicket(0);
+    adaPunchTicket(this->id);
 }
