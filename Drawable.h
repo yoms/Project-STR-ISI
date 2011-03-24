@@ -26,7 +26,7 @@
 class QPainter;
 
 /**
- * @brief Permet d'avoir un objet graphique.
+ * @brief Représente un objet graphique.
  */
 class Drawable
 {

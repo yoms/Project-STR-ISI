@@ -48,7 +48,7 @@ class Tram : public Drawable, public ThreadWithMessages, public TimerListener
 {
 public:
     /**
-     * @brief Représente un feu station.
+     * @brief Représente les différents états d'un tram.
      */
     enum State{
         Acceleration,
