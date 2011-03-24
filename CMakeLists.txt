@@ -35,8 +35,8 @@ set(project_SRCS
     Trip.cpp
     Drawable.cpp
     Door.cpp
-    TerminalComposting.cpp
-    TerminalPurchasing.cpp
+    PunchingTerminal.cpp
+    PurchasingTerminal.cpp
     Light.cpp
     StationLight.cpp
     Station.cpp
@@ -67,15 +67,13 @@ SET(project_UIS
 
 set( ada_SRCS
 api
-borneachat
-composteur
-gestioncomposteur
+punchingmanagement
+punchingterminal
 )
 set( staticada_LIBS
 staticapi
-staticborneachat
-staticcomposteur
-staticgestioncomposteur
+staticpunchingmanagement
+staticpunchingterminal
 )
 
 ADA_COMPILE_LINK( ${ada_SRCS})

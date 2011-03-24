@@ -23,7 +23,7 @@
 #include "Tram.h"
 #include "Trip.h"
 #include "Message.h"
-#include "TerminalComposting.h"
+#include "PunchingTerminal.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -43,7 +43,7 @@ Tram::Tram():Drawable(),ThreadWithMessages()
     m_nbTick = 0;
     m_velocity = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
-//    m_composteurList.append(new TerminalComposting); // TODO penser à détruire
+//    m_punchingTerminalList.append(new PunchingTerminal); // TODO penser à détruire
 }
 void Tram::run()
 {

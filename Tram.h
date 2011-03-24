@@ -39,7 +39,7 @@
 
 class QPainter;
 class Trip;
-class Composteur;
+class PunchingTerminal;
 
 /**
  * @brief Représente un tramway.
@@ -121,7 +121,7 @@ public:
     virtual QString className(){ return QString("Tram");}
 private:
     void handleNewMessage();
-    QList<Composteur*> m_composteurList;
+    QList<PunchingTerminal*> m_punchingTerminalList;
 private:
     Trip* m_trip;
     int m_nbTick;
