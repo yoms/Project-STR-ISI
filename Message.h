@@ -59,11 +59,28 @@ public:
         /**
          * @brief Envoyé par un tram vers un feu pour signifier que les portes sont fermées.
          */
-        DoorClosed,
+        DoorsClosed,
         /**
          * @brief Envoyé par un feu vers un tram pour signifier qu'il attend un signal de porte fermées.
          */
-        WaitDoorClosed
+        WaitDoorClosed,
+        /**
+         * @brief Envoyé par un tram vers un feu station pour signifier qu'il est arrété.
+         */
+        IsStopped,
+        /**
+         * @brief Envoyé par un feu station vers un tram pour signifier qu'il ouvre ses portes.
+         */
+        OpenDoors,
+        /**
+         * @brief Envoyé par un tram vers un feu station pour signifier qu'il a ouvert ses portes.
+         */
+        DoorsOpened,
+        /**
+         * @brief Envoyé par un tram vers un feu station pour signifier qu'il va fermer ses portes.
+         */
+        DoorsClosing
+
     };
     /**
      * @brief Représente le type du message.

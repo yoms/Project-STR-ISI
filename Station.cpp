@@ -24,22 +24,18 @@
 #include <QPainter>
 #include <QDebug>
 #define SIZE_STATION 5
-Station::Station(Station::Type t):m_typeStation(t)
+Station::Station():ThreadWithMessages()
 {
+    m_persons = new Person;
+    m_persons->setContainer(this);
+    qDebug()<<"passagers "<<m_persons->nbPersonsWithoutTicket();
 }
 void Station::draw(QPainter *painter)
 {
     painter->save();
-    if(m_typeStation == Station::Terminus)
-    {
-        painter->setPen(Qt::green);
-        painter->setBrush(QBrush(Qt::green));
-    }
-    else
-    {
-        painter->setPen(Qt::yellow);
-        painter->setBrush(QBrush(Qt::yellow));
-    }
+
+    painter->setPen(Qt::yellow);
+    painter->setBrush(QBrush(Qt::yellow));
 
     drawElemScen(painter, m_coordinate.x(), m_coordinate.y(), SIZE_STATION);
 
@@ -48,9 +44,45 @@ void Station::draw(QPainter *painter)
     painter->restore();
 }
 
-
-
 void Station::addStationLight(StationLight *f)
 {
     m_stationLight = f;
+}
+
+void Station::run()
+{
+
+}
+
+void Station::handleNewMessage()
+{
+
+    while(m_messageList.size())
+    {
+        Message* m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+            case Message::DoorsOpened:
+            {
+                startGetOnTheTram();
+            }
+            break;
+            case Message::DoorsClosing:
+            {
+                stopGetOnTheTram();
+            }
+            break;
+        }
+        delete m;
+    }
+}
+
+void Station::startGetOnTheTram()
+{
+    m_persons->addMessage(new Message(this,Message::DoorsOpened));
+}
+
+void Station::stopGetOnTheTram()
+{
+    m_persons->addMessage(new Message(this,Message::DoorsClosing));
 }

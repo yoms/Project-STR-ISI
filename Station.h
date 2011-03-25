@@ -24,28 +24,22 @@
 #define STATION_H
 #include "Drawable.h"
 #include "StationLight.h"
+#include "ThreadWithMessages.h"
+#include "Timer.h"
+#include "Person.h"
 class StationLight;
+class Person;
 
 /**
  * @brief Représente une station.
  */
-class Station : public Drawable
+class Station : public Drawable, public ThreadWithMessages, public TimerListener
 {
 public:
-
-    /**
-     * @brief Indique le type de la station.
-     */
-    enum Type
-    {
-        Terminus,
-        NonTerminus
-    };
     /**
      * @brief Construit une station.
-     * @param le type de la station
      */
-    Station(Station::Type);
+    Station();
     /**
      * @brief Dessine une station.
      * @param
@@ -56,9 +50,34 @@ public:
      * @param un feu station
      */
     void addStationLight(StationLight*);
+    /**
+     * @brief Indique le nom de la classe.
+     * @return le nom de la classe
+     */
+    virtual QString className(){ return QString("Station");}
+    /**
+     * @brief Traite le nouveau message.
+     */
+    void handleNewMessage();
+    /**
+     * @brief Représente le comportement d'une station.
+     */
+    void run();
+    /**
+     * @brief Représente un tour de timer.
+     */
+    void tick(){}
+    /**
+     * @brief Demander aux passagers de rentrer dans le tram.
+     */
+    void startGetOnTheTram();
+    /**
+     * @brief Demander aux passagers de ne plus rentrer dans le tram.
+     */
+    void stopGetOnTheTram();
 private:
-    Type m_typeStation;
     StationLight* m_stationLight;
+    Person* m_persons;
 };
 
 #endif // STATION_H

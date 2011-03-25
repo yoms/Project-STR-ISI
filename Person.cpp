@@ -22,8 +22,14 @@
 
 #include "Person.h"
 
-Person::Person()
+Person::Person():ThreadWithMessages(),m_nbPersonsWithTicket(0),m_nbPersonsWithPunchedTicket(0),m_container(NULL)
 {
+    int nb = (int)threadid() % 120 + 80;
+    m_nbPersonsWithoutTicket = nb;
+}
+Person::~Person()
+{
+
 }
 
 void Person::run()
@@ -32,14 +38,21 @@ void Person::run()
 }
 void Person::buyTicket()
 {
+    m_nbPersonsWithTicket++;
+    m_nbPersonsWithoutTicket--;
+    //appel ada
 }
 
 void Person::punchTicket()
 {
+    m_nbPersonsWithPunchedTicket++;
+    m_nbPersonsWithTicket--;
+    //appel ada
 }
 
 void Person::getOnTheTram()
 {
+    // tant que le tram n'est pas plein et qu'il reste des passagers dans la station
 }
 
 void Person::getOffTheTram()
@@ -54,6 +67,28 @@ void Person::waitInTram()
 {
 }
 
-void vtriggerEmergencyStop()
+void Person::triggerEmergencyStop()
 {
+}
+
+void Person::handleNewMessage()
+{
+
+    while(m_messageList.size())
+    {
+        Message* m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+            case Message::DoorsOpened:
+            {
+            }
+            break;
+            case Message::DoorsClosed:
+            case Message::DoorsClosing:
+            {
+            }
+            break;
+        }
+        delete m;
+    }
 }

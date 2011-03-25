@@ -31,6 +31,7 @@
 #include "ThreadWithMessages.h"
 #include "Timer.h"
 #include "Obstacle.h"
+#include "Person.h"
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -40,6 +41,7 @@
 class QPainter;
 class Trip;
 class PunchingTerminal;
+class Person;
 
 /**
  * @brief Représente un tramway.
@@ -51,9 +53,21 @@ public:
      * @brief Représente les différents états d'un tram.
      */
     enum State{
+        /**
+         * @brief Le tram accélère.
+         */
         Acceleration,
+        /**
+         * @brief Le tram ralenti.
+         */
         Desceleration,
+        /**
+         * @brief Le tram est en marche.
+         */
         On,
+        /**
+         * @brief Le tram est à l'arrêt.
+         */
         Off};
     /**
      * @brief Construit un tram.
@@ -115,6 +129,10 @@ public:
      */
     Tram::State state(){return m_state;}
     /**
+     * @brief Envoie une message pour signifier qu'il est arrété.
+     */
+    void sendIsStoped();
+    /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
@@ -129,6 +147,7 @@ private:
     pthread_mutex_t m_mutex;
     State m_state;
     Obstacle* m_obstacle;
+    Person* m_persons;
 };
 
 #endif // TRAM_H

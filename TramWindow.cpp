@@ -109,7 +109,7 @@ void TramWindow::setupTrip1()
     QList<QPoint> tra, traret;
     QPoint last(25,25);
     double radius = 0.05;
-    Station* s1 = new Station(Station::NonTerminus);
+    Station* s1 = new Station();
         s1->setCoordinate(last + QPoint(0,5));
         s1->setName("haut gauche");
         m_stationList << s1;
@@ -213,7 +213,7 @@ void TramWindow::setupTrip1()
 
 
     last = tra.last();
-    Station* s2 = new Station(Station::NonTerminus);
+    Station* s2 = new Station();
         s2->setCoordinate(last + QPoint(0,5));
         s2->setName("haut droite");
         m_stationList << s2;
@@ -245,7 +245,7 @@ void TramWindow::setupTrip1()
 
     last = QPoint(25,217);
 
-    Station* s3 = new Station(Station::NonTerminus);
+    Station* s3 = new Station();
         s3->setCoordinate(last + QPoint(0,5));
         s3->setName("bas gauche");
         m_stationList << s3;
@@ -323,7 +323,7 @@ void TramWindow::setupTrip1()
 
 
     last = tra.last();
-    Station* s4 = new Station(Station::NonTerminus);
+    Station* s4 = new Station();
         s4->setCoordinate(last + QPoint(0,5));
         s4->setName("bas droite");
         m_stationList << s4;
@@ -367,7 +367,7 @@ void TramWindow::setupTrip2()
     QList<QPoint> tra, traret;
     QPoint last(25,250);
 
-    m_stationList << new Station(Station::NonTerminus);
+    m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
     m_stationList.last()->setName("bas droite");
 
@@ -464,7 +464,7 @@ void TramWindow::setupTrip2()
     feuret3->start();
     feustation->setPreviousLight(feuret3);
 
-    m_stationList << new Station(Station::NonTerminus);
+    m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
     m_stationList.last()->setName("bas droite");
 

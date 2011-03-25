@@ -22,42 +22,31 @@
 
 #ifndef PERSON_H
 #define PERSON_H
-#include "Thread.h"
-class Station;
-class Tram;
+#include "ThreadWithMessages.h"
+#include "Tram.h"
+#include "Station.h"
 
 /**
- * @brief Représente un passager.
+ * @brief Représente un groupe de passagers.
  */
-class Person : public Thread
+class Person : public ThreadWithMessages
 {
 public:
-    enum Etat{
+    enum State{
         NeedTicket,
         NeedGetOnTheTram,
         NeedGetOffTheTram
     };
+    /**
+     * @brief Construit un groupe de passagers.
+     * @param le nombre de passagers
+     */
     Person();
+
     /**
-     * @brief Indique la station.
-     * @return la station
+     * @brief Détruit un groupe de passagers.
      */
-    Station* station(){return m_station;}
-    /**
-     * @brief Change la station.
-     * @param le nouvelle station
-     */
-    void setStation(Station* s){m_station = s;}
-    /**
-     * @brief Indique le tram.
-     * @return le tram
-     */
-    Tram* tram(){return m_tram;}
-    /**
-     * @brief Change le tram.
-     * @param le nouveau tram
-     */
-    void setTram(Tram* t){m_tram = t;}
+    virtual ~Person();
     /**
      * @brief Représente le comportement d'une personne.
      */
@@ -90,10 +79,26 @@ public:
      * @brief Déclenche un arrêt d'urgence.
      */
     void triggerEmergencyStop();
+    /**
+     * @brief Traite le nouveau message.
+     */
+    void handleNewMessage();
+    /**
+     * @brief Change le conteneur. Le conteneur sera de type station ou tram.
+     * @param le nouveau conteneur
+     */
+    void setContainer(ThreadWithMessages* t){m_container = t;}
+    /**
+     * @brief Indique le nombre de personnes sans ticket.
+     * @param le nombre de personnes sans ticket
+     */
+    int nbPersonsWithoutTicket(){return m_nbPersonsWithoutTicket;}
 private:
-    Station *m_station;
-    Tram *m_tram;
-    Etat m_etat;
+    State m_state;
+    int m_nbPersonsWithoutTicket;
+    int m_nbPersonsWithTicket;
+    int m_nbPersonsWithPunchedTicket;
+    ThreadWithMessages* m_container;
 };
 
 #endif // PERSON_H

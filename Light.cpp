@@ -58,6 +58,7 @@ void Light::run()
 {
     for(;;)
     {
+        // le sleep est arrété lorsqu'un nouveau message apparait
         sleep(1);
     }
 }

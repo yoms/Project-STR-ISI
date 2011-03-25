@@ -70,7 +70,7 @@ void StationLight::handleNewMessage(){
                 }
             }
         break;
-        case Message::DoorClosed:
+        case Message::DoorsClosed:
             {
                 m_doorClosed = true;
                 if(m_free && m_doorClosed)
@@ -78,6 +78,16 @@ void StationLight::handleNewMessage(){
                     m_state = Light::Green;
                     m->sender()->addMessage(new Message(this,Message::Cross));
                 }
+            }
+        break;
+        case Message::IsStopped:
+            {
+                m->sender()->addMessage(new Message(this,Message::OpenDoors));
+            }
+        break;
+        case Message::DoorsOpened:
+            {
+                m_station->addMessage(new Message(this, Message::DoorsOpened));
             }
         break;
         }

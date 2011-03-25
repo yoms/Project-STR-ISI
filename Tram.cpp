@@ -38,6 +38,7 @@
 
 Tram::Tram():Drawable(),ThreadWithMessages()
 {
+    m_persons = new Person;
     m_obstacle = NULL;
     m_state = Tram::Acceleration;
     m_nbTick = 0;
@@ -88,6 +89,8 @@ void Tram::run()
             case Tram::Off:
                 {
                     m_velocity = VITESSE_MIN;
+                    sendIsStoped();
+                    // check this.nbPerson et
                 }
                 break;
             }
@@ -108,6 +111,15 @@ void Tram::obstacleTracking()
         m_obstacle = NULL;
     }
 
+}
+
+void Tram::sendIsStoped()
+{
+    qDebug() << "tram stopped";
+    if(m_obstacle != NULL){
+        Message* m = new Message(this,Message::IsStopped);
+        m_obstacle->addMessage(m);
+    }
 }
 
 void Tram::move()
@@ -165,17 +177,22 @@ void Tram::slowDown()
 
 void Tram::openDoors()
 {
-
+    qDebug() << "ouverture des portes";
+    if(m_obstacle != NULL){
+        Message* m = new Message(this,Message::DoorsOpened);
+        m_obstacle->addMessage(m);
+    }
 }
 
 void Tram::closeDoors()
 {
     if(m_obstacle != NULL){
         sleep(2);
-        Message* m = new Message(this,Message::DoorClosed);
+        Message* m = new Message(this,Message::DoorsClosed);
         m_obstacle->addMessage(m);
     }
 }
+
 void Tram::handleNewMessage()
 {
     while(!m_messageList.isEmpty())
@@ -201,6 +218,13 @@ void Tram::handleNewMessage()
                     this->closeDoors();
                 }
             }
+            break;
+        case Message::OpenDoors:
+            {
+                qDebug() << "ouverture des portes";
+                openDoors();
+            }
+            break;
         }
         delete m;
     }
