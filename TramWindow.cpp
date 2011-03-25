@@ -375,7 +375,7 @@ void TramWindow::setupTrip2()
     StationLight* feustation2 = new StationLight;
 
     feustation->setCoordinate(last+QPoint(5,5));
-    feustation->setPlace(last);
+    feustation->setPlace(last+QPoint(1,0));
     feustation->setName("LightS4");
     feustation->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation);
@@ -497,29 +497,34 @@ void TramWindow::setupTrip2()
     Tram * tram = new Tram;
     m_tramList << tram;
     tram->setTrip(m_trajetList.first());
+    tram->setName("Tram1");
     tram->start();
 
     Tram * tram2 = new Tram;
     m_tramList << tram2;
     tram2->setTrip(m_trajetList.last());
+    tram2->setName("Tram2");
     tram2->start();
 
     Tram * tram3 = new Tram;
     m_tramList << tram3;
     tram3->setTrip(m_trajetList.first());
     tram3->setCoordinate(QPoint(80,250));
+    tram3->setName("Tram3");
     tram3->start();
 
     Tram * tram4 = new Tram;
     m_tramList << tram4;
     tram4->setTrip(m_trajetList.last());
     tram4->setCoordinate(QPoint(80,282));
+    tram4->setName("Tram4");
     tram4->start();
 
     Tram * tram5 = new Tram;
     m_tramList << tram5;
     tram5->setTrip(m_trajetList.last());
     tram5->setCoordinate(QPoint(151,282));
+    tram5->setName("Tram5");
     tram5->start();
 
 //    Tram * tram5 = new Tram;

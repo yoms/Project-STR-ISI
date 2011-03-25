@@ -80,13 +80,12 @@ void Tram::run()
             case Tram::Off:
                 {
                     m_velocity = VITESSE_MIN;
-                    if(m_obstacle != NULL){
-                        qDebug() << m_obstacle->className();
-                        if(m_obstacle->className() == "FeuCross"){
-                            sleep(2);
-                            this->closeDoors();
-                        }
+                    qDebug() << this->name() << " : " << (m_obstacle == NULL);
+                    if(m_obstacle->className() == "StationLight"){
+                        sleep(2);
+                        this->closeDoors();
                     }
+
                 }
                 break;
 
@@ -101,11 +100,15 @@ void Tram::obstacleTracking()
     {
         m_obstacle = o;
         m_obstacle->addMessage(new Message(this,Message::Request));
+        if(this->name() == "Tram4")
+            qDebug() << this->name() << " SET : " << o->name();
     }
     else if(m_obstacle != NULL)
     {
         qDebug() << m_obstacle->name();
         m_obstacle->addMessage(new Message(this,Message::IsCrossed));
+        if(this->name() == "Tram4")
+            qDebug() << this->name() << " : " << "reset : " << m_obstacle->name();
         m_obstacle = NULL;
     }
 
