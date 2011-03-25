@@ -87,12 +87,6 @@ void Tram::run()
             case Tram::Off:
                 {
                     m_velocity = VITESSE_MIN;
-                    qDebug() << this->name() << " face a : " << m_obstacle->className();
-                    if(m_obstacle->className() == "StationLight"){
-                        sleep(2);
-                        this->closeDoors();
-                    }
-
                 }
                 break;
             }
@@ -176,6 +170,7 @@ void Tram::openDoors()
 
 void Tram::closeDoors()
 {
+    qDebug() << "fermeture des portes";
     if(m_obstacle != NULL){
         Message* m = new Message(this,Message::DoorClosed);
         m_obstacle->addMessage(m);
@@ -199,6 +194,14 @@ void Tram::handleNewMessage()
                 m_state = Tram::Acceleration;
             }
             break;
+        case Message::WaitDoorClosed:
+            {
+                qDebug() << "Waiting";
+                if(m_state == Tram::Off)
+                {
+                    this->closeDoors();
+                }
+            }
         }
         delete m;
     }

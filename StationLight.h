@@ -56,6 +56,7 @@ public:
     void setColor(Color);
 private:
     Station* m_station;
+    bool m_doorClosed;
     bool m_free;
 };
 
