@@ -21,6 +21,7 @@
  */
 
 #include "StationLight.h"
+#include <QDebug>
 
 StationLight::StationLight():m_free(true)
 {
@@ -39,6 +40,7 @@ void StationLight::handleNewMessage(){
         {
             if(m_state == Light::Red) {
                 m->sender()->addMessage(new Message(this,Message::Stop));
+                m->sender()->addMessage(new Message(this, Message::WaitDoorClosed));
             }
             if(m_state == Light::Green){
                 m->sender()->addMessage(new Message(this,Message::Cross));
@@ -48,8 +50,10 @@ void StationLight::handleNewMessage(){
         case Message::IsCrossed:
         {
             sleep(1);
+            qDebug() << this->name() << " isCrossed";
             m_state = Light::Red;
             m_free = false;
+            m_doorClosed = false;
             if(m_previousLight != NULL) {
                 Message * m1 = new Message(this, Message::IsFree);
                 m_previousLight->addMessage(m1);
@@ -57,19 +61,27 @@ void StationLight::handleNewMessage(){
         }
         break;
         case Message::IsFree:
-        case Message::DoorClosed:
             {
-                if(m_free){
+                m_free = true;
+                if(m_doorClosed && m_free)
+                {
                     m_state = Light::Green;
                     m->sender()->addMessage(new Message(this,Message::Cross));
                 }
-                else
+            }
+        break;
+        case Message::DoorClosed:
+            {
+                m_doorClosed = true;
+                if(m_free && m_doorClosed)
                 {
-                    m_free = true;
+                    m_state = Light::Green;
+                    m->sender()->addMessage(new Message(this,Message::Cross));
                 }
             }
-            break;
+        break;
         }
+        delete m;
     }
 }
 
@@ -78,5 +90,6 @@ void StationLight::setColor(Light::Color etat) {
     if(etat == Light::Red)
     {
         m_free = false;
+        m_doorClosed = false;
     }
 }

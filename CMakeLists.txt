@@ -48,6 +48,9 @@ set(project_SRCS
     Timer.cpp
     ObstacleWidget.cpp
     Message.cpp
+    SectionLight.cpp
+    IndoorSectionLight.cpp
+    OutdoorSectionLight.cpp
 )
 
 SET(project_MOC_HDRS

@@ -94,6 +94,7 @@ void Light::handleNewMessage()
             }
             break;
         }
+        delete m;
     }
 }
 

@@ -20,41 +20,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "TramPropertiesWidget.h"
-#include "ui_trampropertieswidget.h"
-#include "Tram.h"
-TramPropertiesWidget::TramPropertiesWidget(Tram* t, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TramPropertiesWidget)
+#include "IndoorSectionLight.h"
+
+IndoorSectionLight::IndoorSectionLight()
 {
-    ui->setupUi(this);
-    m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTramInformation()));
-    m_timer->start(50);
-    m_tram = t;
 }
 
-TramPropertiesWidget::~TramPropertiesWidget()
+IndoorSectionLight::~IndoorSectionLight()
 {
-    delete ui;
-}
-
-void TramPropertiesWidget::updateTramInformation()
-{
-    this->ui->m_velocity->setText(QString::number(m_tram->velocity()));
-    switch(m_tram->state())
-    {
-    case Tram::On:
-        this->ui->m_state->setText("Marche");
-        break;
-    case Tram::Off:
-        this->ui->m_state->setText("Arret");
-        break;
-    case Tram::Acceleration:
-        this->ui->m_state->setText("Acceleration");
-        break;
-    case Tram::Desceleration:
-        this->ui->m_state->setText("Desceleration");
-        break;
-    }
 }
