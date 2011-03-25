@@ -28,7 +28,7 @@
 #include <sys/wait.h>
 
 /**
- * @brief Représente un un écouteur.
+ * @brief Représente un écouteur.
  */
 class TimerListener
 {

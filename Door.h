@@ -24,7 +24,7 @@
 #define DOOR_H
 
 /**
- * @brief La porte d'un tram.
+ * @brief Représente la porte d'un tram.
  */
 class Door
 {
