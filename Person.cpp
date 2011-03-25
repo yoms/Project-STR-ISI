@@ -26,7 +26,7 @@ Person::Person()
 {
 }
 
-void run()
+void Person::run()
 {
 
 }

@@ -36,6 +36,10 @@ public:
      */
     PunchingTerminal();
     /**
+     * @brief Detruit un composteur.
+     */
+    ~PunchingTerminal();
+    /**
      * @brief Représente le comportement d'un composteur.
      */
     void run();
@@ -47,6 +51,11 @@ public:
      * @brief TODO
      */
     int id;
+    /**
+     * @brief Retourne le nom de la classe.
+     * @return le nom de la classe
+     */
+    virtual QString className(){ return QString("PunchingTerminal");}
 private:
     void handleNewMessage();
     static int globalId;

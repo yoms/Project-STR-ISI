@@ -29,7 +29,7 @@ class Tram;
 /**
  * @brief Représente un passager.
  */
-class Person
+class Person : public Thread
 {
 public:
     enum Etat{

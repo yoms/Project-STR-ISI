@@ -24,8 +24,7 @@
 #include <QDebug>
 
 extern "C" {
-    extern void adaPunchTicket (int);
-    extern void adaCreatePunchingTerminal(int);
+    void createPunchingTerminal(int);
 }
 
 int PunchingTerminal::globalId = 0;
@@ -36,17 +35,15 @@ PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
 {
     globalId ++;
     this->id = globalId;
-    adaCreatePunchingTerminal(this->id);
+    createPunchingTerminal(0);
 }
+
+PunchingTerminal::~PunchingTerminal() {}
 
 void PunchingTerminal::run() {}
 
-void PunchingTerminal::handleNewMessage()
-{
-
-}
+void PunchingTerminal::handleNewMessage() {}
 
 void PunchingTerminal::punchTicket()
 {
-    adaPunchTicket(this->id);
 }

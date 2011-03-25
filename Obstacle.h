@@ -62,8 +62,6 @@ public:
      */
     virtual QString className(){ return QString("Obstacle");}
 private:
-    void processNewMessage(){}
-private:
     QPoint m_place;
 };
 
