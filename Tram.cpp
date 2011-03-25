@@ -178,7 +178,7 @@ void Tram::closeDoors()
 }
 void Tram::handleNewMessage()
 {
-    if(!m_messageList.isEmpty())
+    while(!m_messageList.isEmpty())
     {
         Message *m = m_messageList.takeFirst();
         switch(m->type())
