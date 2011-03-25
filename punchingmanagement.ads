@@ -3,14 +3,14 @@ with Ada.Containers.Ordered_Maps;
 with Interfaces.C;
 
 package punchingManagement is
+use Interfaces;
 
-   package PunchingMapType is new Ada.Containers.Ordered_Maps(integer, PunchingRecord);
-   punchingMap : PunchingMapType.Map;
+   punchingTab : array(1..10) of PunchingTask;
    
-   procedure createPunchingTerminal(id: in integer);
+   procedure createPunchingTerminal(id: in C.Int);
    pragma Export (C, createPunchingTerminal, "createPunchingTerminal");
 
-   procedure punchTicket(id: in integer);
-   pragma Export (C, punchTicket, "punchTicket");
+   procedure adaPunchTicket(id: in C.Int);
+   pragma Export (C, adaPunchTicket, "adaPunchTicket");
 
 end punchingManagement;

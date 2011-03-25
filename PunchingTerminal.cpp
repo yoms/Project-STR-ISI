@@ -25,6 +25,7 @@
 
 extern "C" {
     void createPunchingTerminal(int);
+    void adaPunchTicket(int);
 }
 
 int PunchingTerminal::globalId = 0;
@@ -34,8 +35,8 @@ int PunchingTerminal::globalId = 0;
 PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
 {
     globalId ++;
+    Q_ASSERT(globalId < 10);
     this->id = globalId;
-    createPunchingTerminal(0);
 }
 
 PunchingTerminal::~PunchingTerminal() {}
@@ -46,4 +47,5 @@ void PunchingTerminal::handleNewMessage() {}
 
 void PunchingTerminal::punchTicket()
 {
+    adaPunchTicket(1);
 }

@@ -43,7 +43,8 @@ Tram::Tram():Drawable(),ThreadWithMessages()
     m_nbTick = 0;
     m_velocity = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
-//    m_punchingTerminalList.append(new PunchingTerminal); // TODO penser à détruire
+    PunchingTerminal *p = new PunchingTerminal;
+    m_punchingTerminalList.append(p);
 }
 void Tram::run()
 {
@@ -103,7 +104,6 @@ void Tram::obstacleTracking()
     }
     else if(m_obstacle != NULL)
     {
-        qDebug() << m_obstacle->name();
         m_obstacle->addMessage(new Message(this,Message::IsCrossed));
         m_obstacle = NULL;
     }
@@ -170,8 +170,8 @@ void Tram::openDoors()
 
 void Tram::closeDoors()
 {
-    qDebug() << "fermeture des portes";
     if(m_obstacle != NULL){
+        sleep(2);
         Message* m = new Message(this,Message::DoorClosed);
         m_obstacle->addMessage(m);
     }
@@ -196,7 +196,6 @@ void Tram::handleNewMessage()
             break;
         case Message::WaitDoorClosed:
             {
-                qDebug() << "Waiting";
                 if(m_state == Tram::Off)
                 {
                     this->closeDoors();

@@ -31,11 +31,11 @@ extern void adafinal (void);
 
 int main(int argc, char *argv[])
 {
-//    adainit();
+    adainit();
     QApplication a(argc, argv);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
     TramWindow w;
     w.show();
-//    adafinal();
+    adafinal();
     return a.exec();
 }

@@ -1,6 +1,7 @@
-with Text_IO;  use Text_IO;
+with Text_IO;
 
 package body punchingTerminal is
+  use Text_IO;
    task body PunchingTask is
    begin
       Put_line("start punching task");

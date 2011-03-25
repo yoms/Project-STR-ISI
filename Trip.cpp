@@ -57,7 +57,7 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement)
     pthread_mutex_lock(&m_mutex);
     foreach(Obstacle* o, m_obstacle)
     {
-        int j=0;
+        int j = 0;
         for(int i = 0; i < DISTANCE_VISION; i++)
         {
             QPoint oE;

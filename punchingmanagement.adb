@@ -1,18 +1,19 @@
-with Text_IO;  use Text_IO;
-with punchingTerminal; use punchingTerminal;
+with Text_IO;  
+with punchingTerminal;
+with Interfaces;
 
 package body punchingManagement is
-
-   procedure createPunchingTerminal(id : in integer) is
-      newPunchingRecord : PunchingRecord;
+use Text_IO;
+use Interfaces;
+use punchingTerminal;
+   procedure createPunchingTerminal(id : in C.Int) is
    begin
-      newPunchingRecord.taskAccess := new PunchingTask;
-      punchingMap.insert(id, newPunchingRecord);
+	null;
    end createPunchingTerminal;
 
-   procedure punchTicket(id : in integer) is
+   procedure adaPunchTicket(id : in C.Int) is
    begin
-      punchingMap.element(id).taskAccess.all.punch;
-   end punchTicket;
+      null;--punchingTab(Integer(id)).punch;
+   end adaPunchTicket;
 
 end punchingManagement;
