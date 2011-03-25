@@ -39,9 +39,9 @@ void StationLight::handleNewMessage(){
         {
             if(m_state == Light::Red) {
                 m->sender()->addMessage(new Message(this,Message::Stop));
-                sleep(5);
-                m_state = Light::Green;
-                m->sender()->addMessage(new Message(this, Message::Cross));
+            }
+            if(m_state == Light::Green){
+                m->sender()->addMessage(new Message(this,Message::Cross));
             }
         }
         break;
@@ -61,6 +61,7 @@ void StationLight::handleNewMessage(){
             {
                 if(m_free){
                     m_state = Light::Green;
+                    m->sender()->addMessage(new Message(this,Message::Cross));
                 }
                 else
                 {

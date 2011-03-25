@@ -57,12 +57,17 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement)
     pthread_mutex_lock(&m_mutex);
     foreach(Obstacle* o, m_obstacle)
     {
+        int j=0;
         for(int i = 0; i < DISTANCE_VISION; i++)
         {
-            int indexof = m_trip.indexOf(monEmplacement)+i < m_trip.size()
-                                ? m_trip.indexOf(monEmplacement)+i
-                                : m_trip.indexOf(monEmplacement);
-            if(o->place() == m_trip[indexof])
+            QPoint oE;
+            if(m_trip.indexOf(monEmplacement)+i < m_trip.size())
+                oE = m_trip[m_trip.indexOf(monEmplacement)+i];
+            else
+            {
+                oE = m_forwardTrip->trip()[j++];
+            }
+            if(o->place() == oE)
             {
                 pthread_mutex_unlock(&m_mutex);
                 return o;
