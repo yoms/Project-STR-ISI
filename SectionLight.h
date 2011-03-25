@@ -23,11 +23,12 @@
 #ifndef SECTIONLIGHT_H
 #define SECTIONLIGHT_H
 
-#include "Light.h"
+#include "OutdoorSectionLight.h"
+#include "IndoorSectionLight.h"
 /**
  * @brief Représente un feu tronçon. Ce feu est placé uniquement sur une voie bidirectionnelle.
  */
-class SectionLight
+class SectionLight : public Drawable
 {
 public:
     /**
@@ -43,29 +44,21 @@ public:
      * @brief Change le feu du tronçon intérieur.
      * @param light le feu du tronçon intérieur
      */
-    void setOutdoorLight(Light*);
+    void setOutdoorLight(OutdoorSectionLight*);
     /**
      * @brief Change le feu du tronçon extérieur.
      * @param light le feu du tronçon extérieur
      */
-    void setIndoorLight(Light*);
+    void setIndoorLight(IndoorSectionLight*);
     /**
      * @brief Change le feu précédent.
      * @param light le feu précédent
      */
     void setPreviousLight(Light*);
-    /**
-     * @brief Change le feu suivant.
-     * @param light le feu suivant
-     */
-    void setNextLight(Light*);
 private:
     // Un feu tronçon est un feu à deux faces. Il est donc composé de deux feux.
-    Light* m_outdoorLight;
-    Light* m_indoorLight;
-
-    Light* m_previousLight;
-    Light* m_nextLight;
+    IndoorSectionLight * m_indoorLight;
+    OutdoorSectionLight * m_outdoorLight;
 };
 
 #endif // SECTIONLIGHT_H

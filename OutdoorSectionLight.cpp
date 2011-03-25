@@ -20,21 +20,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "SectionLight.h"
+#include "OutdoorSectionLight.h"
 
-SectionLight::SectionLight()
+OutdoorSectionLight::OutdoorSectionLight()
 {
 }
-
-SectionLight::~SectionLight()
+OutdoorSectionLight::~OutdoorSectionLight()
 {
-
-}
-
-void SectionLight::setOutdoorLight(OutdoorSectionLight* l){
-    this->m_outdoorLight = l;
-}
-
-void SectionLight::setIndoorLight(IndoorSectionLight* l){
-    this->m_indoorLight = l;
 }

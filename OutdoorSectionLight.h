@@ -20,21 +20,26 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "SectionLight.h"
-
-SectionLight::SectionLight()
+#ifndef OUTDOORSECTIONLIGHT_H
+#define OUTDOORSECTIONLIGHT_H
+#include "Light.h"
+/**
+ * @brief Représente un feu tronçon extérieur. Ce feu est placé uniquement sur une voie bidirectionnelle.
+ */
+class OutdoorSectionLight : public Light
 {
-}
+public:
+    /**
+     * @brief Construit un feu tronçon extérieur.
+     */
+    OutdoorSectionLight();
+    /**
+     * @brief Détruit un feu tronçon extérieur.
+     */
+    virtual ~OutdoorSectionLight();
 
-SectionLight::~SectionLight()
-{
+private:
+    Light* m_next;
+};
 
-}
-
-void SectionLight::setOutdoorLight(OutdoorSectionLight* l){
-    this->m_outdoorLight = l;
-}
-
-void SectionLight::setIndoorLight(IndoorSectionLight* l){
-    this->m_indoorLight = l;
-}
+#endif // OUTDOORSECTIONLIGHT_H
