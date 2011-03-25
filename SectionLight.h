@@ -20,43 +20,52 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef STATIONLIGHT_H
-#define STATIONLIGHT_H
+#ifndef SECTIONLIGHT_H
+#define SECTIONLIGHT_H
 
 #include "Light.h"
-#include "Station.h"
-class Station;
 /**
- * @brief Représente un feu station. Ce feu est placé uniquement au niveau d'une station.
+ * @brief Représente un feu tronçon. Ce feu est placé uniquement sur une voie bidirectionnelle.
  */
-class StationLight : public Light
+class SectionLight
 {
 public:
     /**
-     * @brief Construit un feu station.
+     * @brief Construit un feu tronçon.
      */
-    StationLight();
+    SectionLight();
     /**
-     * @brief Ajoute la station de rattachement du feu.
-     * @param la station de rattachement
+     * @brief Détruit un feu tronçon.
      */
-    void addStation(Station*);
+    virtual ~SectionLight();
+
     /**
-     * @brief Représente un tour de timer.
+     * @brief Change le feu du tronçon intérieur.
+     * @param light le feu du tronçon intérieur
      */
-    void tick(){}
+    void setOutdoorLight(Light*);
     /**
-     * @brief Traite le nouveau message.
+     * @brief Change le feu du tronçon extérieur.
+     * @param light le feu du tronçon extérieur
      */
-    void handleNewMessage();
+    void setIndoorLight(Light*);
     /**
-     * @brief Change le couleur du stage.
-     * @param la nouvelle couleur du feu
+     * @brief Change le feu précédent.
+     * @param light le feu précédent
      */
-    void setColor(Color);
+    void setPreviousLight(Light*);
+    /**
+     * @brief Change le feu suivant.
+     * @param light le feu suivant
+     */
+    void setNextLight(Light*);
 private:
-    Station* m_station;
-    bool m_free;
+    // Un feu tronçon est un feu à deux faces. Il est donc composé de deux feux.
+    Light* m_outdoorLight;
+    Light* m_indoorLight;
+
+    Light* m_previousLight;
+    Light* m_nextLight;
 };
 
-#endif // STATIONLIGHT_H
+#endif // SECTIONLIGHT_H

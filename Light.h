@@ -28,7 +28,7 @@
 #include "Timer.h"
 
 /**
- * @brief Représente un feu de signalisation.
+ * @brief Représente un feu de signalisation. Ce feu est placé uniquement sur une voie unidirectionnelle.
  */
 class Light : public Obstacle
 {

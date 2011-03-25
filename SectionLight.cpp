@@ -20,43 +20,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef STATIONLIGHT_H
-#define STATIONLIGHT_H
+#include "SectionLight.h"
 
-#include "Light.h"
-#include "Station.h"
-class Station;
-/**
- * @brief Représente un feu station. Ce feu est placé uniquement au niveau d'une station.
- */
-class StationLight : public Light
+SectionLight::SectionLight()
 {
-public:
-    /**
-     * @brief Construit un feu station.
-     */
-    StationLight();
-    /**
-     * @brief Ajoute la station de rattachement du feu.
-     * @param la station de rattachement
-     */
-    void addStation(Station*);
-    /**
-     * @brief Représente un tour de timer.
-     */
-    void tick(){}
-    /**
-     * @brief Traite le nouveau message.
-     */
-    void handleNewMessage();
-    /**
-     * @brief Change le couleur du stage.
-     * @param la nouvelle couleur du feu
-     */
-    void setColor(Color);
-private:
-    Station* m_station;
-    bool m_free;
-};
+}
 
-#endif // STATIONLIGHT_H
+SectionLight::~SectionLight()
+{
+
+}
+
+void SectionLight::setOutdoorLight(Light* l){
+    this->m_outdoorLight = l;
+}
+
+void SectionLight::setIndoorLight(Light* l){
+    this->m_indoorLight = l;
+}
+
+void SectionLight::setPreviousLight(Light* l){
+    this->m_previousLight = l;
+}
+
+void SectionLight::setNextLight(Light* l){
+    this->m_nextLight = l;
+}
