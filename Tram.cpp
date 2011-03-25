@@ -66,10 +66,17 @@ void Tram::run()
                 {
                     slowDown();
                     if(m_obstacle != NULL)
+                    {
                         if(m_obstacle->place() == m_trip->next(m_coordinate))
+                        {
+                            m_velocity = VITESSE_MIN;
                             m_state = Tram::Off;
-                    else
-                        move();
+                        }
+                        else
+                        {
+                            move();
+                        }
+                    }
                 }
                 break;
             case Tram::On:
@@ -100,15 +107,11 @@ void Tram::obstacleTracking()
     {
         m_obstacle = o;
         m_obstacle->addMessage(new Message(this,Message::Request));
-        if(this->name() == "Tram4")
-            qDebug() << this->name() << " SET : " << o->name();
     }
     else if(m_obstacle != NULL)
     {
         qDebug() << m_obstacle->name();
         m_obstacle->addMessage(new Message(this,Message::IsCrossed));
-        if(this->name() == "Tram4")
-            qDebug() << this->name() << " : " << "reset : " << m_obstacle->name();
         m_obstacle = NULL;
     }
 
@@ -117,7 +120,7 @@ void Tram::obstacleTracking()
 void Tram::move()
 {
     if(this->m_trip->next(this->m_coordinate) == m_coordinate)
-                                this->m_trip = this->m_trip->forward();
+        this->m_trip = this->m_trip->forward();
     this->m_coordinate = this->m_trip->next(this->m_coordinate);
 }
 
@@ -160,7 +163,7 @@ void Tram::speedUp()
 
 void Tram::slowDown()
 {
-    if(m_velocity > VITESSE_MIN)
+    if(m_velocity >= VITESSE_MIN)
         m_state = Tram::Off;
     else
         m_velocity += ACCELERATION;
@@ -196,6 +199,7 @@ void Tram::handleNewMessage()
             }
             break;
         }
+        delete m;
     }
 }
 

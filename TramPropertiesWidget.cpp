@@ -50,5 +50,11 @@ void TramPropertiesWidget::updateTramInformation()
     case Tram::Off:
         this->ui->m_state->setText("Arret");
         break;
+    case Tram::Acceleration:
+        this->ui->m_state->setText("Acceleration");
+        break;
+    case Tram::Desceleration:
+        this->ui->m_state->setText("Desceleration");
+        break;
     }
 }
