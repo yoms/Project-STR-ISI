@@ -22,11 +22,12 @@
 
 #ifndef PURCHASINGTERMINAL_H
 #define PURCHASINGTERMINAL_H
+#include "ThreadWithMessages.h"
 
 /**
  * @brief Représente une borne d'achat.
  */
-class PurchasingTerminal
+class PurchasingTerminal : public ThreadWithMessages
 {
 public:
     /**
@@ -34,10 +35,27 @@ public:
      */
     PurchasingTerminal();
     /**
+     * @brief Detruit une borne d'achat.
+     */
+    ~PurchasingTerminal();
+    /**
+     * @brief Représente le comportement d'une borne d'achat.
+     */
+    void run();
+    /**
      * @brief Représente une borne d'achat.
      * @return vrai si le ticket est donné et faux sinon
      */
     bool giveTicket();
+    /**
+     * @brief Retourne le nom de la classe.
+     * @return le nom de la classe
+     */
+    virtual QString className(){ return QString("PurchasingTerminal");}
+private:
+    void handleNewMessage();
+    int id;
+    static int globalId;
 };
 
 #endif // PURCHASINGTERMINAL_H

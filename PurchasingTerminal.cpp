@@ -27,6 +27,14 @@
 PurchasingTerminal::PurchasingTerminal()
 {}
 
+PurchasingTerminal::~PurchasingTerminal()
+{}
+
+void PurchasingTerminal::run()
+{}
+
 bool PurchasingTerminal::giveTicket() {
 }
 
+void PurchasingTerminal::handleNewMessage()
+{}

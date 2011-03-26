@@ -37,32 +37,35 @@ void Person::run()
 }
 void Person::buyTicket()
 {
+    //appeler m_nbPerson fois purchaseTicket
+    //ajouter : m_state == Person::NeedGetOnTheTram;
 
-    //appel ada
 }
 
 void Person::punchTicket()
 {
-    //appel ada
+    //appeler m_nbPerson fois punchTicket
+    //ajouter : m_state == Person::NeedGetOffTheTram;
 }
 
-void Person::getOnTheTram()
+void Person::getOnTheTram(Container* tram)
 {
-    // Pour maintenant :
-    // Appeler m_container.quit(this)
-    // Affecter m_container = new container
-    // Appeler m_container.enter(this)
+    this->m_container->quit(this);
+    this->m_container = tram;
+    this->m_container->enter(this);
+    // A remplacer par : m_state == Person::NeedPunchTicket;
     m_state == Person::NeedGetOffTheTram;
-    // Pour plus tard : appeler NB_PERSON fois la méthode ada de la borne correspondante
+    // A ajouter : this->punchTicket();
 }
 
-void Person::getOffTheTram()
+void Person::getOffTheTram(Container* station)
 {
-    // Appeler m_container.quit(this)
-    // Affecter m_container = new container
-    // Appeler m_container.enter(this)
+    this->m_container->quit(this);
+    this->m_container = station;
+    this->m_container->enter(this);
+    // A remplacer par : m_state == Person::NeedTicket;
     m_state == Person::NeedGetOnTheTram;
-    // Pour plus tard : appeler NB_PERSON fois la méthode ada de la borne correspondant
+    // A ajouter : this->buyTicket();
 }
 
 void Person::waitInStation()
@@ -87,10 +90,10 @@ void Person::handleNewMessage()
         {
             case Message::TramIncoming:
                 if(m_state == Person::NeedGetOnTheTram)
-                    getOnTheTram(); // Passer en param le tram
+                    getOnTheTram((Container*)m->sender());
             case Message::ReachingStation:
                 if(m_state == Person::NeedGetOffTheTram)
-                    getOffTheTram(); // Passer en param la station
+                    getOffTheTram((Container*)m->sender());
         }
         delete m;
     }

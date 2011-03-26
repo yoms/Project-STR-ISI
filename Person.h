@@ -25,6 +25,7 @@
 #include "ThreadWithMessages.h"
 #include "Tram.h"
 #include "Station.h"
+class Container;
 
 /**
  * @brief Représente un groupe de passagers.
@@ -59,14 +60,6 @@ public:
      */
     void punchTicket();
     /**
-     * @brief Rentre dans le tram.
-     */
-    void getOnTheTram();
-    /**
-     * @brief Sort du tram.
-     */
-    void getOffTheTram();
-    /**
      * @brief Attend dans la station.
      */
     void waitInStation();
@@ -97,6 +90,16 @@ public:
      * @return le nombre de personnes dans le groupe
      */
     int nbPerson() const {return m_nbPerson;}
+
+private:
+    /**
+     * @brief Rentre dans le tram.
+     */
+    void getOnTheTram(Container*);
+    /**
+     * @brief Sort du tram.
+     */
+    void getOffTheTram(Container*);
 
 private:
     State m_state;

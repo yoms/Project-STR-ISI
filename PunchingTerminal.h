@@ -48,10 +48,6 @@ public:
      */
     void punchTicket();
     /**
-     * @brief TODO
-     */
-    int id;
-    /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
@@ -59,6 +55,7 @@ public:
 private:
     void handleNewMessage();
     static int globalId;
+    int id;
 };
 
 #endif // PUNCHINGTERMINAL_H

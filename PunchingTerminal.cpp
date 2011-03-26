@@ -47,5 +47,5 @@ void PunchingTerminal::handleNewMessage() {}
 
 void PunchingTerminal::punchTicket()
 {
-    adaPunchTicket(1);
+    //adaPunchTicket(1);
 }
