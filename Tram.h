@@ -32,6 +32,7 @@
 #include "Timer.h"
 #include "Obstacle.h"
 #include "Person.h"
+#include "Container.h"
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -46,7 +47,7 @@ class Person;
 /**
  * @brief Représente un tramway.
  */
-class Tram : public Drawable, public ThreadWithMessages, public TimerListener
+class Tram : public Drawable, public ThreadWithMessages, public TimerListener, public Container
 {
 public:
     /**

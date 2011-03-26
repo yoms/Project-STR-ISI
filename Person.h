@@ -42,7 +42,6 @@ public:
      * @brief Construit un groupe de passagers.
      */
     Person();
-
     /**
      * @brief Détruit un groupe de passagers.
      */
@@ -87,15 +86,22 @@ public:
      * @brief Change le conteneur. Le conteneur sera de type station ou tram.
      * @param le nouveau conteneur
      */
-    void setContainer(ThreadWithMessages* t){m_container = t;}
+    void setContainer(Container* c){m_container = c;}
     /**
      * @brief Indique l'état du groupe de passagers.
-     * @param l'état du groupe de passagers
+     * @return l'état du groupe de passagers
      */
     int getState() const {return m_state;}
+    /**
+     * @brief Retourne le nombre de personnes dans le groupe.
+     * @return le nombre de personnes dans le groupe
+     */
+    int nbPerson() const {return m_nbPerson;}
+
 private:
     State m_state;
-    ThreadWithMessages* m_container;
+    Container* m_container;
+    const int m_nbPerson;
 };
 
 #endif // PERSON_H

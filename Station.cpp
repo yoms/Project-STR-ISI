@@ -21,10 +21,11 @@
  */
 
 #include "Station.h"
+#include "Container.h"
 #include <QPainter>
 #include <QDebug>
 #define SIZE_STATION 5
-Station::Station():ThreadWithMessages()
+Station::Station():ThreadWithMessages(), Container()
 {
     m_persons = new Person;
     m_persons->setContainer(this);

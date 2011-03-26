@@ -51,6 +51,7 @@ set(project_SRCS
     SectionLight.cpp
     IndoorSectionLight.cpp
     OutdoorSectionLight.cpp
+    Container.cpp
 )
 
 SET(project_MOC_HDRS

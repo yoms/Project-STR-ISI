@@ -81,11 +81,11 @@ public:
          */
         DoorsClosing,
         /**
-         * @brief Envoyé par un tram à ses passagers pour leur indiquer l'arrêt à une station
+         * @brief Envoyé par un tram à ses passagers pour leur indiquer l'arrêt à une station.
          */
         ReachingStation,
         /**
-         * @brief Envoyé par un tram aux personnes attendant à la station pour leur indiquer son arrivée
+         * @brief Envoyé par un tram aux personnes attendant à la station pour leur indiquer son arrivée.
          */
         TramIncoming
     };

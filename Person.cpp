@@ -22,7 +22,7 @@
 
 #include "Person.h"
 
-Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram)
+Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5)
 {
 
 }

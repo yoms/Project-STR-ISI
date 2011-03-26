@@ -35,8 +35,9 @@
 #include <pthread.h>
 #include <signal.h>
 #include <time.h>
+#include "Container.h"
 
-Tram::Tram():Drawable(),ThreadWithMessages()
+Tram::Tram():Drawable(),ThreadWithMessages(), Container()
 {
     m_persons = new Person;
     m_obstacle = NULL;

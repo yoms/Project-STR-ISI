@@ -27,13 +27,14 @@
 #include "ThreadWithMessages.h"
 #include "Timer.h"
 #include "Person.h"
+#include "Container.h"
 class StationLight;
 class Person;
 
 /**
  * @brief Représente une station.
  */
-class Station : public Drawable, public ThreadWithMessages, public TimerListener
+class Station : public Drawable, public ThreadWithMessages, public TimerListener, public Container
 {
 public:
     /**
