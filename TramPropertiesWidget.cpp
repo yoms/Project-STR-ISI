@@ -43,6 +43,12 @@ void TramPropertiesWidget::updateTramInformation()
 {
     this->ui->m_name->setText(m_tram->name());
     this->ui->m_velocity->setText(QString::number((40 - m_tram->velocity()))+" km/h");
+    int nbPersons =  0;
+    for(int i = 0 ; i< m_tram->persons().size() ; i++)
+    {
+        nbPersons += m_tram->persons()[i]->nbPerson();
+    }
+    this->ui->m_nbPersons->setText(QString::number(nbPersons)+ " passager(s)");
     switch(m_tram->state())
     {
     case Tram::On:
