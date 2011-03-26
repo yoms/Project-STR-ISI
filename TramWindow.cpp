@@ -122,7 +122,7 @@ void TramWindow::setupTrip1()
         feuS1->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS1;
         feuS1->setPlace(last);
-        feuS1->setName("Station 1");
+        feuS1->setName("Feu Station 1");
 //        feuS1->setColor(Light::Red);
         feuS1->addStation(s1);
         s1->addStationLight(feuS1);
@@ -226,7 +226,7 @@ void TramWindow::setupTrip1()
     feuS2->setCoordinate(last+QPoint(0,-5));
     m_obstacleList << feuS2;
     feuS2->setPlace(last);
-    feuS2->setName("Station 2");
+    feuS2->setName("Feu Station 2");
     feuS2->setColor(Light::Red);
     feuS2->setPreviousLight(f2);
     feuS2->addStation(s2);
@@ -258,7 +258,7 @@ void TramWindow::setupTrip1()
         feuS3->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS3;
         feuS3->setPlace(last);
-        feuS3->setName("Station 3");
+        feuS3->setName("Feu Station 3");
         feuS3->addStation(s2);
         s3->addStationLight(feuS3);
         feuS3->start();
@@ -336,7 +336,7 @@ void TramWindow::setupTrip1()
         feuS4->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS4;
         feuS4->setPlace(last);
-        feuS4->setName("Station 4");
+        feuS4->setName("Feu Station 4");
         feuS4->addStation(s2);
         s4->addStationLight(feuS4);
         feuS4->start();
@@ -380,7 +380,7 @@ void TramWindow::setupTrip2()
 
     feustation->setCoordinate(last+QPoint(5,5));
     feustation->setPlace(last+QPoint(1,0));
-    feustation->setName("Station 1");
+    feustation->setName("Feu Station 1");
     feustation->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation);
     m_obstacleList << feustation;
@@ -474,7 +474,7 @@ void TramWindow::setupTrip2()
 
     feustation2->setCoordinate(last+QPoint(-5,5));
     feustation2->setPlace(last);
-    feustation2->setName("Station 2");
+    feustation2->setName("Feu Station 2");
     feustation2->setPreviousLight(feu3);
     feustation2->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation2);
