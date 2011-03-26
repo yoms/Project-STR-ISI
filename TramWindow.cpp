@@ -22,14 +22,8 @@
 
 #include "TramWindow.h"
 #include "ui_tramwindow.h"
-#include "TramPropertiesWidget.h"
-#include "Tram.h"
-#include "Station.h"
 #include "Light.h"
 #include "StationLight.h"
-#include "Trip.h"
-#include "TramPropertiesWidget.h"
-#include "ObstacleWidget.h"
 #include <math.h>
 #include <QDebug>
 
@@ -60,6 +54,10 @@ TramWindow::~TramWindow()
     for(int i = 0; i < m_tramPropertiesWidgetList.size(); i++)
     {
         delete m_tramPropertiesWidgetList[i];
+    }
+    for(int i = 0; i < m_stationWidgetList.size(); i++)
+    {
+        delete m_stationWidgetList[i];
     }
     for(int i = 0; i < m_stationList.size(); i++)
     {
@@ -94,7 +92,11 @@ void TramWindow::setupDrawingWidget()
         ui->m_propertiesLayout->addWidget(m_obstacleWidgetList.last());
     }
     for(int i = 0; i < m_stationList.size(); i++)
+    {
         d << m_stationList[i];
+        m_stationWidgetList << new StationWidget(m_stationList[i]);
+        ui->m_propertiesLayout->addWidget(m_stationWidgetList.last());
+    }
     for(int i = 0; i < m_trajetList.size(); i++)
         d << m_trajetList[i];
     for(int i = 0; i < m_tramList.size(); i++)
@@ -371,7 +373,7 @@ void TramWindow::setupTrip2()
 
     m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
-    m_stationList.last()->setName("bas droite");
+    m_stationList.last()->setName("HautGauche");
 
     StationLight* feustation = new StationLight;
     StationLight* feustation2 = new StationLight;
@@ -468,7 +470,7 @@ void TramWindow::setupTrip2()
 
     m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
-    m_stationList.last()->setName("bas droite");
+    m_stationList.last()->setName("HautDroit");
 
     feustation2->setCoordinate(last+QPoint(-5,5));
     feustation2->setPlace(last);

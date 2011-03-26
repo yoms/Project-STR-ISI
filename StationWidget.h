@@ -20,64 +20,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef TRAMWINDOW_H
-#define TRAMWINDOW_H
+#ifndef STATIONWIDGET_H
+#define STATIONWIDGET_H
 
-#include <QMainWindow>
-#include "Trip.h"
-#include "Obstacle.h"
-#include "Tram.h"
-#include "Station.h"
-#include "Timer.h"
-#include "ObstacleWidget.h"
-#include "TramPropertiesWidget.h"
-#include "StationWidget.h"
-
+#include <QWidget>
+#include <QTimer>
+class Station;
 namespace Ui {
-    class TramWindow;
+    class StationWidget;
 }
 
 /**
- * @brief Représente un widget qui affiche le trajet.
+ * @brief Représente un widget qui affiche le nombre de personnes dans une station.
  */
-class TramWindow : public QMainWindow
+class StationWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     /**
      * @brief Construit le widget.
-     * @param l'objet param
+     * @param une station
+     * @param l'objet parent
      */
-    explicit TramWindow(QWidget *parent = 0);
+    explicit StationWidget(Station* s, QWidget *parent = 0);
     /**
      * @brief Détruit le widget.
      */
-    virtual ~TramWindow();
-    /**
-     * @brief Représente le parcours 1.
-     */
-    void setupTrip1();
-    /**
-     * @brief Représente le parcours 2.
-     */
-    void setupTrip2();
-    /**
-     * @brief Charge les TramWidgets et ObstacleWidgets.
-     */
-    void setupDrawingWidget();
-
+    ~StationWidget();
+private slots:
+    void updateStationInformation();
 private:
-    QList<Trip*> m_trajetList;
-    QList<Tram*> m_tramList;
-    QList<Obstacle*> m_obstacleList;
-    QList<ObstacleWidget*> m_obstacleWidgetList;
-    QList<TramPropertiesWidget*> m_tramPropertiesWidgetList;
-    QList<Station*> m_stationList;
-    QList<StationWidget*> m_stationWidgetList;
-
-    Ui::TramWindow *ui;
-    Timer *m_timer;
+    Ui::StationWidget *ui;
+    QTimer *m_timer;
+    Station *m_station;
 };
 
-#endif // TRAMWINDOW_H
+#endif // STATIONWIDGET_H
