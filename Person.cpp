@@ -22,10 +22,9 @@
 
 #include "Person.h"
 
-Person::Person():ThreadWithMessages(),m_nbPersonsWithTicket(0),m_nbPersonsWithPunchedTicket(0),m_container(NULL)
+Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram)
 {
-    int nb = (int)threadid() % 120 + 80;
-    m_nbPersonsWithoutTicket = nb;
+
 }
 Person::~Person()
 {
@@ -38,25 +37,32 @@ void Person::run()
 }
 void Person::buyTicket()
 {
-    m_nbPersonsWithTicket++;
-    m_nbPersonsWithoutTicket--;
+
     //appel ada
 }
 
 void Person::punchTicket()
 {
-    m_nbPersonsWithPunchedTicket++;
-    m_nbPersonsWithTicket--;
     //appel ada
 }
 
 void Person::getOnTheTram()
 {
-    // tant que le tram n'est pas plein et qu'il reste des passagers dans la station
+    // Pour maintenant :
+    // Appeler m_container.quit(this)
+    // Affecter m_container = new container
+    // Appeler m_container.enter(this)
+    m_state == Person::NeedGetOffTheTram;
+    // Pour plus tard : appeler NB_PERSON fois la méthode ada de la borne correspondante
 }
 
 void Person::getOffTheTram()
 {
+    // Appeler m_container.quit(this)
+    // Affecter m_container = new container
+    // Appeler m_container.enter(this)
+    m_state == Person::NeedGetOnTheTram;
+    // Pour plus tard : appeler NB_PERSON fois la méthode ada de la borne correspondant
 }
 
 void Person::waitInStation()
@@ -79,15 +85,12 @@ void Person::handleNewMessage()
         Message* m = m_messageList.takeFirst();
         switch(m->type())
         {
-            case Message::DoorsOpened:
-            {
-            }
-            break;
-            case Message::DoorsClosed:
-            case Message::DoorsClosing:
-            {
-            }
-            break;
+            case Message::TramIncoming:
+                if(m_state == Person::NeedGetOnTheTram)
+                    getOnTheTram(); // Passer en param le tram
+            case Message::ReachingStation:
+                if(m_state == Person::NeedGetOffTheTram)
+                    getOffTheTram(); // Passer en param la station
         }
         delete m;
     }

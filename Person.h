@@ -35,11 +35,11 @@ public:
     enum State{
         NeedTicket,
         NeedGetOnTheTram,
+        NeedPunchTicket,
         NeedGetOffTheTram
     };
     /**
      * @brief Construit un groupe de passagers.
-     * @param le nombre de passagers
      */
     Person();
 
@@ -89,15 +89,12 @@ public:
      */
     void setContainer(ThreadWithMessages* t){m_container = t;}
     /**
-     * @brief Indique le nombre de personnes sans ticket.
-     * @param le nombre de personnes sans ticket
+     * @brief Indique l'état du groupe de passagers.
+     * @param l'état du groupe de passagers
      */
-    int nbPersonsWithoutTicket(){return m_nbPersonsWithoutTicket;}
+    int getState() const {return m_state;}
 private:
     State m_state;
-    int m_nbPersonsWithoutTicket;
-    int m_nbPersonsWithTicket;
-    int m_nbPersonsWithPunchedTicket;
     ThreadWithMessages* m_container;
 };
 

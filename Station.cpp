@@ -28,7 +28,6 @@ Station::Station():ThreadWithMessages()
 {
     m_persons = new Person;
     m_persons->setContainer(this);
-    qDebug()<<"passagers "<<m_persons->nbPersonsWithoutTicket();
 }
 void Station::draw(QPainter *painter)
 {

@@ -79,8 +79,15 @@ public:
         /**
          * @brief Envoyé par un tram vers un feu station pour signifier qu'il va fermer ses portes.
          */
-        DoorsClosing
-
+        DoorsClosing,
+        /**
+         * @brief Envoyé par un tram à ses passagers pour leur indiquer l'arrêt à une station
+         */
+        ReachingStation,
+        /**
+         * @brief Envoyé par un tram aux personnes attendant à la station pour leur indiquer son arrivée
+         */
+        TramIncoming
     };
     /**
      * @brief Représente le type du message.
