@@ -74,6 +74,13 @@ public:
      */
     Obstacle* obstacleExist(QPoint);
     /**
+     * @brief Indique le prochain obstacle.
+     * @param le point courant
+     * @param distance de vue
+     * @return le prochain obstacle
+     */
+    Obstacle* obstacleExist(QPoint, int);
+    /**
      * @brief Indique le point suivant.
      * @param le point courant
      * @return le point suivant

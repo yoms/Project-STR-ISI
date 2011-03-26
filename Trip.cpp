@@ -33,9 +33,9 @@ void Trip::draw(QPainter * painter)
     painter->setPen(Qt::blue);
     painter->setBrush(QBrush(Qt::blue));
 
-    foreach(QPoint p, m_trip)
+    for(int i = 0; i < m_trip.size(); i++)
     {
-        drawElemScen(painter, p.x(), p.y(), SIZE_POINT_TRAJET);
+        drawElemScen(painter, m_trip[i].x(), m_trip[i].y(), SIZE_POINT_TRAJET);
     }
 
     painter->setPen(Qt::darkGray);
@@ -55,21 +55,21 @@ void Trip::setTrip(QList<QPoint> & lp)
     this->m_trip = lp;
     pthread_mutex_unlock(&m_mutex);
 }
-Obstacle* Trip::obstacleExist(QPoint monEmplacement)
+Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
 {
     pthread_mutex_lock(&m_mutex);
     foreach(Obstacle* o, m_obstacle)
     {
         int j = 0;
-        for(int i = 0; i < DISTANCE_VISION; i++)
+        for(int i = 0; i < distance; i++)
         {
             QPoint oE;
             if(m_trip.indexOf(monEmplacement)+i < m_trip.size())
-                oE = m_trip[m_trip.indexOf(monEmplacement)+i];
+                oE = m_trip.at(m_trip.indexOf(monEmplacement)+i);
             else
             {
-                if(j < m_forwardTrip->trip().size())
-                    oE = m_forwardTrip->trip()[j++];
+                pthread_mutex_unlock(&m_mutex);
+                return m_forwardTrip->obstacleExist(m_forwardTrip->trip().first(),DISTANCE_VISION-i);
             }
             if(o->place() == oE)
             {
@@ -80,6 +80,10 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement)
     }
     pthread_mutex_unlock(&m_mutex);
     return NULL;
+}
+Obstacle* Trip::obstacleExist(QPoint monEmplacement)
+{
+    return obstacleExist(monEmplacement,DISTANCE_VISION);
 }
 
 void Trip::setObstacle(QList<Obstacle *> o)
@@ -98,16 +102,10 @@ void Trip::addObstacle(Obstacle *o)
 
 QPoint Trip::next(QPoint p)
 {
-    pthread_mutex_lock(&m_mutex);
-    QPoint retour = m_trip.indexOf(p)+1 < m_trip.size() ? m_trip[m_trip.indexOf(p)+1] : m_trip[m_trip.indexOf(p)];
-    pthread_mutex_unlock(&m_mutex);
-    return retour;
+      return m_trip.indexOf(p)+1 < m_trip.size() ? m_trip[m_trip.indexOf(p)+1] : m_trip[m_trip.indexOf(p)];
 }
 
 QPoint Trip::previous(QPoint p)
 {
-    pthread_mutex_lock(&m_mutex);
-    QPoint retour = m_trip.indexOf(p)-1 >= 0 ? m_trip.at(m_trip.indexOf(p)-1) : m_trip.at(m_trip.indexOf(p));
-    pthread_mutex_unlock(&m_mutex);
-    return retour;
+    return m_trip.indexOf(p)-1 >= 0 ? m_trip.at(m_trip.indexOf(p)-1) : m_trip.at(m_trip.indexOf(p));
 }
