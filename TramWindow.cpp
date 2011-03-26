@@ -36,10 +36,25 @@ TramWindow::TramWindow(QWidget *parent) :
 
     setupTrip2();
     setupDrawingWidget();
-    for(int i = 0; i < m_tramList.size(); i++)
-        m_timer->addListener(m_tramList[i]);
     for(int i = 0; i < m_obstacleList.size(); i++)
+    {
         m_timer->addListener(m_obstacleList[i]);
+        m_obstacleList[i]->start();
+    }
+    bool allObstacleRun = true;
+    do
+    {
+        allObstacleRun = true;
+        for(int i = 0; i < m_obstacleList.size(); i++)
+        {
+            allObstacleRun = allObstacleRun && m_obstacleList[i]->isRunning();
+        }
+    }while(!allObstacleRun);
+    for(int i = 0; i < m_tramList.size(); i++)
+    {
+        m_timer->addListener(m_tramList[i]);
+        m_tramList[i]->start();
+    }
 
     m_timer->start();
 
@@ -126,7 +141,6 @@ void TramWindow::setupTrip1()
 //        feuS1->setColor(Light::Red);
         feuS1->addStation(s1);
         s1->addStationLight(feuS1);
-        feuS1->start();
 
 
 
@@ -146,7 +160,6 @@ void TramWindow::setupTrip1()
     f1->setName("Feu 1");
     f1->setColor(Light::Green);
     f1->setPreviousLight(feuS1);
-    f1->start();
 
     last = tra.last();
     for(double i = 3; i > 1.5; i -= radius)
@@ -206,7 +219,6 @@ void TramWindow::setupTrip1()
     f2->setName("Feu 2");
     f2->setColor(Light::Red);
     f2->setPreviousLight(f1);
-    f2->start();
 
     last = tra.last();
     for(double i = 1; i < 50; i++)
@@ -231,7 +243,6 @@ void TramWindow::setupTrip1()
     feuS2->setPreviousLight(f2);
     feuS2->addStation(s2);
     s2->addStationLight(feuS2);
-    feuS2->start();
 
     Trip* traj = new Trip;
     traj->setTrip(tra);
@@ -261,7 +272,6 @@ void TramWindow::setupTrip1()
         feuS3->setName("Feu Station 3");
         feuS3->addStation(s2);
         s3->addStationLight(feuS3);
-        feuS3->start();
 
     for(double i = 0; i < 50; i++)
     {
@@ -339,7 +349,6 @@ void TramWindow::setupTrip1()
         feuS4->setName("Feu Station 4");
         feuS4->addStation(s2);
         s4->addStationLight(feuS4);
-        feuS4->start();
 
     Trip* traj2 = new Trip;
     traj2->setTrip(tra);
@@ -360,11 +369,9 @@ void TramWindow::setupTrip1()
     Tram * tram = new Tram;
     m_tramList << tram;
     tram->setTrip(m_trajetList[0]);
-    tram->start();
     Tram * tram2 = new Tram;
     m_tramList << tram2;
     tram2->setTrip(m_trajetList[2 ]);
-    tram2->start();
 }
 void TramWindow::setupTrip2()
 {
@@ -384,7 +391,6 @@ void TramWindow::setupTrip2()
     feustation->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation);
     m_obstacleList << feustation;
-    feustation->start();
 
     for(double i = 0; i < 250; i++)
     {
@@ -401,7 +407,6 @@ void TramWindow::setupTrip2()
     feu->setName("Feu 1");
     feu->setColor(Light::Green);
     feu->setPreviousLight(feustation);
-    feu->start();
 
     Light * feuret = new Light;
     feuret->setCoordinate(lastret+QPoint(200,5));
@@ -410,7 +415,6 @@ void TramWindow::setupTrip2()
     feuret->setName("Feu 2");
     feuret->setColor(Light::Green);
     feuret->setPreviousLight(feustation2);
-    feuret->start();
 
     Light * feu1 = new Light;
     feu1->setCoordinate(last+QPoint(-150,5));
@@ -419,7 +423,6 @@ void TramWindow::setupTrip2()
     feu1->setName("Feu 3");
     feu1->setColor(Light::Green);
     feu1->setPreviousLight(feu);
-    feu1->start();
 
     Light * feuret1 = new Light;
     feuret1->setCoordinate(lastret+QPoint(150,5));
@@ -428,7 +431,6 @@ void TramWindow::setupTrip2()
     feuret1->setName("Feu 4");
     feuret1->setColor(Light::Green);
     feuret1->setPreviousLight(feuret);
-    feuret1->start();
 
     Light * feu2 = new Light;
     feu2->setCoordinate(last+QPoint(-100,5));
@@ -437,7 +439,6 @@ void TramWindow::setupTrip2()
     feu2->setName("Feu 5");
     feu2->setColor(Light::Green);
     feu2->setPreviousLight(feu1);
-    feu2->start();
 
     Light * feuret2 = new Light;
     feuret2->setCoordinate(lastret+QPoint(100,5));
@@ -446,7 +447,6 @@ void TramWindow::setupTrip2()
     feuret2->setName("Feu 6");
     feuret2->setColor(Light::Green);
     feuret2->setPreviousLight(feuret1);
-    feuret2->start();
 
 
     Light * feu3 = new Light;
@@ -456,7 +456,6 @@ void TramWindow::setupTrip2()
     feu3->setName("Feu 7");
     feu3->setColor(Light::Green);
     feu3->setPreviousLight(feu2);
-    feu3->start();
 
     Light * feuret3 = new Light;
     feuret3->setCoordinate(lastret+QPoint(50,5));
@@ -465,7 +464,6 @@ void TramWindow::setupTrip2()
     feuret3->setName("Feu 8");
     feuret3->setColor(Light::Green);
     feuret3->setPreviousLight(feuret2);
-    feuret3->start();
     feustation->setPreviousLight(feuret3);
 
     m_stationList << new Station();
@@ -479,7 +477,6 @@ void TramWindow::setupTrip2()
     feustation2->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation2);
     m_obstacleList << feustation2;
-    feustation2->start();
 
     for(double i = 1; i < 30; i++)
     {
@@ -502,41 +499,34 @@ void TramWindow::setupTrip2()
     m_tramList << tram;
     tram->setTrip(m_trajetList.first());
     tram->setName("Tram1");
-    tram->start();
 
     Tram * tram2 = new Tram;
     m_tramList << tram2;
     tram2->setTrip(m_trajetList.last());
     tram2->setName("Tram2");
-    tram2->start();
 
     Tram * tram3 = new Tram;
     m_tramList << tram3;
     tram3->setTrip(m_trajetList.first());
     tram3->setCoordinate(QPoint(80,250));
     tram3->setName("Tram3");
-    tram3->start();
 
     Tram * tram4 = new Tram;
     m_tramList << tram4;
     tram4->setTrip(m_trajetList.last());
     tram4->setCoordinate(QPoint(80,282));
     tram4->setName("Tram4");
-    tram4->start();
 
     Tram * tram5 = new Tram;
     m_tramList << tram5;
     tram5->setTrip(m_trajetList.last());
     tram5->setCoordinate(QPoint(151,282));
     tram5->setName("Tram5");
-    tram5->start();
 
 //    Tram * tram5 = new Tram;
 //    m_tramList << tram5;
 //    tram5->setTrip(m_trajetList[1]);
-//    tram5->start();
 //    Tram * tram6 = new Tram;
 //    m_tramList << tram6;
 //    tram6->setTrip(m_trajetList[1]);
-//    tram6->start();
 }

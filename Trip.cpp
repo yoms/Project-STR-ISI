@@ -96,7 +96,7 @@ void Trip::addObstacle(Obstacle *o)
     pthread_mutex_unlock(&m_mutex);
 }
 
-QPoint Trip::next(QPoint& p)
+QPoint Trip::next(QPoint p)
 {
     pthread_mutex_lock(&m_mutex);
     QPoint retour = m_trip.indexOf(p)+1 < m_trip.size() ? m_trip[m_trip.indexOf(p)+1] : m_trip[m_trip.indexOf(p)];
@@ -104,10 +104,10 @@ QPoint Trip::next(QPoint& p)
     return retour;
 }
 
-QPoint Trip::previous(QPoint& p)
+QPoint Trip::previous(QPoint p)
 {
     pthread_mutex_lock(&m_mutex);
-    QPoint retour = m_trip.indexOf(p)-1 >= 0 ? m_trip[m_trip.indexOf(p)-1] : m_trip[m_trip.indexOf(p)];
+    QPoint retour = m_trip.indexOf(p)-1 >= 0 ? m_trip.at(m_trip.indexOf(p)-1) : m_trip.at(m_trip.indexOf(p));
     pthread_mutex_unlock(&m_mutex);
     return retour;
 }

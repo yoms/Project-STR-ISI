@@ -31,7 +31,7 @@ void StationLight::addStation(Station* s){
     m_station = s;
 }
 
-Station* station(){
+Station* StationLight::station(){
     return m_station;
 }
 

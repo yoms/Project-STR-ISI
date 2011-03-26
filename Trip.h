@@ -78,13 +78,13 @@ public:
      * @param le point courant
      * @return le point suivant
      */
-    QPoint next(QPoint&);
+    QPoint next(QPoint);
     /**
      * @brief Indique le point précédent.
      * @param le point courant
      * @return le point précédent
      */
-    QPoint previous(QPoint&);
+    QPoint previous(QPoint);
     /**
      * @brief Change la liste d'obstacles.
      * @param la nouvelle liste d'obstacles
