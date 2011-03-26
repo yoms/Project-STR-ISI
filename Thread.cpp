@@ -49,8 +49,6 @@ Thread::Thread() :m_running(false) {
 
 Thread::~Thread()
 {
-    this->join();
-    this->stop();
 }
 
 void *_threadFunc(void *obj)
@@ -83,11 +81,9 @@ void Thread::stop()
 
 void Thread::join()
 {
-    //wait for the running thread to exit
-    void *retValue = NULL;
     //pthread_attr_destroy(&m_attr);
     m_running = false;
-    if (pthread_join(m_thread, &retValue) == 0)
+    if (pthread_join(m_thread, NULL) == 0)
     {
     }
 }

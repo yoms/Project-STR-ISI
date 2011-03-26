@@ -39,6 +39,11 @@ ThreadWithMessages::ThreadWithMessages()
     }
 }
 
+ThreadWithMessages::~ThreadWithMessages()
+{
+    for(int i = 0; i < m_messageList.size(); i++)
+        delete m_messageList[i];
+}
 
 void ThreadWithMessages::addMessage(Message* m)
 {

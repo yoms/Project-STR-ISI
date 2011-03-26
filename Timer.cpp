@@ -58,8 +58,8 @@ void Timer::removeListener(TimerListener *tl)
 }
 void Timer::tick()
 {
-    foreach(TimerListener* tl, m_listenerList)
-        tl->tick();
+    for(int i =0 ; i < m_listenerList.size(); i++)
+        m_listenerList[i]->tick();
 }
 
 void Timer::run()
@@ -70,8 +70,8 @@ void Timer::run()
 void Timer::stop()
 {
     Thread::stop();
-    m_listenerList.clear();
     timer_delete(this->m_timerID);
+    m_listenerList.clear();
 }
 
 void Timer::_alarmFunction(int sigNumb, siginfo_t *si, void *uc)
@@ -81,5 +81,6 @@ void Timer::_alarmFunction(int sigNumb, siginfo_t *si, void *uc)
 }
 Timer::~Timer()
 {
+    timer_delete(this->m_timerID);
     m_listenerList.clear();
 }

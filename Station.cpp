@@ -51,7 +51,7 @@ void Station::addStationLight(StationLight *f)
 
 void Station::run()
 {
-
+    exit(0);
 }
 
 void Station::handleNewMessage()

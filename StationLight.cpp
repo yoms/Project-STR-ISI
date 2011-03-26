@@ -23,7 +23,7 @@
 #include "StationLight.h"
 #include <QDebug>
 
-StationLight::StationLight():m_free(true)
+StationLight::StationLight():m_free(true),m_doorClosed(true)
 {
 }
 
