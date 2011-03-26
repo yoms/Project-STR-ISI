@@ -84,7 +84,7 @@ void Thread::stop()
 void Thread::join()
 {
     //wait for the running thread to exit
-    void *retValue;
+    void *retValue = NULL;
     //pthread_attr_destroy(&m_attr);
     m_running = false;
     if (pthread_join(m_thread, &retValue) == 0)

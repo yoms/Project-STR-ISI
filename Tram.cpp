@@ -109,6 +109,7 @@ void Tram::obstacleTracking()
     {
         m_obstacle->addMessage(new Message(this,Message::IsCrossed));
         m_obstacle = NULL;
+        m_state = Tram::Acceleration;
     }
 
 }
