@@ -31,6 +31,10 @@ void StationLight::addStation(Station* s){
     m_station = s;
 }
 
+Station* station(){
+    return m_station;
+}
+
 void StationLight::handleNewMessage(){
     while(m_messageList.size())
     {

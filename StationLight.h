@@ -42,6 +42,11 @@ public:
      */
     void addStation(Station*);
     /**
+     * @brief Permet d'obtenir la station de rattachement du feu.
+     * @return la station de rattachement du feu
+     */
+    Station * station();
+    /**
      * @brief Représente un tour de timer.
      */
     void tick(){}
