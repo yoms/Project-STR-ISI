@@ -45,10 +45,15 @@ void ObstacleWidget::updateObstacleInformation()
     this->ui->m_name->setText(m_obstacle->name());
     if(m_obstacle->indicateState())
     {
-        this->ui->m_etat->setCheckState(Qt::Unchecked);
+        this->ui->m_color->setStyleSheet("background-color: #00ff00");
     }
     else
     {
-        this->ui->m_etat->setCheckState(Qt::Checked);
+        this->ui->m_color->setStyleSheet("background-color: #ff0000");
     }
+}
+
+void ObstacleWidget::on_m_etat_clicked()
+{
+    m_obstacle->changeState();
 }

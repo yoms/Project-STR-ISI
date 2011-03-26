@@ -50,6 +50,7 @@ public:
     ~ObstacleWidget();
 
 private slots:
+    void on_m_etat_clicked();
     void updateObstacleInformation();
 private:
     Ui::ObstacleWidget *ui;

@@ -47,6 +47,10 @@ public:
      */
     virtual bool indicateState() = 0;
     /**
+     * @brief Change l'état de l'obstacle.
+     */
+    virtual void changeState() = 0;
+    /**
      * @brief Indique le lieu de l'obstacle.
      * @return le lieu
      */

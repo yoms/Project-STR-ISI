@@ -109,6 +109,23 @@ bool Light::indicateState() {
     }
 }
 
+void Light::changeState(){
+
+    switch(this->m_state)
+    {
+    case Light::Red:
+        {
+            this->m_state = Light::Green;
+            break;
+        }
+    case Light::Green:
+        {
+            this->m_state = Light::Red;
+            break;
+        }
+    }
+}
+
 void Light::setColor(Light::Color state) {
     this->m_state = state;
 }

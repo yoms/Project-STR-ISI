@@ -41,7 +41,8 @@ TramPropertiesWidget::~TramPropertiesWidget()
 
 void TramPropertiesWidget::updateTramInformation()
 {
-    this->ui->m_velocity->setText(QString::number(m_tram->velocity()));
+    this->ui->m_name->setText(m_tram->name());
+    this->ui->m_velocity->setText(QString::number((40 - m_tram->velocity()))+" km/h");
     switch(m_tram->state())
     {
     case Tram::On:
@@ -51,10 +52,10 @@ void TramPropertiesWidget::updateTramInformation()
         this->ui->m_state->setText("Arret");
         break;
     case Tram::Acceleration:
-        this->ui->m_state->setText("Acceleration");
+        this->ui->m_state->setText("Accelere");
         break;
     case Tram::Desceleration:
-        this->ui->m_state->setText("Desceleration");
+        this->ui->m_state->setText("Ralenti");
         break;
     }
 }

@@ -118,7 +118,7 @@ void TramWindow::setupTrip1()
         feuS1->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS1;
         feuS1->setPlace(last);
-        feuS1->setName("LightS1");
+        feuS1->setName("Station 1");
 //        feuS1->setColor(Light::Red);
         feuS1->addStation(s1);
         s1->addStationLight(feuS1);
@@ -139,7 +139,7 @@ void TramWindow::setupTrip1()
     f1->setCoordinate(last+QPoint(0,-5));
     m_obstacleList << f1;
     f1->setPlace(last);
-    f1->setName("F1");
+    f1->setName("Feu 1");
     f1->setColor(Light::Green);
     f1->setPreviousLight(feuS1);
     f1->start();
@@ -199,7 +199,7 @@ void TramWindow::setupTrip1()
     f2->setCoordinate(last+QPoint(0,-5));
     m_obstacleList << f2;
     f2->setPlace(last);
-    f2->setName("F2");
+    f2->setName("Feu 2");
     f2->setColor(Light::Red);
     f2->setPreviousLight(f1);
     f2->start();
@@ -222,7 +222,7 @@ void TramWindow::setupTrip1()
     feuS2->setCoordinate(last+QPoint(0,-5));
     m_obstacleList << feuS2;
     feuS2->setPlace(last);
-    feuS2->setName("LightS2");
+    feuS2->setName("Station 2");
     feuS2->setColor(Light::Red);
     feuS2->setPreviousLight(f2);
     feuS2->addStation(s2);
@@ -254,7 +254,7 @@ void TramWindow::setupTrip1()
         feuS3->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS3;
         feuS3->setPlace(last);
-        feuS3->setName("LightS3");
+        feuS3->setName("Station 3");
         feuS3->addStation(s2);
         s3->addStationLight(feuS3);
         feuS3->start();
@@ -332,7 +332,7 @@ void TramWindow::setupTrip1()
         feuS4->setCoordinate(last+QPoint(0,-5));
         m_obstacleList << feuS4;
         feuS4->setPlace(last);
-        feuS4->setName("LightS4");
+        feuS4->setName("Station 4");
         feuS4->addStation(s2);
         s4->addStationLight(feuS4);
         feuS4->start();
@@ -376,7 +376,7 @@ void TramWindow::setupTrip2()
 
     feustation->setCoordinate(last+QPoint(5,5));
     feustation->setPlace(last+QPoint(1,0));
-    feustation->setName("LightS4");
+    feustation->setName("Station 1");
     feustation->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation);
     m_obstacleList << feustation;
@@ -394,7 +394,7 @@ void TramWindow::setupTrip2()
     feu->setCoordinate(last+QPoint(-200,5));
     m_obstacleList << feu;
     feu->setPlace(last+QPoint(-200,0));
-    feu->setName("F1");
+    feu->setName("Feu 1");
     feu->setColor(Light::Green);
     feu->setPreviousLight(feustation);
     feu->start();
@@ -403,7 +403,7 @@ void TramWindow::setupTrip2()
     feuret->setCoordinate(lastret+QPoint(200,5));
     m_obstacleList << feuret;
     feuret->setPlace(lastret+QPoint(200,0));
-    feuret->setName("F1");
+    feuret->setName("Feu 2");
     feuret->setColor(Light::Green);
     feuret->setPreviousLight(feustation2);
     feuret->start();
@@ -412,7 +412,7 @@ void TramWindow::setupTrip2()
     feu1->setCoordinate(last+QPoint(-150,5));
     m_obstacleList << feu1;
     feu1->setPlace(last+QPoint(-150,0));
-    feu1->setName("F2");
+    feu1->setName("Feu 3");
     feu1->setColor(Light::Green);
     feu1->setPreviousLight(feu);
     feu1->start();
@@ -421,7 +421,7 @@ void TramWindow::setupTrip2()
     feuret1->setCoordinate(lastret+QPoint(150,5));
     m_obstacleList << feuret1;
     feuret1->setPlace(lastret+QPoint(150,0));
-    feuret1->setName("F1");
+    feuret1->setName("Feu 4");
     feuret1->setColor(Light::Green);
     feuret1->setPreviousLight(feuret);
     feuret1->start();
@@ -430,7 +430,7 @@ void TramWindow::setupTrip2()
     feu2->setCoordinate(last+QPoint(-100,5));
     m_obstacleList << feu2;
     feu2->setPlace(last+QPoint(-100,0));
-    feu2->setName("F3");
+    feu2->setName("Feu 5");
     feu2->setColor(Light::Green);
     feu2->setPreviousLight(feu1);
     feu2->start();
@@ -439,7 +439,7 @@ void TramWindow::setupTrip2()
     feuret2->setCoordinate(lastret+QPoint(100,5));
     m_obstacleList << feuret2;
     feuret2->setPlace(lastret+QPoint(100,0));
-    feuret2->setName("F1");
+    feuret2->setName("Feu 6");
     feuret2->setColor(Light::Green);
     feuret2->setPreviousLight(feuret1);
     feuret2->start();
@@ -449,7 +449,7 @@ void TramWindow::setupTrip2()
     feu3->setCoordinate(last+QPoint(-50,5));
     m_obstacleList << feu3;
     feu3->setPlace(last+QPoint(-50,0));
-    feu3->setName("F3");
+    feu3->setName("Feu 7");
     feu3->setColor(Light::Green);
     feu3->setPreviousLight(feu2);
     feu3->start();
@@ -458,7 +458,7 @@ void TramWindow::setupTrip2()
     feuret3->setCoordinate(lastret+QPoint(50,5));
     m_obstacleList << feuret3;
     feuret3->setPlace(lastret+QPoint(50,0));
-    feuret3->setName("F1");
+    feuret3->setName("Feu 8");
     feuret3->setColor(Light::Green);
     feuret3->setPreviousLight(feuret2);
     feuret3->start();
@@ -470,7 +470,7 @@ void TramWindow::setupTrip2()
 
     feustation2->setCoordinate(last+QPoint(-5,5));
     feustation2->setPlace(last);
-    feustation2->setName("LightS3");
+    feustation2->setName("Station 2");
     feustation2->setPreviousLight(feu3);
     feustation2->addStation(m_stationList.last());
     m_stationList.last()->addStationLight(feustation2);

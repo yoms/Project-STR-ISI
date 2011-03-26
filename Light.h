@@ -55,6 +55,10 @@ public:
      */
     bool indicateState();
     /**
+     * @brief Change l'état de l'obstacle.
+     */
+    void changeState();
+    /**
      * @brief Dessine le feu.
      */
     void draw(QPainter *);
