@@ -21,6 +21,7 @@
  */
 
 #include "Person.h"
+#include <QDebug>
 
 Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5)
 {
@@ -33,7 +34,8 @@ Person::~Person()
 
 void Person::run()
 {
-
+    for(;;)
+    {};
 }
 void Person::buyTicket()
 {
@@ -55,6 +57,7 @@ void Person::getOnTheTram(Container* tram)
     this->m_container->enter(this);
     // A remplacer par : m_state == Person::NeedPunchTicket;
     m_state == Person::NeedGetOffTheTram;
+    qDebug() << "Personne passe de station à tram";
     // A ajouter : this->punchTicket();
 }
 
@@ -65,6 +68,7 @@ void Person::getOffTheTram(Container* station)
     this->m_container->enter(this);
     // A remplacer par : m_state == Person::NeedTicket;
     m_state == Person::NeedGetOnTheTram;
+    qDebug() << "Personne passe de tram à station";
     // A ajouter : this->buyTicket();
 }
 
@@ -82,18 +86,24 @@ void Person::triggerEmergencyStop()
 
 void Person::handleNewMessage()
 {
-
+    qDebug() << "New Message dans Person";
     while(m_messageList.size())
     {
         Message* m = m_messageList.takeFirst();
         switch(m->type())
         {
-            case Message::TramIncoming:
+        case Message::TramIncoming:
+            {
                 if(m_state == Person::NeedGetOnTheTram)
                     getOnTheTram((Container*)m->sender());
-            case Message::ReachingStation:
+            }
+            break;
+        case Message::ReachingStation:
+            {
                 if(m_state == Person::NeedGetOffTheTram)
                     getOffTheTram((Container*)m->sender());
+            }
+            break;
         }
         delete m;
     }

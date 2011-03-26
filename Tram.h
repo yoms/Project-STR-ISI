@@ -148,7 +148,7 @@ private:
     pthread_mutex_t m_mutex;
     State m_state;
     Obstacle* m_obstacle;
-    Person* m_persons;
+    bool dooropened;
 };
 
 #endif // TRAM_H

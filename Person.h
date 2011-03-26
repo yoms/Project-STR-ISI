@@ -25,6 +25,7 @@
 #include "ThreadWithMessages.h"
 #include "Tram.h"
 #include "Station.h"
+#include <QString>
 class Container;
 
 /**
@@ -39,6 +40,7 @@ public:
         NeedPunchTicket,
         NeedGetOffTheTram
     };
+    QString m_name;
     /**
      * @brief Construit un groupe de passagers.
      */

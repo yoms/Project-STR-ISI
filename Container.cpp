@@ -1,15 +1,24 @@
 #include "Container.h"
 
 Container::Container()
-{}
+{
+
+}
 
 Container::~Container()
 {
-    // TODO : Detruire les personnes une par une de la QList sinon Martine s'en chargera et ça sera pas beau à voir
+    while(m_persons.size()){
+        Person * p = m_persons.takeFirst();
+        delete p;
+    }
 }
 
-void Container::quit(Person *)
-{}
+void Container::quit(Person * p)
+{
+    m_persons.removeAt(m_persons.indexOf(p));
+}
 
-void Container::enter(Person *)
-{}
+void Container::enter(Person * p)
+{
+    m_persons.append(p);
+}

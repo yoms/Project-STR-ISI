@@ -78,7 +78,6 @@ public:
     void stopGetOnTheTram();
 private:
     StationLight* m_stationLight;
-    Person* m_persons;
 };
 
 #endif // STATION_H

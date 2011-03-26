@@ -2,7 +2,6 @@
 #define CONTAINER_H
 
 #include <QList>
-
 class Person;
 
 /**

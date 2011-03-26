@@ -39,7 +39,7 @@
 
 Tram::Tram():Drawable(),ThreadWithMessages(), Container()
 {
-    m_persons = new Person;
+    dooropened = false;
     m_obstacle = NULL;
     m_state = Tram::Acceleration;
     m_nbTick = 0;
@@ -90,7 +90,9 @@ void Tram::run()
             case Tram::Off:
                 {
                     m_velocity = VITESSE_MIN;
-                    sendIsStoped();
+//                    if(!dooropened){
+//                        sendIsStoped();
+//                    }
                     // check this.nbPerson et
                 }
                 break;
@@ -179,20 +181,33 @@ void Tram::slowDown()
 
 void Tram::openDoors()
 {
+    dooropened = true;
     qDebug() << "ouverture des portes";
     if(m_obstacle != NULL){
-        Message* m = new Message(this,Message::DoorsOpened);
-        m_obstacle->addMessage(m);
+
+        //Message* m = new Message(this,Message::DoorsOpened);
+        //m_obstacle->addMessage(m);
+        StationLight * stationLight = (StationLight *) m_obstacle;
+        // Envoit du Message aux passagers attendant la station
+        for(int i = 0 ; i < persons().size() ; i++)
+        {
+            Message * m = new Message(stationLight->station(), Message::ReachingStation);
+            persons().at(i)->addMessage(m);
+        }
+        qDebug() << stationLight->station()->name();
+        // Envoit du Message aux passagers attendant le tram
+        QList<Person*> stationPersons = stationLight->station()->persons();
+        for(int i = 0 ; i < stationPersons.size() ; i++)
+        {
+            qDebug() << stationPersons.at(i)->m_name;
+            Message * m = new Message(this, Message::TramIncoming);
+            stationPersons.at(i)->addMessage(m);
+        }
     }
 }
 
 void Tram::closeDoors()
 {
-    if(m_obstacle != NULL){
-        sleep(2);
-        Message* m = new Message(this,Message::DoorsClosed);
-        m_obstacle->addMessage(m);
-    }
 }
 
 void Tram::handleNewMessage()
@@ -215,18 +230,18 @@ void Tram::handleNewMessage()
             break;
         case Message::WaitDoorClosed:
             {
-                if(m_state == Tram::Off)
+                if(m_state == Tram::Off && !dooropened)
                 {
-                    this->closeDoors();
+                    this->openDoors();
+                    closeDoors();
                 }
             }
             break;
-        case Message::OpenDoors:
-            {
-                qDebug() << "ouverture des portes";
-                openDoors();
-            }
-            break;
+//        case Message::OpenDoors:
+//            {
+
+//            }
+//            break;
         }
         delete m;
     }

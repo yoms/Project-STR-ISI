@@ -27,8 +27,6 @@
 #define SIZE_STATION 5
 Station::Station():ThreadWithMessages(), Container()
 {
-    m_persons = new Person;
-    m_persons->setContainer(this);
 }
 void Station::draw(QPainter *painter)
 {
@@ -79,10 +77,14 @@ void Station::handleNewMessage()
 
 void Station::startGetOnTheTram()
 {
-    m_persons->addMessage(new Message(this,Message::DoorsOpened));
+    for(int i = 0 ; i < persons().size() ; i++){
+        persons().at(i)->addMessage(new Message(this,Message::DoorsOpened));
+    }
 }
 
 void Station::stopGetOnTheTram()
 {
-    m_persons->addMessage(new Message(this,Message::DoorsClosing));
+    for(int i = 0 ; i < persons().size() ; i++){
+        persons().at(i)->addMessage(new Message(this,Message::DoorsClosing));
+    }
 }

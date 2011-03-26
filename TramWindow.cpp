@@ -381,6 +381,9 @@ void TramWindow::setupTrip2()
     m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
     m_stationList.last()->setName("HautGauche");
+    Person * p = new Person();
+    p->m_name = "Person1";
+    m_stationList.last()->enter(p);
 
     StationLight* feustation = new StationLight;
     StationLight* feustation2 = new StationLight;
@@ -504,24 +507,24 @@ void TramWindow::setupTrip2()
     m_tramList << tram2;
     tram2->setTrip(m_trajetList.last());
     tram2->setName("Tram2");
-
-    Tram * tram3 = new Tram;
-    m_tramList << tram3;
-    tram3->setTrip(m_trajetList.first());
-    tram3->setCoordinate(QPoint(80,250));
-    tram3->setName("Tram3");
+//    Tram * tram3 = new Tram;
+//    m_tramList << tram3;
+//    tram3->setTrip(m_trajetList.first());
+//    tram3->setCoordinate(QPoint(80,250));
+//    tram3->setName("Tram3");
+//    tram3->start();
 
     Tram * tram4 = new Tram;
     m_tramList << tram4;
     tram4->setTrip(m_trajetList.last());
     tram4->setCoordinate(QPoint(80,282));
     tram4->setName("Tram4");
-
-    Tram * tram5 = new Tram;
-    m_tramList << tram5;
-    tram5->setTrip(m_trajetList.last());
-    tram5->setCoordinate(QPoint(151,282));
-    tram5->setName("Tram5");
+//    Tram * tram5 = new Tram;
+//    m_tramList << tram5;
+//    tram5->setTrip(m_trajetList.last());
+//    tram5->setCoordinate(QPoint(151,282));
+//    tram5->setName("Tram5");
+//    tram5->start();
 
 //    Tram * tram5 = new Tram;
 //    m_tramList << tram5;
