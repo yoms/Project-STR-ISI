@@ -41,7 +41,7 @@ public:
     /**
      * @brief Détruit le trajet.
      */
-    ~Trip(){}
+    virtual ~Trip(){}
     /**
      * @brief Change le trajet retour.
      * @param le nouveau trajet

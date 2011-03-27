@@ -37,7 +37,7 @@ public:
     /**
      * @brief Detruit une borne d'achat.
      */
-    ~PurchasingTerminal();
+    virtual ~PurchasingTerminal();
     /**
      * @brief Représente le comportement d'une borne d'achat.
      */

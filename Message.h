@@ -101,7 +101,7 @@ public:
     /**
      * @brief Détruit un message.
      */
-    ~Message(){}
+    virtual ~Message(){}
     /**
      * @brief Retourne l'émetteur du message.
      * @return L'émetteur du message

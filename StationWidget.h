@@ -47,7 +47,7 @@ public:
     /**
      * @brief Détruit le widget.
      */
-    ~StationWidget();
+    virtual ~StationWidget();
 private slots:
     void updateStationInformation();
 private:

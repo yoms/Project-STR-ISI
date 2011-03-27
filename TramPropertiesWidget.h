@@ -47,7 +47,7 @@ public:
     /**
      * @brief Détruit le widget.
      */
-    ~TramPropertiesWidget();
+    virtual ~TramPropertiesWidget();
 private slots:
     void updateTramInformation();
 private:

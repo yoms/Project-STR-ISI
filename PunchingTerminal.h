@@ -38,7 +38,7 @@ public:
     /**
      * @brief Detruit un composteur.
      */
-    ~PunchingTerminal();
+    virtual ~PunchingTerminal();
     /**
      * @brief Représente le comportement d'un composteur.
      */

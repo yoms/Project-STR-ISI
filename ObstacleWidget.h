@@ -47,7 +47,7 @@ public:
     /**
      * @brief Détriut un obstacle.
      */
-    ~ObstacleWidget();
+    virtual ~ObstacleWidget();
 
 private slots:
     void on_m_etat_clicked();
