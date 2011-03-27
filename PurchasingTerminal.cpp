@@ -23,17 +23,25 @@
 #include "PurchasingTerminal.h"
 #include <QDebug>
 
+int PurchasingTerminal::globalId = 0;
 
-PurchasingTerminal::PurchasingTerminal()
-{}
+PurchasingTerminal::PurchasingTerminal(): ThreadWithMessages()
+{
+    globalId ++;
+    Q_ASSERT(globalId < 10);
+    this->id = globalId;
+}
 
+// TODO créer un destructeur qui appelle une fonction deletePurchasingTerminal(this->id)
 PurchasingTerminal::~PurchasingTerminal()
 {}
 
 void PurchasingTerminal::run()
 {}
 
-bool PurchasingTerminal::giveTicket() {
+void PurchasingTerminal::giveTicket()
+{
+    qDebug() << "Giving ticket";
 }
 
 void PurchasingTerminal::handleNewMessage()

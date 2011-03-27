@@ -43,10 +43,9 @@ public:
      */
     void run();
     /**
-     * @brief Représente une borne d'achat.
-     * @return vrai si le ticket est donné et faux sinon
+     * @brief Donne un ticket.
      */
-    bool giveTicket();
+    void giveTicket();
     /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe

@@ -30,8 +30,6 @@ extern "C" {
 
 int PunchingTerminal::globalId = 0;
 
-// TODO créer un destructeur qui appelle une fonction adaDeleteTerminalPunching
-
 PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
 {
     globalId ++;
@@ -39,6 +37,7 @@ PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
     this->id = globalId;
 }
 
+// TODO créer un destructeur qui appelle une fonction deletePunchingTerminal(this->id)
 PunchingTerminal::~PunchingTerminal() {}
 
 void PunchingTerminal::run() {}
@@ -47,5 +46,6 @@ void PunchingTerminal::handleNewMessage() {}
 
 void PunchingTerminal::punchTicket()
 {
+    qDebug() << "Punching ticket";
     //adaPunchTicket(1);
 }
