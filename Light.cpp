@@ -26,8 +26,7 @@
 #include <QDebug>
 #define SIZE_LIGHT 3
 Light::Light():m_state(Light::Green),m_previousLight(NULL)
-{
-}
+{}
 
 void Light::draw(QPainter * painter)
 {
@@ -35,20 +34,15 @@ void Light::draw(QPainter * painter)
     switch(this->m_state)
     {
     case Light::Red:
-        {
-            painter->setPen(Qt::red);
-            painter->setBrush(QBrush(Qt::red));
-        }
-    break;
+        painter->setPen(Qt::red);
+        painter->setBrush(QBrush(Qt::red));
+        break;
     case Light::Green:
-        {
-            painter->setPen(Qt::green);
-            painter->setBrush(QBrush(Qt::green));
-        }
-    break;
+        painter->setPen(Qt::green);
+        painter->setBrush(QBrush(Qt::green));
+        break;
     }
     drawElemScen(painter, m_coordinate.x(), m_coordinate.y(), SIZE_LIGHT);
-
     painter->setPen(Qt::darkGray);
     painter->setBrush(QBrush(Qt::darkGray));
     painter->restore();
@@ -64,42 +58,35 @@ void Light::run()
 }
 void Light::handleNewMessage()
 {
-
     while(m_messageList.size())
     {
         Message* m = m_messageList.takeFirst();
         switch(m->type())
         {
-            case Message::Request:
-            {
-                if(m_state == Light::Red) {
-                    m->sender()->addMessage(new Message(this,Message::Stop));
-                }
-                else if(m_state == Light::Green) {
-                    m->sender()->addMessage(new Message(this,Message::Cross));
-                }
-            }
-            break;
+            case Message::TramToLightRequest:
+                if(m_state == Light::Red)
+                    m->sender()->addMessage(new Message(this,Message::LightToTramStop));
+                else if(m_state == Light::Green)
+                    m->sender()->addMessage(new Message(this,Message::LightToTramCross));
+                break;
             case Message::IsCrossed:
-            {
                 m_state = Light::Red;
-                if(m_previousLight != NULL) {
+                if(m_previousLight != NULL)
+                {
                     Message * m1 = new Message(this, Message::IsFree);
                     m_previousLight->addMessage(m1);
                 }
-            }
-            break;
-        case Message::IsFree:
-            {
+                break;
+            case Message::IsFree:
                 m_state = Light::Green;
-            }
-            break;
+                break;
         }
         delete m;
     }
 }
 
-bool Light::indicateState() {
+bool Light::indicateState()
+{
     switch(this->m_state)
     {
     case Light::Red:
@@ -109,31 +96,30 @@ bool Light::indicateState() {
     }
 }
 
-void Light::changeState(){
-
+void Light::changeState()
+{
     switch(this->m_state)
     {
     case Light::Red:
-        {
-            this->m_state = Light::Green;
-            break;
-        }
+        this->m_state = Light::Green;
+        break;
     case Light::Green:
-        {
-            this->m_state = Light::Red;
-            break;
-        }
+        this->m_state = Light::Red;
+        break;
     }
 }
 
-void Light::setColor(Light::Color state) {
+void Light::setColor(Light::Color state)
+{
     this->m_state = state;
 }
 
-Light::Color Light::state() {
+Light::Color Light::state()
+{
     return this->m_state;
 }
 
-void Light::setPreviousLight(Light * f) {
+void Light::setPreviousLight(Light * f)
+{
     m_previousLight = f;
 }

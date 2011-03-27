@@ -39,15 +39,15 @@ public:
         /**
          * @brief Envoyé par un tram vers un feu pour demander le passage.
          */
-        Request,
+        TramToLightRequest,
         /**
          * @brief Envoyé par un feu vers un tram pour signifier qu'il doit s'arréter.
          */
-        Stop,
+        LightToTramStop,
         /**
-         * @brief Envoyé par vers un pour.
+         * @brief Envoyé par un feu vers un tram pour signifier qu'il peut passer.
          */
-        Cross,
+        LightToTramCross,
         /**
          * @brief Envoyé par un tram vers un feu pour signifier le passage.
          */

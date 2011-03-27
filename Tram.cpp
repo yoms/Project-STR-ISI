@@ -63,39 +63,29 @@ void Tram::run()
             switch(m_state)
             {
             case Tram::Acceleration:
-                {
-                    speedUp();
-                    move();
-                }
+                speedUp();
+                move();
                 break;
             case Tram::Desceleration:
+                slowDown();
+                if(m_obstacle != NULL)
                 {
-                    slowDown();
-                    if(m_obstacle != NULL)
+                    if(m_obstacle->place() == m_trip->next(m_coordinate))
                     {
-                        if(m_obstacle->place() == m_trip->next(m_coordinate))
-                        {
-                            m_velocity = VITESSE_MIN;
-                            m_state = Tram::Off;
-                        }
-                        else
-                        {
-                            move();
-                        }
+                        m_velocity = VITESSE_MIN;
+                        m_state = Tram::Off;
                     }
+                    else
+                        move();
                 }
                 break;
             case Tram::On:
-                {
-                    move();
-                }
+                move();
                 break;
             case Tram::Off:
-                {
-                    m_velocity = VITESSE_MIN;
-                    sendIsStoped();
-                    // check this.nbPerson et
-                }
+                m_velocity = VITESSE_MIN;
+                sendIsStoped();
+                // check this.nbPerson et
                 break;
             }
         }
@@ -107,7 +97,7 @@ void Tram::obstacleTracking()
     if((o = m_trip->obstacleExist(this->m_coordinate)) != NULL)
     {
         m_obstacle = o;
-        m_obstacle->addMessage(new Message(this,Message::Request));
+        m_obstacle->addMessage(new Message(this,Message::TramToLightRequest));
     }
     else if(m_obstacle != NULL)
     {
@@ -121,7 +111,8 @@ void Tram::obstacleTracking()
 void Tram::sendIsStoped()
 {
     qDebug() << "tram stopped";
-    if(m_obstacle != NULL){
+    if(m_obstacle != NULL)
+    {
         Message* m = new Message(this,Message::IsStopped);
         m_obstacle->addMessage(m);
     }
@@ -157,7 +148,6 @@ void Tram::draw(QPainter *painter)
         drawElemScen(painter, buff.x(), buff.y(), SIZE_TRAM);
         buff = this->m_trip->previous(buff);
     }
-
     painter->setPen(Qt::darkGray);
     painter->setBrush(QBrush(Qt::darkGray));
     painter->restore();
@@ -173,9 +163,8 @@ void Tram::speedUp()
 
 void Tram::slowDown()
 {
-    if(m_velocity >= VITESSE_MIN){
+    if(m_velocity >= VITESSE_MIN)
         m_state = Tram::Off;
-    }
     else
         m_velocity += ACCELERATION;
 }
@@ -183,14 +172,13 @@ void Tram::slowDown()
 void Tram::openDoors()
 {
     qDebug() << "ouverture des portes";
-    if(m_obstacle != NULL){
-
-    }
+    //if(m_obstacle != NULL){}
 }
 
 void Tram::closeDoors()
 {
-    if(m_obstacle != NULL){
+    if(m_obstacle != NULL)
+    {
         sleep(2);
         Message* m = new Message(this,Message::DoorsClosed);
         m_obstacle->addMessage(m);
@@ -204,30 +192,20 @@ void Tram::handleNewMessage()
         Message *m = m_messageList.takeFirst();
         switch(m->type())
         {
-        case Message::Stop:
-            {
-                if(m_state != Tram::Off)
-                    m_state = Tram::Desceleration;
-            }
+        case Message::LightToTramStop:
+            if(m_state != Tram::Off)
+                m_state = Tram::Desceleration;
             break;
-        case Message::Cross:
-            {
-                m_state = Tram::Acceleration;
-            }
+        case Message::LightToTramCross:
+            m_state = Tram::Acceleration;
             break;
         case Message::WaitDoorClosed:
-            {
-                if(m_state == Tram::Off)
-                {
-                    this->closeDoors();
-                }
-            }
+            if(m_state == Tram::Off)
+                this->closeDoors();
             break;
         case Message::OpenDoors:
-            {
-                qDebug() << "ouverture des portes";
-                openDoors();
-            }
+            qDebug() << "ouverture des portes";
+            openDoors();
             break;
         }
         delete m;

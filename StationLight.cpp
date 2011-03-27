@@ -28,74 +28,69 @@ StationLight::StationLight():m_free(true),m_doorClosed(true)
     m_state = Light::Red;
 }
 
-void StationLight::addStation(Station* s){
+void StationLight::addStation(Station* s)
+{
     m_station = s;
 }
 
-Station* StationLight::station(){
+Station* StationLight::station()
+{
     return m_station;
 }
 
-void StationLight::handleNewMessage(){
+void StationLight::handleNewMessage()
+{
     while(m_messageList.size())
     {
         Message* m = m_messageList.takeFirst();
         switch(m->type()){
-        case Message::Request:
-        {
-            if(m_state == Light::Red) {
-                m->sender()->addMessage(new Message(this,Message::Stop));
+        case Message::TramToLightRequest:
+            if(m_state == Light::Red)
+            {
+                m->sender()->addMessage(new Message(this,Message::LightToTramStop));
                 m->sender()->addMessage(new Message(this, Message::WaitDoorClosed));
             }
-            if(m_state == Light::Green){
-                m->sender()->addMessage(new Message(this,Message::Cross));
-            }
-        }
-        break;
+            if(m_state == Light::Green)
+                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
+            break;
         case Message::IsCrossed:
-        {
             sleep(1);
             qDebug() << this->name() << " isCrossed";
             m_state = Light::Red;
             m_free = false;
             m_doorClosed = false;
-            if(m_previousLight != NULL) {
+            if(m_previousLight != NULL)
+            {
                 Message * m1 = new Message(this, Message::IsFree);
                 m_previousLight->addMessage(m1);
             }
-        }
-        break;
+            break;
         case Message::IsFree:
+            m_free = true;
+            if(m_doorClosed && m_free)
             {
-                m_free = true;
-                if(m_doorClosed && m_free)
-                {
-                    m_state = Light::Green;
-                    m->sender()->addMessage(new Message(this,Message::Cross));
-                }
+                m_state = Light::Green;
+                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
             }
-        break;
+            break;
         case Message::DoorsClosed:
+            m_doorClosed = true;
+            if(m_free && m_doorClosed)
             {
-                m_doorClosed = true;
-                if(m_free && m_doorClosed)
-                {
-                    m_state = Light::Green;
-                    m->sender()->addMessage(new Message(this,Message::Cross));
-                }
+                m_state = Light::Green;
+                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
             }
-        break;
+            break;
         case Message::IsStopped:
-            {
-                m->sender()->addMessage(new Message(this,Message::OpenDoors));
-            }
-        break;
+            m->sender()->addMessage(new Message(this,Message::OpenDoors));
+            break;
         }
         delete m;
     }
 }
 
-void StationLight::setColor(Light::Color etat) {
+void StationLight::setColor(Light::Color etat)
+{
     this->m_state = etat;
     if(etat == Light::Red)
     {
