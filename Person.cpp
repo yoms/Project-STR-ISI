@@ -51,18 +51,19 @@ void Person::punchTicket(PunchingTerminal * punchingTerm)
 
 void Person::getOnTheTram(Container* tram)
 {
-    qDebug() << "Personne passe de station à tram";
+    qDebug() << "Personne passe de station a tram";
     this->m_container->quit(this);
     this->m_container = tram;
-    this->m_container->enter(this);
+    ((ThreadWithMessages*) tram)->addMessage(new Message(this, Message::EnterTram));
     m_state == Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
     // A ajouter : this->punchTicket();
 }
 
 void Person::getOffTheTram(Container* station)
 {
-    qDebug() << "Personne passe de tram à station";
-    this->m_container->quit(this);
+    qDebug() << "Personne passe de tram a station";
+    ThreadWithMessages* tram = (ThreadWithMessages*)this->m_container;
+    tram->addMessage(new Message(this, Message::QuitTram));
     this->m_container = station;
     this->m_container->enter(this);
     m_state == Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
@@ -75,7 +76,6 @@ void Person::triggerEmergencyStop()
 
 void Person::handleNewMessage()
 {
-    qDebug() << "New Message dans Person";
     while(m_messageList.size())
     {
         Message* m = m_messageList.takeFirst();

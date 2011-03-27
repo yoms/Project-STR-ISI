@@ -75,7 +75,15 @@ public:
         /**
          * @brief Envoyé par un tram aux personnes attendant à la station pour leur indiquer son arrivée.
          */
-        TramIncoming
+        TramIncoming,
+        /**
+         * @brief Envoyé par une personne au tram pour lui indiquer qu'elle monte dedans.
+         */
+        EnterTram,
+        /**
+         * @brief Envoyé par une personne au tram pour lui indiquer qu'elle le quitte.
+         */
+        QuitTram
     };
     /**
      * @brief Construit un message.

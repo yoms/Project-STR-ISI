@@ -112,7 +112,7 @@ void Tram::obstacleTracking()
 
 void Tram::sendIsStoped()
 {
-    qDebug() << "tram stopped";
+    qDebug() << "Arret du tram";
     if(m_obstacle != NULL)
     {
         Message* m = new Message(this,Message::IsStopped);
@@ -186,7 +186,7 @@ void Tram::manageStationStop()
     for(int i = 0 ; i < stationPersons.size() ; i++)
     {
         Message * m = new Message(this, Message::TramIncoming);
-        //stationPersons.at(i)->addMessage(m);   // LIGNE QUI BUG
+        stationPersons.at(i)->addMessage(m);
     }
     qDebug() << "fermeture des portes";
     Message* m = new Message(this,Message::DoorsClosed);
@@ -209,6 +209,12 @@ void Tram::handleNewMessage()
             break;
         case Message::ManageStationStop:
             manageStationStop();
+            break;
+        case Message::EnterTram:
+            this->enter((Person*)m->sender());
+            break;
+        case Message::QuitTram:
+            this->quit((Person*)m->sender());
             break;
         }
         delete m;
