@@ -35,6 +35,7 @@ PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
     globalId ++;
     Q_ASSERT(globalId < 10);
     this->id = globalId;
+    //createPunchingTerminal(this->id);
 }
 
 // TODO créer un destructeur qui appelle une fonction deletePunchingTerminal(this->id)
@@ -47,5 +48,5 @@ void PunchingTerminal::handleNewMessage() {}
 void PunchingTerminal::punchTicket()
 {
     qDebug() << "Punching ticket";
-    //adaPunchTicket(1);
+    //adaPunchTicket(this->id);
 }

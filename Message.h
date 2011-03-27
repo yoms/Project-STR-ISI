@@ -113,6 +113,11 @@ public:
      * @return Type du message.
      */
     TypeMessage type();
+    /**
+     * @brief Retourne le contenu du message.
+     * @return Le contenu du message
+     */
+    void* content() {return this->m_content;}
 private:
     ThreadWithMessages * m_sender;
     TypeMessage m_type;

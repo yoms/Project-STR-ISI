@@ -81,16 +81,12 @@ void Person::handleNewMessage()
         switch(m->type())
         {
         case Message::TramIncoming:
-            {
-                if(m_state == Person::NeedGetOnTheTram)
-                    getOnTheTram((Container*)m->sender());
-            }
+            if(m_state == Person::NeedGetOnTheTram)
+                getOnTheTram((Container*)m->sender());
             break;
         case Message::ReachingStation:
-            {
-                if(m_state == Person::NeedGetOffTheTram)
-                    getOffTheTram((Container*)m->sender());
-            }
+            if(m_state == Person::NeedGetOffTheTram)
+                getOffTheTram((Container*)m->content());
             break;
         }
         delete m;
