@@ -41,11 +41,13 @@
 Tram::Tram():Drawable(),ThreadWithMessages(), Container()
 {
     m_obstacle = NULL;
+    m_punchingTerminal = NULL;
     m_state = Tram::Acceleration;
     m_nbTick = 0;
     m_velocity = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
     PunchingTerminal* m_punchingTerminal = new PunchingTerminal;
+    m_punchingTerminal->start();
 }
 Tram::~Tram()
 {
