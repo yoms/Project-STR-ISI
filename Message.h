@@ -86,11 +86,18 @@ public:
         TramIncoming
     };
     /**
-     * @brief Représente le type du message.
-     * @param Emetteur du message.
-     * @param Type du message.
+     * @brief Construit un message.
+     * @param Emetteur du message
+     * @param Type du message
      */
     Message(ThreadWithMessages*, TypeMessage);
+    /**
+    * @brief Construit un message.
+    * @param Emetteur du message
+    * @param Type du message
+    * @param Contenu du message
+    */
+   Message(ThreadWithMessages*, TypeMessage, void *);
     /**
      * @brief Détruit un message.
      */
@@ -113,6 +120,7 @@ public:
 private:
     ThreadWithMessages * m_sender;
     TypeMessage m_type;
+    void * m_content;
     Message(){}
 };
 

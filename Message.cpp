@@ -22,7 +22,11 @@
 
 #include "Message.h"
 
-Message::Message(ThreadWithMessages *t , TypeMessage type):m_sender(t), m_type(type)
+Message::Message(ThreadWithMessages *t , TypeMessage type):m_sender(t), m_type(type), m_content(NULL)
+{
+}
+
+Message::Message(ThreadWithMessages *t , TypeMessage type, void* content):m_sender(t), m_type(type), m_content(content)
 {
 }
 
