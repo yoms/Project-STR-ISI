@@ -29,6 +29,7 @@
 Station::Station():Container()
 {
     m_purchasingTerminal = new PurchasingTerminal;
+    m_purchasingTerminal->start();
 }
 Station::~Station()
 {

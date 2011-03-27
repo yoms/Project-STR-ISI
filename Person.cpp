@@ -25,7 +25,7 @@
 #include "PunchingTerminal.h"
 #include <QDebug>
 
-Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5)
+Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5), m_nbTicketToBuy(0), m_nbTicketToPunch(0)
 {}
 Person::~Person()
 {}
@@ -38,15 +38,15 @@ void Person::run()
 void Person::buyTicket(PurchasingTerminal * purchasingTerm)
 {
     for(int i=0; i<m_nbPerson; i++)
-        purchasingTerm->giveTicket();
-    m_state == Person::NeedGetOnTheTram;
+        purchasingTerm->addMessage(new Message(this,Message::BuyTicket));
+    m_nbTicketToBuy += m_nbPerson;
 }
 
 void Person::punchTicket(PunchingTerminal * punchingTerm)
 {
     for(int i=0; i<m_nbPerson; i++)
-        punchingTerm->punchTicket();
-    m_state == Person::NeedGetOffTheTram;
+        punchingTerm->addMessage(new Message(this,Message::PunchTicket));
+    m_nbTicketToPunch += m_nbPerson;
 }
 
 void Person::getOnTheTram(Container* tram)
@@ -88,6 +88,16 @@ void Person::handleNewMessage()
         case Message::ReachingStation:
             if(m_state == Person::NeedGetOffTheTram)
                 getOffTheTram((Container*)m->content());
+            break;
+        case Message::TicketBought:
+            m_nbTicketToBuy --;
+            if(m_nbTicketToBuy == 0)
+                m_state == Person::NeedGetOnTheTram;
+            break;
+        case Message::TicketPunched:
+            m_nbTicketToPunch --;
+            if(m_nbTicketToPunch == 0)
+                m_state == Person::NeedGetOffTheTram;
             break;
         }
         delete m;

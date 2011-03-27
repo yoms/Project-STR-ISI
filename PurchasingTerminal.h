@@ -43,14 +43,15 @@ public:
      */
     void run();
     /**
-     * @brief Donne un ticket.
-     */
-    void giveTicket();
-    /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("PurchasingTerminal");}
+private:
+    /**
+     * @brief Donne un ticket.
+     */
+    void giveTicket();
 private:
     void handleNewMessage();
     int id;

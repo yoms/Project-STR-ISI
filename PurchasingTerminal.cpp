@@ -37,7 +37,10 @@ PurchasingTerminal::~PurchasingTerminal()
 {}
 
 void PurchasingTerminal::run()
-{}
+{
+    for(;;)
+        sleep(1);
+}
 
 void PurchasingTerminal::giveTicket()
 {
@@ -45,4 +48,17 @@ void PurchasingTerminal::giveTicket()
 }
 
 void PurchasingTerminal::handleNewMessage()
-{}
+{
+    while(!m_messageList.isEmpty())
+    {
+        Message *m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+        case Message::BuyTicket:
+            this->giveTicket();
+            m->sender()->addMessage(new Message(this,Message::TicketBought));
+            break;
+        }
+        delete m;
+    }
+}

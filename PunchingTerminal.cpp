@@ -45,9 +45,27 @@ PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
 // TODO créer un destructeur qui appelle une fonction deletePunchingTerminal(this->id)
 PunchingTerminal::~PunchingTerminal() {}
 
-void PunchingTerminal::run() {}
+void PunchingTerminal::run()
+{
+    for(;;)
+       sleep(1);
+}
 
-void PunchingTerminal::handleNewMessage() {}
+void PunchingTerminal::handleNewMessage()
+{
+    while(!m_messageList.isEmpty())
+    {
+        Message *m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+        case Message::PunchTicket:
+            this->punchTicket();
+            m->sender()->addMessage(new Message(this,Message::TicketPunched));
+            break;
+        }
+        delete m;
+    }
+}
 
 void PunchingTerminal::punchTicket()
 {

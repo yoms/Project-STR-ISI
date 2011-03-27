@@ -101,6 +101,8 @@ private:
     State m_state;
     Container* m_container;
     const int m_nbPerson;
+    int m_nbTicketToBuy;
+    int m_nbTicketToPunch;
 };
 
 #endif // PERSON_H

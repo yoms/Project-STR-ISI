@@ -22,7 +22,6 @@
 
 #ifndef PUNCHINGTERMINAL_H
 #define PUNCHINGTERMINAL_H
-
 #include "ThreadWithMessages.h"
 
 /**
@@ -44,14 +43,15 @@ public:
      */
     void run();
     /**
-     * @brief Composte un ticket.
-     */
-    void punchTicket();
-    /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("PunchingTerminal");}
+private:
+    /**
+     * @brief Composte un ticket.
+     */
+    void punchTicket();
 private:
     void handleNewMessage();
     static int globalId;
