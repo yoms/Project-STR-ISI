@@ -84,11 +84,11 @@ void StationLight::handleNewMessage(){
                 }
             }
         break;
-//        case Message::IsStopped:
-//            {
-//                m->sender()->addMessage(new Message(this,Message::OpenDoors));
-//            }
-//        break;
+        case Message::IsStopped:
+            {
+                m->sender()->addMessage(new Message(this,Message::OpenDoors));
+            }
+        break;
         case Message::DoorsOpened:
             {
                 m_station->addMessage(new Message(this, Message::DoorsOpened));
