@@ -27,6 +27,8 @@
 #include "Station.h"
 #include <QString>
 class Container;
+class PurchasingTerminal;
+class PunchingTerminal;
 
 /**
  * @brief Représente un groupe de passagers.
@@ -56,19 +58,11 @@ public:
     /**
      * @brief Achète un ticket.
      */
-    void buyTicket();
+    void buyTicket(PurchasingTerminal *);
     /**
      * @brief Composte un ticket.
      */
-    void punchTicket();
-    /**
-     * @brief Attend dans la station.
-     */
-    void waitInStation();
-    /**
-     * @brief Attend dans le tram.
-     */
-    void waitInTram();
+    void punchTicket(PunchingTerminal *);
     /**
      * @brief Déclenche un arrêt d'urgence.
      */

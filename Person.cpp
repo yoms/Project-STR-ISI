@@ -21,63 +21,51 @@
  */
 
 #include "Person.h"
+#include "PurchasingTerminal.h"
+#include "PunchingTerminal.h"
 #include <QDebug>
 
 Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5)
-{
-
-}
+{}
 Person::~Person()
-{
-
-}
+{}
 
 void Person::run()
 {
-    for(;;)
-    {};
+    for(;;);
 }
-void Person::buyTicket()
+void Person::buyTicket(PurchasingTerminal * purchasingTerm)
 {
-    //appeler m_nbPerson fois purchaseTicket
-    //ajouter : m_state == Person::NeedGetOnTheTram;
-
+    for(int i=0; i<m_nbPerson; i++)
+        purchasingTerm->giveTicket();
+    m_state == Person::NeedGetOnTheTram;
 }
 
-void Person::punchTicket()
+void Person::punchTicket(PunchingTerminal * punchingTerm)
 {
-    //appeler m_nbPerson fois punchTicket
-    //ajouter : m_state == Person::NeedGetOffTheTram;
+    for(int i=0; i<m_nbPerson; i++)
+        punchingTerm->punchTicket();
+    m_state == Person::NeedGetOffTheTram;
 }
 
 void Person::getOnTheTram(Container* tram)
 {
+    qDebug() << "Personne passe de station à tram";
     this->m_container->quit(this);
     this->m_container = tram;
     this->m_container->enter(this);
-    // A remplacer par : m_state == Person::NeedPunchTicket;
-    m_state == Person::NeedGetOffTheTram;
-    qDebug() << "Personne passe de station à tram";
+    m_state == Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
     // A ajouter : this->punchTicket();
 }
 
 void Person::getOffTheTram(Container* station)
 {
+    qDebug() << "Personne passe de tram à station";
     this->m_container->quit(this);
     this->m_container = station;
     this->m_container->enter(this);
-    // A remplacer par : m_state == Person::NeedTicket;
-    m_state == Person::NeedGetOnTheTram;
-    qDebug() << "Personne passe de tram à station";
+    m_state == Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
     // A ajouter : this->buyTicket();
-}
-
-void Person::waitInStation()
-{
-}
-
-void Person::waitInTram()
-{
 }
 
 void Person::triggerEmergencyStop()
