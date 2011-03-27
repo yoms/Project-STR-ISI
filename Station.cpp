@@ -22,11 +22,17 @@
 
 #include "Station.h"
 #include "Container.h"
+#include "PurchasingTerminal.h"
 #include <QPainter>
 #include <QDebug>
 #define SIZE_STATION 5
 Station::Station():Container()
 {
+    m_purchasingTerminal = new PurchasingTerminal;
+}
+Station::~Station()
+{
+    delete m_purchasingTerminal;
 }
 void Station::draw(QPainter *painter)
 {

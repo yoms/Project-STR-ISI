@@ -28,6 +28,7 @@
 #include "Timer.h"
 #include "Person.h"
 #include "Container.h"
+class PurchasingTerminal;
 class StationLight;
 class Person;
 
@@ -41,6 +42,10 @@ public:
      * @brief Construit une station.
      */
     Station();
+    /**
+     * @brief Detruit une station.
+     */
+    virtual ~Station();
     /**
      * @brief Dessine une station.
      * @param
@@ -56,8 +61,14 @@ public:
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("Station");}
+    /**
+     * @brief Retourne la borne d'achat du tram.
+     * @return la borne d'achat du tram
+     */
+    PurchasingTerminal* purchasingTerminal() {return m_purchasingTerminal;}
 private:
     StationLight* m_stationLight;
+    PurchasingTerminal* m_purchasingTerminal;
 };
 
 #endif // STATION_H
