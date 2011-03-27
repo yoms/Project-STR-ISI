@@ -381,10 +381,13 @@ void TramWindow::setupTrip2()
     m_stationList << new Station();
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
     m_stationList.last()->setName("HautGauche");
+
+    // TODO : remove fake person
     Person * p = new Person();
     p->m_name = "Person1";
     m_stationList.last()->enter(p);
     p->setContainer(m_stationList.last());
+    p->start();
 
     StationLight* feustation = new StationLight;
     StationLight* feustation2 = new StationLight;

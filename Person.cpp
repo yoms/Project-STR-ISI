@@ -32,7 +32,8 @@ Person::~Person()
 
 void Person::run()
 {
-    for(;;);
+    for(;;)
+        sleep(1);
 }
 void Person::buyTicket(PurchasingTerminal * purchasingTerm)
 {

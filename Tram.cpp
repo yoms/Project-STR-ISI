@@ -174,7 +174,20 @@ void Tram::slowDown()
 void Tram::manageStationStop()
 {
     qDebug() << "ouverture des portes";
-    sleep(2);
+    StationLight * stationLight = (StationLight *) m_obstacle;
+    qDebug() << "--les passagers descendent";
+    for(int i = 0 ; i < persons().size() ; i++)
+    {
+        Message * m = new Message(this, Message::ReachingStation,(void*)stationLight->station());
+        persons().at(i)->addMessage(m);
+    }
+    qDebug() << "--les passagers montent";
+    QList<Person*> stationPersons = stationLight->station()->persons();
+    for(int i = 0 ; i < stationPersons.size() ; i++)
+    {
+        Message * m = new Message(this, Message::TramIncoming);
+        //stationPersons.at(i)->addMessage(m);   // LIGNE QUI BUG
+    }
     qDebug() << "fermeture des portes";
     Message* m = new Message(this,Message::DoorsClosed);
     m_obstacle->addMessage(m);
