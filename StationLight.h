@@ -47,10 +47,6 @@ public:
      */
     Station * station();
     /**
-     * @brief Représente un tour de timer.
-     */
-    void tick(){}
-    /**
      * @brief Traite le nouveau message.
      */
     void handleNewMessage();

@@ -180,8 +180,7 @@ void Tram::openDoors()
 {
     qDebug() << "ouverture des portes";
     if(m_obstacle != NULL){
-        Message* m = new Message(this,Message::DoorsOpened);
-        m_obstacle->addMessage(m);
+
     }
 }
 

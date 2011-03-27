@@ -25,7 +25,7 @@
 #include <QPainter>
 #include <QDebug>
 #define SIZE_STATION 5
-Station::Station():ThreadWithMessages(), Container()
+Station::Station():Container()
 {
 }
 void Station::draw(QPainter *painter)
@@ -45,46 +45,4 @@ void Station::draw(QPainter *painter)
 void Station::addStationLight(StationLight *f)
 {
     m_stationLight = f;
-}
-
-void Station::run()
-{
-    exit(0);
-}
-
-void Station::handleNewMessage()
-{
-
-    while(m_messageList.size())
-    {
-        Message* m = m_messageList.takeFirst();
-        switch(m->type())
-        {
-            case Message::DoorsOpened:
-            {
-                startGetOnTheTram();
-            }
-            break;
-            case Message::DoorsClosing:
-            {
-                stopGetOnTheTram();
-            }
-            break;
-        }
-        delete m;
-    }
-}
-
-void Station::startGetOnTheTram()
-{
-    for(int i = 0 ; i < persons().size() ; i++){
-        persons().at(i)->addMessage(new Message(this,Message::DoorsOpened));
-    }
-}
-
-void Station::stopGetOnTheTram()
-{
-    for(int i = 0 ; i < persons().size() ; i++){
-        persons().at(i)->addMessage(new Message(this,Message::DoorsClosing));
-    }
 }

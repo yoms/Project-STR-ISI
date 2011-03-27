@@ -34,7 +34,7 @@ class Person;
 /**
  * @brief Représente une station.
  */
-class Station : public Drawable, public ThreadWithMessages, public TimerListener, public Container
+class Station : public Drawable, public Container
 {
 public:
     /**
@@ -56,26 +56,6 @@ public:
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("Station");}
-    /**
-     * @brief Traite le nouveau message.
-     */
-    void handleNewMessage();
-    /**
-     * @brief Représente le comportement d'une station.
-     */
-    void run();
-    /**
-     * @brief Représente un tour de timer.
-     */
-    void tick(){}
-    /**
-     * @brief Demander aux passagers de rentrer dans le tram.
-     */
-    void startGetOnTheTram();
-    /**
-     * @brief Demander aux passagers de ne plus rentrer dans le tram.
-     */
-    void stopGetOnTheTram();
 private:
     StationLight* m_stationLight;
 };

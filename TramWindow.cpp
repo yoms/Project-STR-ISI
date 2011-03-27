@@ -384,6 +384,7 @@ void TramWindow::setupTrip2()
     Person * p = new Person();
     p->m_name = "Person1";
     m_stationList.last()->enter(p);
+    p->setContainer(m_stationList.last());
 
     StationLight* feustation = new StationLight;
     StationLight* feustation2 = new StationLight;

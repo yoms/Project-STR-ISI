@@ -89,11 +89,6 @@ void StationLight::handleNewMessage(){
                 m->sender()->addMessage(new Message(this,Message::OpenDoors));
             }
         break;
-        case Message::DoorsOpened:
-            {
-                m_station->addMessage(new Message(this, Message::DoorsOpened));
-            }
-        break;
         }
         delete m;
     }
