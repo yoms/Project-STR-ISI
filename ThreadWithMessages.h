@@ -40,7 +40,7 @@ public:
      * @brief Construit un thread avec une boite à messages.
      */
     ThreadWithMessages();
-    ~ThreadWithMessages();
+    virtual ~ThreadWithMessages();
     /**
      * @brief Ajoute un message à la boite à messages.
      * @param un nouveau message

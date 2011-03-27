@@ -36,6 +36,7 @@
 #include <signal.h>
 #include <time.h>
 #include "Container.h"
+#include "PunchingTerminal.h"
 
 Tram::Tram():Drawable(),ThreadWithMessages(), Container()
 {
@@ -44,8 +45,11 @@ Tram::Tram():Drawable(),ThreadWithMessages(), Container()
     m_nbTick = 0;
     m_velocity = VITESSE_MIN;
     pthread_mutex_init(&m_mutex,NULL);
-    PunchingTerminal *p = new PunchingTerminal;
-    m_punchingTerminalList.append(p);
+    PunchingTerminal* m_punchingTerminal = new PunchingTerminal;
+}
+Tram::~Tram()
+{
+    delete m_punchingTerminal;
 }
 void Tram::run()
 {

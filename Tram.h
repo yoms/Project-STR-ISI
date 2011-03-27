@@ -41,8 +41,8 @@
 
 class QPainter;
 class Trip;
-class PunchingTerminal;
 class Person;
+class PunchingTerminal;
 
 /**
  * @brief Représente un tramway.
@@ -77,7 +77,7 @@ public:
     /**
      * @brief Détruit le tram.
      */
-    virtual ~Tram(){}
+    virtual ~Tram();
     /**
      * @brief Représente un tour de timer.
      */
@@ -138,10 +138,15 @@ public:
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("Tram");}
+    /**
+     * @brief Retourne le composteur du tram.
+     * @return le composteur du tram
+     */
+    PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
 private:
     void handleNewMessage();
-    QList<PunchingTerminal*> m_punchingTerminalList;
 private:
+    PunchingTerminal* m_punchingTerminal;
     Trip* m_trip;
     int m_nbTick;
     int m_velocity;
