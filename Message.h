@@ -73,10 +73,6 @@ public:
          */
         OpenDoors,
         /**
-         * @brief Envoyé par un tram vers un feu station pour signifier qu'il va fermer ses portes.
-         */
-        DoorsClosing,
-        /**
          * @brief Envoyé par un tram à ses passagers pour leur indiquer l'arrêt à une station.
          */
         ReachingStation,
