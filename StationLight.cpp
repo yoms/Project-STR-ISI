@@ -25,6 +25,7 @@
 
 StationLight::StationLight():m_free(true),m_doorClosed(true)
 {
+    m_state = Light::Red;
 }
 
 void StationLight::addStation(Station* s){
