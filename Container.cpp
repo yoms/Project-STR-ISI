@@ -16,7 +16,7 @@ Container::~Container()
 
 void Container::quit(Person * p)
 {
-    m_persons.removeAt(m_persons.indexOf(p));
+    m_persons.removeAll(p);
 }
 
 void Container::enter(Person * p)
