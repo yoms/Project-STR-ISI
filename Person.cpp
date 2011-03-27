@@ -55,7 +55,7 @@ void Person::getOnTheTram(Container* tram)
     this->m_container->quit(this);
     this->m_container = tram;
     ((ThreadWithMessages*) tram)->addMessage(new Message(this, Message::EnterTram));
-    m_state == Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
+    m_state = Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
     // A ajouter : this->punchTicket();
 }
 
@@ -65,8 +65,8 @@ void Person::getOffTheTram(Container* station)
     ThreadWithMessages* tram = (ThreadWithMessages*)this->m_container;
     tram->addMessage(new Message(this, Message::QuitTram));
     this->m_container = station;
-    this->m_container->enter(this);
-    m_state == Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
+    //station->enter(this); ERREUR ICI
+    m_state = Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
     // A ajouter : this->buyTicket();
 }
 
