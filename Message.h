@@ -61,17 +61,13 @@ public:
          */
         DoorsClosed,
         /**
-         * @brief Envoyé par un feu vers un tram pour signifier qu'il attend un signal de porte fermées.
-         */
-        WaitDoorClosed,
-        /**
          * @brief Envoyé par un tram vers un feu station pour signifier qu'il est arrété.
          */
         IsStopped,
         /**
-         * @brief Envoyé par un feu station vers un tram pour signifier qu'il ouvre ses portes.
+         * @brief Envoyé par un feu station vers un tram pour signifier qu'il doit gérer l'arrêt en station.
          */
-        OpenDoors,
+        ManageStationStop,
         /**
          * @brief Envoyé par un tram à ses passagers pour leur indiquer l'arrêt à une station.
          */

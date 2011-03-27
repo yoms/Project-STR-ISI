@@ -169,20 +169,13 @@ void Tram::slowDown()
         m_velocity += ACCELERATION;
 }
 
-void Tram::openDoors()
+void Tram::manageStationStop()
 {
     qDebug() << "ouverture des portes";
-    //if(m_obstacle != NULL){}
-}
-
-void Tram::closeDoors()
-{
-    if(m_obstacle != NULL)
-    {
-        sleep(2);
-        Message* m = new Message(this,Message::DoorsClosed);
-        m_obstacle->addMessage(m);
-    }
+    sleep(2);
+    qDebug() << "fermeture des portes";
+    Message* m = new Message(this,Message::DoorsClosed);
+    m_obstacle->addMessage(m);
 }
 
 void Tram::handleNewMessage()
@@ -199,13 +192,8 @@ void Tram::handleNewMessage()
         case Message::LightToTramCross:
             m_state = Tram::Acceleration;
             break;
-        case Message::WaitDoorClosed:
-            if(m_state == Tram::Off)
-                this->closeDoors();
-            break;
-        case Message::OpenDoors:
-            qDebug() << "ouverture des portes";
-            openDoors();
+        case Message::ManageStationStop:
+            manageStationStop();
             break;
         }
         delete m;

@@ -107,13 +107,9 @@ public:
      */
     void slowDown();
     /**
-     * @brief Ouvre les portes.
+     * @brief Gère l'arrêt en gare.
      */
-    void openDoors();
-    /**
-     * @brief Ferme les portes.
-     */
-    void closeDoors();
+    void manageStationStop();
     /**
      * @brief Change le trajet.
      * @param le nouveau trajet

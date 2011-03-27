@@ -48,7 +48,6 @@ void StationLight::handleNewMessage()
             if(m_state == Light::Red)
             {
                 m->sender()->addMessage(new Message(this,Message::LightToTramStop));
-                m->sender()->addMessage(new Message(this, Message::WaitDoorClosed));
             }
             if(m_state == Light::Green)
                 m->sender()->addMessage(new Message(this,Message::LightToTramCross));
@@ -82,7 +81,7 @@ void StationLight::handleNewMessage()
             }
             break;
         case Message::IsStopped:
-            m->sender()->addMessage(new Message(this,Message::OpenDoors));
+            m->sender()->addMessage(new Message(this,Message::ManageStationStop));
             break;
         }
         delete m;
