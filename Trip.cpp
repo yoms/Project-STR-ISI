@@ -58,14 +58,15 @@ void Trip::setTrip(QList<QPoint> & lp)
 Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
 {
     pthread_mutex_lock(&m_mutexTrip);
+    int indexOf = m_trip.indexOf(monEmplacement);
     foreach(Obstacle* o, m_obstacle)
     {
         int j = 0;
         for(int i = 0; i < distance; i++)
         {
             QPoint oE;
-            if(m_trip.indexOf(monEmplacement)+i < m_trip.size())
-                oE = m_trip.at(m_trip.indexOf(monEmplacement)+i);
+            if(indexOf+i < m_trip.size())
+                oE = m_trip.at(indexOf+i);
             else
             {
                 pthread_mutex_unlock(&m_mutexTrip);
