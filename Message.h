@@ -105,9 +105,13 @@ public:
          */
         PunchTicket,
         /**
-         * @brief Envoyé par un composteur à une personne pour lui indiquer que le ticket est composté..
+         * @brief Envoyé par un composteur à une personne pour lui indiquer que le ticket est composté.
          */
-        TicketPunched
+        TicketPunched,
+        /**
+         * @brief Envoyé par le pcc à un tram pour lui indiquer que le problème est résolu.
+         */
+        Solved
     };
     /**
      * @brief Construit un message.
