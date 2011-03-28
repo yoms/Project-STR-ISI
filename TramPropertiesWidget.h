@@ -49,6 +49,8 @@ public:
      */
     virtual ~TramPropertiesWidget();
 private slots:
+    void on_m_panne_clicked();
+    void on_pushButton_clicked();
     void updateTramInformation();
     void updateTramSelection();
 private:

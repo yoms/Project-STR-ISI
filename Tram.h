@@ -69,7 +69,11 @@ public:
         /**
          * @brief Le tram est à l'arrêt.
          */
-        Off};
+        Off,
+        /**
+         * @brief Le tram est en panne.
+         */
+        OutOfOrder};
     /**
      * @brief Construit un tram.
      */
@@ -126,7 +130,7 @@ public:
      */
     Tram::State state(){return m_state;}
     /**
-     * @brief Envoie une message pour signifier qu'il est arrété.
+     * @brief Envoie un message pour signifier qu'il est arrété.
      */
     void sendIsStoped();
     /**
@@ -139,6 +143,11 @@ public:
      * @return le composteur du tram
      */
     PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
+    /**
+     * @brief Modifie le fait qu'il y ait une anomalie de détectée.
+     * @param vrai s'il y a une anomalie de détectée et faux sinon
+     */
+    void changeProblem(bool b) {m_generateProblem = b;}
 private:
     void handleNewMessage();
 private:
@@ -149,6 +158,9 @@ private:
     pthread_mutex_t m_mutexTram;
     State m_state;
     Obstacle* m_obstacle;
+    bool m_problemDetected;
+    bool m_generateProblem;
+    int m_security;
 };
 
 #endif // TRAM_H
