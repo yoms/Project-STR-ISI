@@ -91,7 +91,23 @@ public:
         /**
          * @brief Envoyé par une personne a la station pour lui indiquer qu'elle la quitte.
          */
-        QuitStation
+        QuitStation,
+        /**
+         * @brief Envoyé par une personne à une borne d'achat pour acheter un ticket.
+         */
+        BuyTicket,
+        /**
+         * @brief Envoyé par une borne d'achat à une personne pour lui indiquer que le ticket est acheté.
+         */
+        TicketBought,
+        /**
+         * @brief Envoyé par une personne à un composteur pour composter un ticket.
+         */
+        PunchTicket,
+        /**
+         * @brief Envoyé par un composteur à une personne pour lui indiquer que le ticket est composté..
+         */
+        TicketPunched
     };
     /**
      * @brief Construit un message.

@@ -44,6 +44,7 @@ Tram::Tram():Drawable(), Container()
 {
     pthread_mutex_init(&m_mutexTram,NULL);
     PunchingTerminal* m_punchingTerminal = new PunchingTerminal;
+    m_punchingTerminal->start();
 }
 Tram::~Tram()
 {

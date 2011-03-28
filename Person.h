@@ -46,7 +46,7 @@ public:
     /**
      * @brief Construit un groupe de passagers.
      */
-    Person();
+    Person(Person::State s = NeedGetOnTheTram);
     /**
      * @brief Détruit un groupe de passagers.
      */
@@ -107,6 +107,8 @@ private:
     State m_state;
     Container* m_container;
     const int m_nbPerson;
+    int m_nbTicketToBuy;
+    int m_nbTicketToPunch;
 };
 
 #endif // PERSON_H

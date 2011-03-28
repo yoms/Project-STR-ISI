@@ -471,7 +471,7 @@ void TramWindow::setupTrip2()
     m_obstacleList << feuret2;
     feuret2->setPlace(lastret+QPoint(100,0));
     feuret2->setName("Feu 6");
-    feuret2->setColor(Light::Green);
+    feuret2->setColor(Light::Red);
     feuret2->setPreviousLight(feuret1);
 
 
@@ -488,7 +488,7 @@ void TramWindow::setupTrip2()
     m_obstacleList << feuret3;
     feuret3->setPlace(lastret+QPoint(50,0));
     feuret3->setName("Feu 8");
-    feuret3->setColor(Light::Green);
+    feuret3->setColor(Light::Red);
     feuret3->setPreviousLight(feuret2);
     feustation->setPreviousLight(feuret3);
 
@@ -543,7 +543,7 @@ void TramWindow::setupTrip2()
     tram4->setCoordinate(QPoint(80,282));
     tram4->setName("Tram4");
 
-    Person * p = new Person();
+    Person * p = new Person(Person::NeedGetOffTheTram);
     p->m_name = "Person1";
     tram->enter(p);
     p->setContainer(tram);
