@@ -50,6 +50,7 @@ public:
     virtual ~TramPropertiesWidget();
 private slots:
     void updateTramInformation();
+    void updateTramSelection();
 private:
     Ui::TramPropertiesWidget *ui;
     QTimer *m_timer;

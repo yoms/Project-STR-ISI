@@ -23,9 +23,9 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QLabel" name="m_name">
+      <widget class="QPushButton" name="m_name">
        <property name="text">
-        <string>TextLabel</string>
+        <string>PushButton</string>
        </property>
       </widget>
      </item>

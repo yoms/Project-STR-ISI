@@ -23,7 +23,7 @@
 #include <QRect>
 #include <QPainter>
 #define SIZEX 0
-Drawable::Drawable()
+Drawable::Drawable(): m_selected(false)
 {
 }
 void Drawable::drawElemScen(QPainter *painter, int X, int Y, int size)

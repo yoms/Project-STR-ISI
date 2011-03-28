@@ -139,11 +139,24 @@ void Tram::tick()
 void Tram::draw(QPainter *painter)
 {
     painter->save();
-    painter->setPen(Qt::red);
-    painter->setBrush(QBrush(Qt::red));
-    QPoint buff = this->m_coordinate;
+    QPoint buff;
+    if(isSelect())
+    {
+        buff = this->m_coordinate;
+        for(int i = 0; i < SIZE; i++)
+        {
+            painter->setPen(Qt::yellow);
+            painter->setBrush(QBrush(Qt::yellow));
+            drawElemScen(painter, buff.x()-1, buff.y()-1, SIZE_TRAM+2);
+            buff = this->m_trip->previous(buff);
+        }
+    }
+
+    buff = this->m_coordinate;
     for(int i = 0; i < SIZE; i++)
     {
+        painter->setPen(Qt::red);
+        painter->setBrush(QBrush(Qt::red));
         drawElemScen(painter, buff.x(), buff.y(), SIZE_TRAM);
         buff = this->m_trip->previous(buff);
     }

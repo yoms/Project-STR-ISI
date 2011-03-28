@@ -30,6 +30,7 @@ TramPropertiesWidget::TramPropertiesWidget(Tram* t, QWidget *parent) :
     ui->setupUi(this);
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTramInformation()));
+    connect(this->ui->m_name, SIGNAL(clicked()), this, SLOT(updateTramSelection()));
     m_timer->start(50);
     m_tram = t;
 }
@@ -37,6 +38,11 @@ TramPropertiesWidget::TramPropertiesWidget(Tram* t, QWidget *parent) :
 TramPropertiesWidget::~TramPropertiesWidget()
 {
     delete ui;
+}
+
+void TramPropertiesWidget::updateTramSelection()
+{
+    m_tram->isSelect() ? m_tram->unSelect():m_tram->select();;
 }
 
 void TramPropertiesWidget::updateTramInformation()

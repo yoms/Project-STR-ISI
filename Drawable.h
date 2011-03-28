@@ -68,10 +68,25 @@ public:
      * @param le nouveau nom
      */
     void setName(QString n){m_name = n;}
+    /**
+     * @brief Met en surbrillance l'objet.
+     */
+    void select(){m_selected = true;}
+    /**
+     * @brief Enleve la surbrillance de l'objet.
+     */
+    void unSelect(){m_selected = false;}
+    /**
+     * @brief Retourne vrai si l'objet est en surbrillance ou pas.
+     * @return Vrai si l'objet est en surbrillance, faut sinon.
+     */
+    bool isSelect(){return m_selected;}
+
 protected:
     QPoint m_coordinate;
 private:
     QString m_name;
+    bool m_selected;
 };
 
 #endif // DRAWABLE_H

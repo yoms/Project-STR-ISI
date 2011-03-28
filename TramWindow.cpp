@@ -543,10 +543,22 @@ void TramWindow::setupTrip2()
     tram4->setCoordinate(QPoint(80,282));
     tram4->setName("Tram4");
 
-    Person * p = new Person(Person::NeedGetOffTheTram);
+    Person * p = new Person(Person::NeedGetOnTheTram);
     p->m_name = "Person1";
-    tram->enter(p);
-    p->setContainer(tram);
+    m_stationList.first()->enter(p);
+    p->setContainer(m_stationList.first());
+    m_personList << p;
+
+    p = new Person(Person::NeedGetOnTheTram);
+    p->m_name = "Person2";
+    m_stationList.last()->enter(p);
+    p->setContainer(m_stationList.last());
+    m_personList << p;
+
+    p = new Person(Person::NeedGetOnTheTram);
+    p->m_name = "Person2";
+    m_stationList.first()->enter(p);
+    p->setContainer(m_stationList.first());
     m_personList << p;
 //    Tram * tram5 = new Tram;
 //    m_tramList << tram5;
