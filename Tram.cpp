@@ -172,10 +172,10 @@ void Tram::setTrip(Trip *t)
 
 void Tram::tick()
 {
-//    srand ( time(NULL) );
-//    int panne = (rand()+this->m_nbTick+10000) % 1000;
-//    int panne2 = (this->velocity()+this->threadid()+1) % 1000;
-//    this->m_generateProblem = (panne == panne2);
+    srand ( time(NULL) );
+    int panne = (rand()+this->m_nbTick+10000) % 1000;
+    int panne2 = (this->velocity()+this->threadid()+1) % 1000;
+    this->m_generateProblem = (panne == panne2);
     this->m_nbTick = ++m_nbTick%m_velocity;
     pthread_mutex_unlock(&m_mutexTram);
 }
