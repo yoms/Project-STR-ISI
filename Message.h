@@ -83,7 +83,15 @@ public:
         /**
          * @brief Envoyé par une personne au tram pour lui indiquer qu'elle le quitte.
          */
-        QuitTram
+        QuitTram,
+        /**
+         * @brief Envoyé par une personne a la station pour lui indiquer qu'elle rentre dedans.
+         */
+        EnterStation,
+        /**
+         * @brief Envoyé par une personne a la station pour lui indiquer qu'elle la quitte.
+         */
+        QuitStation
     };
     /**
      * @brief Construit un message.

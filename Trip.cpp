@@ -25,7 +25,7 @@
 #define SIZE_POINT_TRAJET 2
 Trip::Trip()
 {
-    pthread_mutex_init(&m_mutex,NULL);
+    pthread_mutex_init(&m_mutexTrip,NULL);
 }
 void Trip::draw(QPainter * painter)
 {
@@ -51,13 +51,13 @@ QList<QPoint> Trip::trip()
 
 void Trip::setTrip(QList<QPoint> & lp)
 {
-    pthread_mutex_lock(&m_mutex);
+    pthread_mutex_lock(&m_mutexTrip);
     this->m_trip = lp;
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_unlock(&m_mutexTrip);
 }
 Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
 {
-    pthread_mutex_lock(&m_mutex);
+    pthread_mutex_lock(&m_mutexTrip);
     foreach(Obstacle* o, m_obstacle)
     {
         int j = 0;
@@ -68,17 +68,17 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
                 oE = m_trip.at(m_trip.indexOf(monEmplacement)+i);
             else
             {
-                pthread_mutex_unlock(&m_mutex);
+                pthread_mutex_unlock(&m_mutexTrip);
                 return m_forwardTrip->obstacleExist(m_forwardTrip->trip().first(),DISTANCE_VISION-i);
             }
             if(o->place() == oE)
             {
-                pthread_mutex_unlock(&m_mutex);
+                pthread_mutex_unlock(&m_mutexTrip);
                 return o;
             }
         }
     }
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_unlock(&m_mutexTrip);
     return NULL;
 }
 Obstacle* Trip::obstacleExist(QPoint monEmplacement)
@@ -88,16 +88,16 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement)
 
 void Trip::setObstacle(QList<Obstacle *> o)
 {
-    pthread_mutex_lock(&m_mutex);
+    pthread_mutex_lock(&m_mutexTrip);
     m_obstacle = o;
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_unlock(&m_mutexTrip);
 }
 
 void Trip::addObstacle(Obstacle *o)
 {
-    pthread_mutex_lock(&m_mutex);
+    pthread_mutex_lock(&m_mutexTrip);
     m_obstacle << o;
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_unlock(&m_mutexTrip);
 }
 
 QPoint Trip::next(QPoint p)

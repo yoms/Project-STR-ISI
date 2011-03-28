@@ -86,6 +86,12 @@ public:
      * @return le nombre de personnes dans le groupe
      */
     int nbPerson() const {return m_nbPerson;}
+    /**
+     * @brief Indique le nom de la classe.
+     * @return le nom de la classe
+     */
+    virtual QString className(){ return QString("Person");}
+
 
 private:
     /**

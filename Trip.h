@@ -106,7 +106,7 @@ private:
     QList<QPoint> m_trip;
     QList<Obstacle*> m_obstacle;
     Trip* m_forwardTrip;
-    pthread_mutex_t m_mutex;
+    pthread_mutex_t m_mutexTrip;
 };
 
 #endif // TRIP_H

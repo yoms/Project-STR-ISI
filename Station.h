@@ -66,6 +66,14 @@ public:
      * @return la borne d'achat du tram
      */
     PurchasingTerminal* purchasingTerminal() {return m_purchasingTerminal;}
+    /**
+     * @brief Représente le comportement du feu.
+     */
+    virtual void run();
+    /**
+     * @brief Traite le nouveau message.
+     */
+    void handleNewMessage();
 private:
     StationLight* m_stationLight;
     PurchasingTerminal* m_purchasingTerminal;

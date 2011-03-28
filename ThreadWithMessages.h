@@ -55,7 +55,7 @@ private:
 protected:
     QList<Message*> m_messageList;
 private:
-    pthread_mutex_t m_mutex;
+    pthread_mutex_t m_mutexThreadMessage;
     timer_t m_timerID;
     struct sigevent m_signalEvent;
     struct sigaction m_signalAction;

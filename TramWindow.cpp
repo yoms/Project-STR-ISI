@@ -35,7 +35,6 @@ TramWindow::TramWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setupTrip2();
-    setupDrawingWidget();
     for(int i = 0; i < m_obstacleList.size(); i++)
     {
         m_timer->addListener(m_obstacleList[i]);
@@ -50,12 +49,39 @@ TramWindow::TramWindow(QWidget *parent) :
             allObstacleRun = allObstacleRun && m_obstacleList[i]->isRunning();
         }
     }while(!allObstacleRun);
+
+    for(int i = 0; i < m_stationList.size(); i++)
+    {
+        m_stationList[i]->start();
+    }
+    bool allStationRun = true;
+    do
+    {
+        allStationRun = true;
+        for(int i = 0; i < m_stationList.size(); i++)
+        {
+            allStationRun = allStationRun && m_stationList[i]->isRunning();
+        }
+    }while(!allStationRun);
+
     for(int i = 0; i < m_tramList.size(); i++)
     {
         m_timer->addListener(m_tramList[i]);
         m_tramList[i]->start();
     }
+    bool allTramRun = true;
+    do
+    {
+        allTramRun = true;
+        for(int i = 0; i < m_tramList.size(); i++)
+        {
+            allTramRun = allTramRun && m_tramList[i]->isRunning();
+        }
+    }while(!allTramRun);
+    for(int i = 0; i < m_personList.size(); i++)
+        m_personList[i]->start();
 
+    setupDrawingWidget();
     m_timer->start();
 
 }
@@ -382,13 +408,6 @@ void TramWindow::setupTrip2()
     m_stationList.last()->setCoordinate(last + QPoint(0,-7));
     m_stationList.last()->setName("HautGauche");
 
-    // TODO : remove fake person
-    Person * p = new Person();
-    p->m_name = "Person1";
-    m_stationList.last()->enter(p);
-    p->setContainer(m_stationList.last());
-    p->start();
-
     StationLight* feustation = new StationLight;
     StationLight* feustation2 = new StationLight;
 
@@ -523,6 +542,12 @@ void TramWindow::setupTrip2()
     tram4->setTrip(m_trajetList.last());
     tram4->setCoordinate(QPoint(80,282));
     tram4->setName("Tram4");
+
+    Person * p = new Person();
+    p->m_name = "Person1";
+    tram->enter(p);
+    p->setContainer(tram);
+    m_personList << p;
 //    Tram * tram5 = new Tram;
 //    m_tramList << tram5;
 //    tram5->setTrip(m_trajetList.last());

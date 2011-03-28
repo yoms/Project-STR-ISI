@@ -2,13 +2,14 @@
 #define CONTAINER_H
 
 #include <QList>
+#include "ThreadWithMessages.h"
 class Person;
 
 /**
  * @brief Représente un conteneur de Person.
  * @see Person
  */
-class Container
+class Container : public ThreadWithMessages
 {
 public:
     /**
@@ -23,7 +24,7 @@ public:
      * @brief Retourne la liste des Person contenues dans le conteneur.
      * @return la liste des Person contenues dans le conteneur
      */
-    QList<Person*> persons() const {return this->m_persons;}
+    QList<Person*> persons();
     /**
      * @brief Fait entrer une personne dans le conteneur.
      * @param la personne à ajouter au conteneur
@@ -36,6 +37,7 @@ public:
     void quit(Person*);
 private:
     QList<Person*> m_persons;
+    pthread_mutex_t m_mutexContainer;
 };
 
 #endif // CONTAINER_H

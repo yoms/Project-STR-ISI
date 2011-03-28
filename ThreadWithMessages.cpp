@@ -28,7 +28,7 @@ Thread* getThreadPointer(pthread_t p);
 
 ThreadWithMessages::ThreadWithMessages()
 {
-    pthread_mutex_init(&m_mutex,NULL);
+    pthread_mutex_init(&m_mutexThreadMessage,NULL);
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
     this->m_signalAction.sa_sigaction = ThreadWithMessages::_newmessage;
@@ -47,9 +47,9 @@ ThreadWithMessages::~ThreadWithMessages()
 
 void ThreadWithMessages::addMessage(Message* m)
 {
-    pthread_mutex_lock(&m_mutex);
-    m_messageList << m;
-    pthread_mutex_unlock(&m_mutex);
+    pthread_mutex_lock(&m_mutexThreadMessage);
+    m_messageList.append(m);
+    pthread_mutex_unlock(&m_mutexThreadMessage);
     pthread_kill(this->threadid(), THREAD_SIGNAL);
 }
 

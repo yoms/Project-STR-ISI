@@ -25,7 +25,7 @@
 #include "PunchingTerminal.h"
 #include <QDebug>
 
-Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOnTheTram), m_nbPerson(5)
+Person::Person():ThreadWithMessages(),m_container(NULL), m_state(Person::NeedGetOffTheTram), m_nbPerson(5)
 {}
 Person::~Person()
 {}
@@ -52,9 +52,9 @@ void Person::punchTicket(PunchingTerminal * punchingTerm)
 void Person::getOnTheTram(Container* tram)
 {
     qDebug() << "Personne passe de station a tram";
-    this->m_container->quit(this);
+    m_container->addMessage(new Message(this, Message::QuitStation));
     this->m_container = tram;
-    ((ThreadWithMessages*) tram)->addMessage(new Message(this, Message::EnterTram));
+    tram->addMessage(new Message(this, Message::EnterTram));
     m_state = Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
     // A ajouter : this->punchTicket();
 }
@@ -62,10 +62,10 @@ void Person::getOnTheTram(Container* tram)
 void Person::getOffTheTram(Container* station)
 {
     qDebug() << "Personne passe de tram a station";
-    ThreadWithMessages* tram = (ThreadWithMessages*)this->m_container;
-    tram->addMessage(new Message(this, Message::QuitTram));
+
+    m_container->addMessage(new Message(this, Message::QuitTram));
     this->m_container = station;
-    //station->enter(this); ERREUR ICI
+    station->addMessage(new Message(this, Message::EnterStation));
     m_state = Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
     // A ajouter : this->buyTicket();
 }
@@ -87,7 +87,7 @@ void Person::handleNewMessage()
             break;
         case Message::ReachingStation:
             if(m_state == Person::NeedGetOffTheTram)
-                getOffTheTram((Container*)m->content());
+                getOffTheTram((Container*)m->sender());
             break;
         }
         delete m;

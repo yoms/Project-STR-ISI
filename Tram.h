@@ -47,7 +47,7 @@ class PunchingTerminal;
 /**
  * @brief Représente un tramway.
  */
-class Tram : public Drawable, public ThreadWithMessages, public TimerListener, public Container
+class Tram : public Drawable, public TimerListener, public Container
 {
 public:
     /**
@@ -146,7 +146,7 @@ private:
     Trip* m_trip;
     int m_nbTick;
     int m_velocity;
-    pthread_mutex_t m_mutex;
+    pthread_mutex_t m_mutexTram;
     State m_state;
     Obstacle* m_obstacle;
 };

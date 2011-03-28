@@ -48,7 +48,32 @@ void Station::draw(QPainter *painter)
     painter->restore();
 }
 
+void Station::run()
+{
+    for(;;)
+    {
+        // le sleep est arrété lorsqu'un nouveau message apparait
+        sleep(1);
+    }
+}
 void Station::addStationLight(StationLight *f)
 {
     m_stationLight = f;
+}
+void Station::handleNewMessage()
+{
+    while(!m_messageList.isEmpty())
+    {
+        Message *m = m_messageList.takeFirst();
+        switch(m->type())
+        {
+        case Message::EnterStation:
+            this->enter((Person*)m->sender());
+            break;
+        case Message::QuitStation:
+            this->quit((Person*)m->sender());
+            break;
+        }
+        delete m;
+    }
 }

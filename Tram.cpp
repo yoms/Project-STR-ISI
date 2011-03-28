@@ -38,11 +38,11 @@
 #include "Container.h"
 #include "PunchingTerminal.h"
 
-Tram::Tram():Drawable(),ThreadWithMessages(), Container()
+Tram::Tram():Drawable(), Container()
         , m_obstacle(NULL), m_punchingTerminal(NULL), m_state(Tram::Acceleration)
         , m_nbTick(0), m_velocity(VITESSE_MIN)
 {
-    pthread_mutex_init(&m_mutex,NULL);
+    pthread_mutex_init(&m_mutexTram,NULL);
     PunchingTerminal* m_punchingTerminal = new PunchingTerminal;
 }
 Tram::~Tram()
@@ -53,7 +53,7 @@ void Tram::run()
 {
     for(;;)
     {
-        pthread_mutex_lock(&m_mutex);
+        pthread_mutex_lock(&m_mutexTram);
         obstacleTracking();
         if(m_nbTick == m_velocity-1)
         {
@@ -72,6 +72,7 @@ void Tram::run()
                     {
                         m_velocity = VITESSE_MIN;
                         m_state = Tram::Off;
+                        sendIsStoped();
                     }
                     else
                         move();
@@ -82,7 +83,6 @@ void Tram::run()
                 break;
             case Tram::Off:
                 m_velocity = VITESSE_MIN;
-                sendIsStoped();
                 // check this.nbPerson et
                 break;
             }
@@ -132,7 +132,7 @@ void Tram::setTrip(Trip *t)
 void Tram::tick()
 {
    this->m_nbTick = ++m_nbTick%m_velocity;
-   pthread_mutex_unlock(&m_mutex);
+   pthread_mutex_unlock(&m_mutexTram);
 }
 
 void Tram::draw(QPainter *painter)
@@ -174,7 +174,7 @@ void Tram::manageStationStop()
     qDebug() << "--les passagers descendent";
     for(int i = 0 ; i < persons().size() ; i++)
     {
-        Message * m = new Message(this, Message::ReachingStation,(void*)stationLight->station());
+        Message * m = new Message(stationLight->station(), Message::ReachingStation);
         persons().at(i)->addMessage(m);
     }
     qDebug() << "--les passagers montent";

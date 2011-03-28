@@ -74,6 +74,7 @@ private:
     QList<ObstacleWidget*> m_obstacleWidgetList;
     QList<TramPropertiesWidget*> m_tramPropertiesWidgetList;
     QList<Station*> m_stationList;
+    QList<Person*> m_personList;
     QList<StationWidget*> m_stationWidgetList;
 
     Ui::TramWindow *ui;
