@@ -25,9 +25,13 @@
 #include "PunchingTerminal.h"
 #include <QDebug>
 
-Person::Person(Person::State s):ThreadWithMessages(),m_container(NULL), m_state(s)
-        , m_nbPerson(5), m_nbTicketToBuy(0), m_nbTicketToPunch(0)
-{}
+Person::Person(Person::State s):ThreadWithMessages(), m_nbPerson(5)
+{
+    m_container = NULL;
+    m_state = s;
+    m_nbTicketToBuy = 0;
+    m_nbTicketToPunch = 0;
+}
 Person::~Person()
 {}
 
@@ -93,12 +97,14 @@ void Person::handleNewMessage()
         case Message::TicketBought:
             m_nbTicketToBuy --;
             if(m_nbTicketToBuy == 0)
-                m_state == Person::NeedGetOnTheTram;
+                m_state = Person::NeedGetOnTheTram;
             break;
         case Message::TicketPunched:
             m_nbTicketToPunch --;
             if(m_nbTicketToPunch == 0)
-                m_state == Person::NeedGetOffTheTram;
+                m_state = Person::NeedGetOffTheTram;
+            break;
+        default:
             break;
         }
         delete m;

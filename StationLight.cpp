@@ -23,8 +23,10 @@
 #include "StationLight.h"
 #include <QDebug>
 
-StationLight::StationLight():m_free(true),m_doorClosed(false)
+StationLight::StationLight()
 {
+    m_free = true;
+    m_doorClosed = false;
     m_state = Light::Red;
 }
 
@@ -82,6 +84,8 @@ void StationLight::handleNewMessage()
             break;
         case Message::IsStopped:
             m->sender()->addMessage(new Message(this,Message::ManageStationStop));
+            break;
+        default:
             break;
         }
         delete m;

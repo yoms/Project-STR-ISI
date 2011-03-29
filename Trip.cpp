@@ -61,7 +61,6 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
     int indexOf = m_trip.indexOf(monEmplacement);
     foreach(Obstacle* o, m_obstacle)
     {
-        int j = 0;
         for(int i = 0; i < distance; i++)
         {
             QPoint oE;
@@ -69,8 +68,9 @@ Obstacle* Trip::obstacleExist(QPoint monEmplacement, int distance)
                 oE = m_trip.at(indexOf+i);
             else
             {
+                o = m_forwardTrip->obstacleExist(m_forwardTrip->trip().first(),DISTANCE_VISION-i);
                 pthread_mutex_unlock(&m_mutexTrip);
-                return m_forwardTrip->obstacleExist(m_forwardTrip->trip().first(),DISTANCE_VISION-i);
+                return o;
             }
             if(o->place() == oE)
             {

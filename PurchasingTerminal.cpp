@@ -58,6 +58,8 @@ void PurchasingTerminal::handleNewMessage()
             this->giveTicket();
             m->sender()->addMessage(new Message(this,Message::TicketBought));
             break;
+        default:
+            break;
         }
         delete m;
     }

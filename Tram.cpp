@@ -39,11 +39,13 @@
 #include "PunchingTerminal.h"
 
 Tram::Tram():Drawable(), Container()
-        , m_obstacle(NULL), m_punchingTerminal(NULL), m_state(Tram::Acceleration)
-        , m_nbTick(0), m_velocity(VITESSE_MIN)
+        , m_punchingTerminal(new PunchingTerminal)
+        ,  m_velocity(VITESSE_MIN)
 {
+    m_obstacle = NULL;
+    m_nbTick = 0;
+    m_state = Tram::Acceleration;
     pthread_mutex_init(&m_mutexTram,NULL);
-    PunchingTerminal* m_punchingTerminal = new PunchingTerminal;
     m_punchingTerminal->start();
 }
 Tram::~Tram()
@@ -225,6 +227,8 @@ void Tram::handleNewMessage()
             break;
         case Message::QuitTram:
             this->quit((Person*)m->sender());
+            break;
+        default:
             break;
         }
         delete m;

@@ -143,12 +143,12 @@ private:
     void handleNewMessage();
 private:
     PunchingTerminal* m_punchingTerminal;
+    Obstacle* m_obstacle;
     Trip* m_trip;
     int m_nbTick;
     int m_velocity;
     pthread_mutex_t m_mutexTram;
     State m_state;
-    Obstacle* m_obstacle;
 };
 
 #endif // TRAM_H

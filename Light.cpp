@@ -80,6 +80,8 @@ void Light::handleNewMessage()
             case Message::IsFree:
                 m_state = Light::Green;
                 break;
+        default:
+            break;
         }
         delete m;
     }

@@ -25,7 +25,6 @@ MACRO( ADA_COMPILE_LINK )
         )
   ENDFOREACH( _adafilename )
 ENDMACRO( ADA_COMPILE_LINK )
-
 set(project_SRCS
     main.cpp
     TramWidget.cpp
@@ -90,5 +89,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 qt4_automoc(${project_SRCS})
-add_executable(Project-STR-ISI ${project_SRCS} ${project_MOC_SRCS} ${project_UIS_H} )
+add_executable(Project-STR-ISI ${project_SRCS} ${project_MOC_SRCS} ${project_UIS_H})
+set_target_properties(Project-STR-ISI PROPERTIES COMPILE_FLAGS "-Wall -Werror")
 target_link_libraries(Project-STR-ISI ${QT_LIBRARIES} ${QT_QTTEST_LIBRARIES} gnat gnarl ${staticada_LIBS})

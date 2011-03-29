@@ -74,6 +74,8 @@ void Station::handleNewMessage()
         case Message::QuitStation:
             this->quit((Person*)m->sender());
             break;
+        default:
+            break;
         }
         delete m;
     }

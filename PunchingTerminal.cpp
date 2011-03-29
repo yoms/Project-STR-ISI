@@ -62,6 +62,8 @@ void PunchingTerminal::handleNewMessage()
             this->punchTicket();
             m->sender()->addMessage(new Message(this,Message::TicketPunched));
             break;
+        default:
+            break;
         }
         delete m;
     }
