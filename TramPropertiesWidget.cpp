@@ -69,5 +69,18 @@ void TramPropertiesWidget::updateTramInformation()
     case Tram::Desceleration:
         this->ui->m_state->setText("Ralenti");
         break;
+    case Tram::OutOfOrder:
+        this->ui->m_state->setText("En panne");
+        break;
     }
+}
+
+void TramPropertiesWidget::on_pushButton_clicked()
+{
+    m_tram->addMessage(new Message(NULL, Message::Solved));
+}
+
+void TramPropertiesWidget::on_m_panne_clicked()
+{
+    m_tram->changeProblem(true);
 }
