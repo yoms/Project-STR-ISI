@@ -1,16 +1,20 @@
-with Text_IO;  
-with punchingTerminal;
-with Interfaces;
+with Text_IO; use Text_IO;
 
 package body punchingManagement is
-use Text_IO;
-use Interfaces;
-use punchingTerminal;
 
-   procedure adaPunchTicket(id : in C.Int) is
+	task body PunchingTask is
    begin
-      --punchingTab(Integer(id)).punch;
-      null;
+      loop
+         accept punch
+         do
+            delay 1.0;
+         end;
+      end loop;
+   end PunchingTask;
+
+   procedure adaPunchTicket(id : integer) is
+   begin
+      punchingTab(id).punch;
    end adaPunchTicket;
 
 end punchingManagement;

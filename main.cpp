@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("System"));
     TramWindow w;
     w.show();
+    int retour = a.exec();
     adafinal();
-    return a.exec();
+    return retour;
 }

@@ -69,6 +69,5 @@ void PunchingTerminal::handleNewMessage()
 
 void PunchingTerminal::punchTicket()
 {
-    sleep(1);
     adaPunchTicket(this->id);
 }

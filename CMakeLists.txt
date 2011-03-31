@@ -73,13 +73,9 @@ SET(project_UIS
 
 set( ada_SRCS
 api
-punchingmanagement
-punchingterminal
 )
 set( staticada_LIBS
 staticapi
-staticpunchingmanagement
-staticpunchingterminal
 )
 
 ADA_COMPILE_LINK( ${ada_SRCS})
