@@ -56,7 +56,6 @@ void StationLight::handleNewMessage()
             break;
         case Message::IsCrossed:
             sleep(1);
-            qDebug() << this->name() << " isCrossed";
             m_state = Light::Red;
             m_free = false;
             m_doorClosed = false;

@@ -167,7 +167,6 @@ private:
     State m_state;
     int m_nbPeopleGettingOff;
     int m_nbPeopleGettingOn;
-    bool m_isStopped;
 };
 
 #endif // TRAM_H
