@@ -115,11 +115,6 @@ public:
      * @return le composteur du tram
      */
     PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
-    /**
-     * @brief Modifie le fait qu'il y ait une anomalie de détectée.
-     * @param vrai s'il y a une anomalie de détectée et faux sinon
-     */
-    void changeProblem(bool b) {m_generateProblem = b;}
 private:
     /**
      * @brief Envoie un message pour signifier qu'il est arrété.
@@ -146,9 +141,21 @@ private:
      */
     void slowDown();
     /**
-     * @brief Gère l'arrêt en gare.
+     * @brief Gère la descente des passagers.
      */
-    void manageStationStop();
+    void makePeopleGetOff();
+    /**
+     * @brief Gère la montée des passagers
+     */
+    void makePeopleGetOn();
+    /**
+     * @brief Ouvre les portes
+     */
+    void openDoors();
+    /**
+     * @brief Ferme les portes
+     */
+    void closeDoors();
     void handleNewMessage();
 private:
     PunchingTerminal* m_punchingTerminal;
@@ -158,9 +165,9 @@ private:
     int m_velocity;
     pthread_mutex_t m_mutexTram;
     State m_state;
-    bool m_problemDetected;
-    bool m_generateProblem;
-    int m_security;
+    int m_nbPeopleGettingOff;
+    int m_nbPeopleGettingOn;
+    bool m_isStopped;
 };
 
 #endif // TRAM_H

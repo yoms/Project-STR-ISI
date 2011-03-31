@@ -24,7 +24,6 @@ void Container::quit(Person * p)
 
 void Container::enter(Person * p)
 {
-    qDebug() << p->className();
     pthread_mutex_lock(&m_mutexContainer);
     m_persons.append(p);
     pthread_mutex_unlock(&m_mutexContainer);
