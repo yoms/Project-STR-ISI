@@ -141,9 +141,21 @@ private:
      */
     void slowDown();
     /**
-     * @brief Gère l'arrêt en gare.
+     * @brief Gère la descente des passagers.
      */
-    void manageStationStop();
+    void makePeopleGetOff();
+    /**
+     * @brief Gère la montée des passagers
+     */
+    void makePeopleGetOn();
+    /**
+     * @brief Ouvre les portes
+     */
+    void openDoors();
+    /**
+     * @brief Ferme les portes
+     */
+    void closeDoors();
     void handleNewMessage();
 private:
     PunchingTerminal* m_punchingTerminal;
@@ -153,6 +165,9 @@ private:
     int m_velocity;
     pthread_mutex_t m_mutexTram;
     State m_state;
+    int m_nbPeopleGettingOff;
+    int m_nbPeopleGettingOn;
+    bool m_isStopped;
 };
 
 #endif // TRAM_H

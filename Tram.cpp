@@ -41,6 +41,9 @@
 Tram::Tram():Drawable(), Container()
         , m_punchingTerminal(new PunchingTerminal)
         ,  m_velocity(VITESSE_MIN)
+        , m_nbPeopleGettingOff(0)
+        , m_nbPeopleGettingOn(0)
+        , m_isStopped(false)
 {
     m_obstacle = NULL;
     m_nbTick = 0;
@@ -65,6 +68,7 @@ void Tram::run()
             switch(m_state)
             {
             case Tram::Acceleration:
+                m_isStopped = false;
                 speedUp();
                 move();
                 break;
@@ -116,11 +120,12 @@ void Tram::obstacleTracking()
 
 void Tram::sendIsStoped()
 {
-    qDebug() << "Arret du tram";
-    if(m_obstacle != NULL)
+    if(m_obstacle != NULL && !m_isStopped)
     {
+        qDebug() << "Arret du tram";
         Message* m = new Message(this,Message::IsStopped);
         m_obstacle->addMessage(m);
+        m_isStopped = true;
     }
 }
 
@@ -200,24 +205,45 @@ void Tram::slowDown()
         m_velocity += ACCELERATION;
 }
 
-void Tram::manageStationStop()
+void Tram::openDoors()
 {
     qDebug() << "ouverture des portes";
-    StationLight * stationLight = (StationLight *) m_obstacle;
-    qDebug() << "--les passagers descendent";
-    for(int i = 0 ; i < persons().size() ; i++)
-    {
-        Message * m = new Message(stationLight->station(), Message::ReachingStation);
-        persons().at(i)->addMessage(m);
-    }
-    qDebug() << "--les passagers montent";
-    QList<Person*> stationPersons = stationLight->station()->persons();
-    for(int i = 0 ; i < stationPersons.size() ; i++)
-    {
-        Message * m = new Message(this, Message::TramIncoming);
-        stationPersons.at(i)->addMessage(m);
-    }
+    makePeopleGetOff();
+}
 
+void Tram::makePeopleGetOff()
+{
+    qDebug() << "--les passagers descendent";
+    StationLight * stationLight = (StationLight *) m_obstacle;
+    m_nbPeopleGettingOff = persons().size(); // TODO : corriger avec le nb réél compte tenu de l'état
+    if(m_nbPeopleGettingOff > 0)
+        for(int i = 0 ; i < m_nbPeopleGettingOff ; i++)
+        {
+            Message * m = new Message(stationLight->station(), Message::ReachingStation);
+            persons().at(i)->addMessage(m);
+        }
+    else
+        makePeopleGetOn();
+}
+
+void Tram::makePeopleGetOn()
+{
+    qDebug() << "--les passagers montent";
+    StationLight * stationLight = (StationLight *) m_obstacle;
+    QList<Person*> stationPersons = stationLight->station()->persons();
+    m_nbPeopleGettingOn = stationPersons.size(); // TODO : corriger avec le nb réél compte tenu de l'état
+    if(m_nbPeopleGettingOn > 0)
+        for(int i = 0 ; i < m_nbPeopleGettingOn ; i++)
+        {
+            Message * m = new Message(this, Message::TramIncoming);
+            stationPersons.at(i)->addMessage(m);
+        }
+    else
+        closeDoors();
+}
+
+void Tram::closeDoors()
+{
     qDebug() << "fermeture des portes";
     Message* m = new Message(this,Message::DoorsClosed);
     m_obstacle->addMessage(m);
@@ -238,13 +264,19 @@ void Tram::handleNewMessage()
             m_state = Tram::Acceleration;
             break;
         case Message::ManageStationStop:
-            manageStationStop();
+            openDoors();
             break;
         case Message::EnterTram:
-            this->enter((Person*)m->sender());
+            enter((Person*)m->sender());
+            m_nbPeopleGettingOn --;
+            if(m_nbPeopleGettingOn == 0)
+                closeDoors();
             break;
         case Message::QuitTram:
-            this->quit((Person*)m->sender());
+            quit((Person*)m->sender());
+            m_nbPeopleGettingOff --;
+            if(m_nbPeopleGettingOff == 0)
+                makePeopleGetOn();
             break;
         default:
             break;

@@ -56,7 +56,7 @@ void Person::punchTicket(PunchingTerminal * punchingTerm)
 
 void Person::getOnTheTram(Container* tram)
 {
-    qDebug() << "Personne passe de station a tram";
+    qDebug() << "----Une personne monte dans le tram";
     m_container->addMessage(new Message(this, Message::QuitStation));
     this->m_container = tram;
     tram->addMessage(new Message(this, Message::EnterTram));
@@ -66,7 +66,7 @@ void Person::getOnTheTram(Container* tram)
 
 void Person::getOffTheTram(Container* station)
 {
-    qDebug() << "Personne passe de tram a station";
+    qDebug() << "----Une personne descend du tram";
 
     m_container->addMessage(new Message(this, Message::QuitTram));
     this->m_container = station;
