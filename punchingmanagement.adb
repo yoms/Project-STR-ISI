@@ -6,14 +6,11 @@ package body punchingManagement is
 use Text_IO;
 use Interfaces;
 use punchingTerminal;
-   procedure createPunchingTerminal(id : in C.Int) is
-   begin
-	null;
-   end createPunchingTerminal;
 
    procedure adaPunchTicket(id : in C.Int) is
    begin
-      null;--punchingTab(Integer(id)).punch;
+      --punchingTab(Integer(id)).punch;
+      null;
    end adaPunchTicket;
 
 end punchingManagement;

@@ -6,9 +6,6 @@ package punchingManagement is
 use Interfaces;
 
    punchingTab : array(1..10) of PunchingTask;
-   
-   procedure createPunchingTerminal(id: in C.Int);
-   pragma Export (C, createPunchingTerminal, "createPunchingTerminal");
 
    procedure adaPunchTicket(id: in C.Int);
    pragma Export (C, adaPunchTicket, "adaPunchTicket");

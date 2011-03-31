@@ -23,12 +23,12 @@
 #ifndef PERSON_H
 #define PERSON_H
 #include "ThreadWithMessages.h"
-#include "Tram.h"
-#include "Station.h"
 #include <QString>
 class Container;
 class PurchasingTerminal;
 class PunchingTerminal;
+class Tram;
+class Station;
 
 /**
  * @brief Représente un groupe de passagers.
@@ -109,11 +109,11 @@ private:
     /**
      * @brief Rentre dans le tram.
      */
-    void getOnTheTram(Container*);
+    void getOnTheTram(Tram*);
     /**
      * @brief Sort du tram.
      */
-    void getOffTheTram(Container*);
+    void getOffTheTram(Station*);
 
 private:
     State m_state;

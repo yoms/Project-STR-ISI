@@ -21,6 +21,8 @@
  */
 
 #include "Person.h"
+#include "Tram.h"
+#include "Station.h"
 #include "PurchasingTerminal.h"
 #include "PunchingTerminal.h"
 #include <QDebug>
@@ -54,24 +56,24 @@ void Person::punchTicket(PunchingTerminal * punchingTerm)
     m_nbTicketToPunch += m_nbPerson;
 }
 
-void Person::getOnTheTram(Container* tram)
+void Person::getOnTheTram(Tram* tram)
 {
     qDebug() << "------" << m_nbPerson << "personnes montent dans le tram";
     m_container->addMessage(new Message(this, Message::QuitStation));
     this->m_container = tram;
     tram->addMessage(new Message(this, Message::EnterTram));
-    m_state = Person::NeedGetOffTheTram;     // A remplacer par : m_state == Person::NeedPunchTicket;
-    // A ajouter : this->punchTicket();
+    m_state = Person::NeedPunchTicket;
+    punchTicket(tram->punchingTerminal());
 }
 
-void Person::getOffTheTram(Container* station)
+void Person::getOffTheTram(Station* station)
 {
     qDebug() << "------" << m_nbPerson << "personnes descendent du tram";
     m_container->addMessage(new Message(this, Message::QuitTram));
     this->m_container = station;
     station->addMessage(new Message(this, Message::EnterStation));
-    m_state = Person::NeedGetOnTheTram;     // A remplacer par : m_state == Person::NeedTicket;
-    // A ajouter : this->buyTicket();
+    m_state = Person::NeedTicket;
+    buyTicket(station->purchasingTerminal());
 }
 
 void Person::triggerEmergencyStop()
@@ -87,21 +89,27 @@ void Person::handleNewMessage()
         {
         case Message::TramIncoming:
             if(m_state == Person::NeedGetOnTheTram)
-                getOnTheTram((Container*)m->sender());
+                getOnTheTram((Tram*)m->sender());
             break;
         case Message::ReachingStation:
             if(m_state == Person::NeedGetOffTheTram)
-                getOffTheTram((Container*)m->sender());
+                getOffTheTram((Station*)m->sender());
             break;
         case Message::TicketBought:
             m_nbTicketToBuy --;
             if(m_nbTicketToBuy == 0)
+            {
                 m_state = Person::NeedGetOnTheTram;
+                qDebug() << "------" << m_nbPerson << "personnes ont achete leur ticket";
+            }
             break;
         case Message::TicketPunched:
             m_nbTicketToPunch --;
             if(m_nbTicketToPunch == 0)
+            {
                 m_state = Person::NeedGetOffTheTram;
+                qDebug() << "------" << m_nbPerson << "personnes ont composte leur ticket";
+            }
             break;
         default:
             break;

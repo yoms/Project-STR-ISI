@@ -44,7 +44,7 @@ void PurchasingTerminal::run()
 
 void PurchasingTerminal::giveTicket()
 {
-    qDebug() << "Giving ticket";
+    sleep(1);
 }
 
 void PurchasingTerminal::handleNewMessage()

@@ -24,7 +24,7 @@
 #include "Trip.h"
 #include "Message.h"
 #include "PunchingTerminal.h"
-
+#include "StationLight.h"
 #include <QPainter>
 #include <QDebug>
 #define SIZE 5

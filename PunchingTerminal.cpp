@@ -26,7 +26,6 @@
 pthread_mutex_t mutexGlobalId = PTHREAD_MUTEX_INITIALIZER;
 
 extern "C" {
-    void createPunchingTerminal(int);
     void adaPunchTicket(int);
 }
 
@@ -38,7 +37,6 @@ PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
     globalId ++;
     Q_ASSERT(globalId < 10);
     this->id = globalId;
-    //createPunchingTerminal(this->id);
     pthread_mutex_unlock(&mutexGlobalId);
 }
 
@@ -71,6 +69,6 @@ void PunchingTerminal::handleNewMessage()
 
 void PunchingTerminal::punchTicket()
 {
-    qDebug() << "Punching ticket";
-    //adaPunchTicket(this->id);
+    sleep(1);
+    adaPunchTicket(this->id);
 }

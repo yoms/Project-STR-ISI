@@ -8,6 +8,7 @@ package body punchingTerminal is
       loop
          accept punch
          do
+         	delay 1.0;
             Put_line("punching ticket");
          end;
       end loop;
