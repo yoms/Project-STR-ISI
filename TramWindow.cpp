@@ -130,13 +130,13 @@ void TramWindow::setupDrawingWidget()
     {
         d << m_obstacleList[i];
         m_obstacleWidgetList << new ObstacleWidget(m_obstacleList[i]);
-        ui->m_propertiesLayout->addWidget(m_obstacleWidgetList.last());
+        ui->m_obstacleLayout->addWidget(m_obstacleWidgetList.last());
     }
     for(int i = 0; i < m_stationList.size(); i++)
     {
         d << m_stationList[i];
         m_stationWidgetList << new StationWidget(m_stationList[i]);
-        ui->m_propertiesLayout->addWidget(m_stationWidgetList.last());
+        ui->m_stationLayout->addWidget(m_stationWidgetList.last());
     }
     for(int i = 0; i < m_trajetList.size(); i++)
         d << m_trajetList[i];
@@ -144,7 +144,7 @@ void TramWindow::setupDrawingWidget()
     {
         d << m_tramList[i];
         m_tramPropertiesWidgetList << new TramPropertiesWidget(m_tramList[i]);
-        ui->m_propertiesLayout->addWidget(m_tramPropertiesWidgetList.last());
+        ui->m_tramLayout->addWidget(m_tramPropertiesWidgetList.last());
     }
     ui->widget->setDrawableList(d);
 }
