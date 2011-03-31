@@ -77,10 +77,10 @@ void TramPropertiesWidget::updateTramInformation()
 
 void TramPropertiesWidget::on_pushButton_clicked()
 {
-    m_tram->addMessage(new Message(NULL, Message::Solved));
+//    m_tram->addMessage(new Message(NULL, Message::Solved));
 }
 
 void TramPropertiesWidget::on_m_panne_clicked()
 {
-    m_tram->changeProblem(true);
+//    m_tram->changeProblem(true);
 }

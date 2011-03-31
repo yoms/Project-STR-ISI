@@ -46,9 +46,6 @@ Tram::Tram():Drawable(), Container()
     m_nbTick = 0;
     m_state = Tram::Acceleration;
     pthread_mutex_init(&m_mutexTram,NULL);
-    m_security = 0;
-    m_generateProblem = false;
-    m_problemDetected = false;
     m_punchingTerminal->start();
 }
 Tram::~Tram()
@@ -61,10 +58,6 @@ void Tram::run()
     {
         pthread_mutex_lock(&m_mutexTram);
 
-        if( this->m_generateProblem  && !m_problemDetected)
-        {
-            m_problemDetected = true;
-        }
         obstacleTracking();
         if(m_nbTick == m_velocity-1)
         {
@@ -72,16 +65,6 @@ void Tram::run()
             switch(m_state)
             {
             case Tram::Acceleration:
-                if(m_problemDetected )
-                {
-                    if(m_security < 8 && m_obstacle == NULL)
-                        m_security++;
-                    else
-                    {
-                        m_state = Tram::Desceleration;
-                        m_security = 0;
-                    }
-                }
                 speedUp();
                 move();
                 break;
@@ -102,16 +85,6 @@ void Tram::run()
                 }
                 break;
             case Tram::On:
-                if(m_problemDetected)
-                {
-                    if(m_security < 8 && m_obstacle == NULL)
-                        m_security++;
-                    else
-                    {
-                        m_state = Tram::Desceleration;
-                        m_security = 0;
-                    }
-                }
                 move();
                 break;
             case Tram::Off:
@@ -136,7 +109,7 @@ void Tram::obstacleTracking()
         m_obstacle->addMessage(new Message(this,Message::IsCrossed));
         m_obstacle = NULL;
         m_state = Tram::Acceleration;
-        m_security++;
+//        m_security++;
     }
 
 }
@@ -144,18 +117,10 @@ void Tram::obstacleTracking()
 void Tram::sendIsStoped()
 {
     qDebug() << "Arret du tram";
-    m_security = 0;
-    if(!m_problemDetected)
+    if(m_obstacle != NULL)
     {
-        if(m_obstacle != NULL)
-        {
-            Message* m = new Message(this,Message::IsStopped);
-            m_obstacle->addMessage(m);
-        }
-    }
-    else
-    {
-        m_state = Tram::OutOfOrder;
+        Message* m = new Message(this,Message::IsStopped);
+        m_obstacle->addMessage(m);
     }
 }
 
@@ -174,10 +139,10 @@ void Tram::setTrip(Trip *t)
 
 void Tram::tick()
 {
-    srand ( time(NULL) );
-    int panne = (rand()+this->m_nbTick+10000) % 1000;
-    int panne2 = (this->velocity()+this->threadid()+1) % 1000;
-    this->m_generateProblem = (panne == panne2);
+//    srand ( time(NULL) );
+//    int panne = (rand()+this->m_nbTick+10000) % 1000;
+//    int panne2 = (this->velocity()+this->threadid()+1) % 1000;
+//    this->m_generateProblem = (panne == panne2);
     this->m_nbTick = ++m_nbTick%m_velocity;
     pthread_mutex_unlock(&m_mutexTram);
 }
@@ -201,16 +166,16 @@ void Tram::draw(QPainter *painter)
     buff = this->m_coordinate;
     for(int i = 0; i < SIZE; i++)
     {
-        if(m_problemDetected)
-        {
-            painter->setPen(QColor(255, 165, 0));
-            painter->setBrush(QBrush(QColor(255, 165, 0)));
-        }
-        else
-        {
+//        if(m_problemDetected)
+//        {
+//            painter->setPen(QColor(255, 165, 0));
+//            painter->setBrush(QBrush(QColor(255, 165, 0)));
+//        }
+//        else
+//        {
             painter->setPen(Qt::red);
             painter->setBrush(QBrush(Qt::red));
-        }
+//        }
         drawElemScen(painter, buff.x(), buff.y(), SIZE_TRAM);
         buff = this->m_trip->previous(buff);
     }
@@ -252,12 +217,10 @@ void Tram::manageStationStop()
         Message * m = new Message(this, Message::TramIncoming);
         stationPersons.at(i)->addMessage(m);
     }
-    if(! m_problemDetected)
-    {
-        qDebug() << "fermeture des portes";
-        Message* m = new Message(this,Message::DoorsClosed);
-        m_obstacle->addMessage(m);
-    }
+
+    qDebug() << "fermeture des portes";
+    Message* m = new Message(this,Message::DoorsClosed);
+    m_obstacle->addMessage(m);
 }
 
 void Tram::handleNewMessage()
@@ -271,9 +234,6 @@ void Tram::handleNewMessage()
             if(m_state != Tram::Off && m_state != OutOfOrder)
                 m_state = Tram::Desceleration;
             break;
-        case Message::Solved:
-            m_problemDetected = false;
-            m_generateProblem = false;
         case Message::LightToTramCross:
             m_state = Tram::Acceleration;
             break;
