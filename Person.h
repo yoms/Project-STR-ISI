@@ -91,6 +91,18 @@ public:
      * @return le nom de la classe
      */
     virtual QString className(){ return QString("Person");}
+    /**
+     * @brief Retourne les personnes qui sont prêtes à monter dans le tram.
+     * @param personnes qu'on veut faire monter
+     * @return les personnes qui sont prêtes à monter
+     */
+    static QList<Person*> personsReadyToGetOn(QList<Person*>);
+    /**
+     * @brief Retourne les personnes qui sont prêtes à descendre du tram.
+     * @param personnes qu'on veut faire descendre
+     * @return les personnes qui sont prêtes à descendre
+     */
+    static QList<Person*> personsReadyToGetOff(QList<Person*>);
 
 
 private:

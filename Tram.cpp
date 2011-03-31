@@ -229,14 +229,15 @@ void Tram::openDoors()
 void Tram::makePeopleGetOff()
 {
     StationLight * stationLight = (StationLight *) m_obstacle;
-    m_nbPeopleGettingOff = persons().size(); // TODO : corriger avec le nb réél compte tenu de l'état
+    QList<Person*> personsReadyToGetOff = Person::personsReadyToGetOff(persons());
+    m_nbPeopleGettingOff = personsReadyToGetOff.size();
     if(m_nbPeopleGettingOff > 0)
     {
         qDebug() << "----les passagers descendent";
         for(int i = 0 ; i < m_nbPeopleGettingOff ; i++)
         {
             Message * m = new Message(stationLight->station(), Message::ReachingStation);
-            persons().at(i)->addMessage(m);
+            personsReadyToGetOff.at(i)->addMessage(m);
         }
     }
     else
@@ -245,16 +246,19 @@ void Tram::makePeopleGetOff()
 
 void Tram::makePeopleGetOn()
 {
+    // Permet de visualiser l'arrêt dans l'IHM
+    sleep(2);
     StationLight * stationLight = (StationLight *) m_obstacle;
     QList<Person*> stationPersons = stationLight->station()->persons();
-    m_nbPeopleGettingOn = stationPersons.size(); // TODO : corriger avec le nb réél compte tenu de l'état
+    QList<Person*> personsReadyToGetOn = Person::personsReadyToGetOn(stationPersons);
+    m_nbPeopleGettingOn = personsReadyToGetOn.size();
     if(m_nbPeopleGettingOn > 0)
     {
         qDebug() << "----les passagers montent";
         for(int i = 0 ; i < m_nbPeopleGettingOn ; i++)
         {
             Message * m = new Message(this, Message::TramIncoming);
-            stationPersons.at(i)->addMessage(m);
+            personsReadyToGetOn.at(i)->addMessage(m);
         }
     }
     else

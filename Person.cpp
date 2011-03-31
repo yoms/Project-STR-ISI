@@ -109,3 +109,21 @@ void Person::handleNewMessage()
         delete m;
     }
 }
+
+QList<Person*> Person::personsReadyToGetOn(QList<Person*> all)
+{
+    QList<Person*> personsReady;
+    for(int i=0 ; i<all.size() ; i++)
+        if(all.at(i)->getState() == Person::NeedGetOnTheTram)
+            personsReady.append(all.at(i));
+    return personsReady;
+}
+
+QList<Person*> Person::personsReadyToGetOff(QList<Person*> all)
+{
+    QList<Person*> personsReady;
+    for(int i=0 ; i<all.size() ; i++)
+        if(all.at(i)->getState() == Person::NeedGetOffTheTram)
+            personsReady.append(all.at(i));
+    return personsReady;
+}
