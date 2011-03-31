@@ -1,16 +1,19 @@
-with Text_Io; use Text_Io;
-with Interfaces;
 with punchingManagement;
-with Ada.Exceptions;
+with purchasingManagement;
 
 package body API is 
 
-procedure adaPunchTicket(id : integer) is
-begin
-   punchingManagement.adaPunchTicket(id);
-end adaPunchTicket;
+	procedure adaPunchTicket(id : integer) is
+	begin
+		punchingManagement.adaPunchTicket(id);
+	end adaPunchTicket;
 
-procedure Initialize_API is 
+	procedure adaPurchaseTicket(id : integer) is
+	begin
+		purchasingManagement.adaPurchaseTicket(id);
+	end adaPurchaseTicket;
+
+	procedure Initialize_API is 
       procedure Adainit; 
       pragma Import (CPP, Adainit); 
    begin 
@@ -22,5 +25,6 @@ procedure Initialize_API is
       pragma Import (CPP, Adafinal); 
    begin 
       Adafinal; 
-   end Finalize_API; 
+   end Finalize_API;
+    
 end API; 

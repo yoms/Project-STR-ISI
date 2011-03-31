@@ -23,18 +23,24 @@
 #include "PurchasingTerminal.h"
 #include <QDebug>
 
+pthread_mutex_t mutexGlobalPurchaseId = PTHREAD_MUTEX_INITIALIZER;
+
+extern "C" {
+    void adaPurchaseTicket(int);
+}
+
 int PurchasingTerminal::globalId = 0;
 
 PurchasingTerminal::PurchasingTerminal(): ThreadWithMessages()
 {
+    pthread_mutex_lock(&mutexGlobalPurchaseId);
     globalId ++;
     Q_ASSERT(globalId < 10);
     this->id = globalId;
+    pthread_mutex_unlock(&mutexGlobalPurchaseId);
 }
 
-// TODO créer un destructeur qui appelle une fonction deletePurchasingTerminal(this->id)
-PurchasingTerminal::~PurchasingTerminal()
-{}
+PurchasingTerminal::~PurchasingTerminal() {}
 
 void PurchasingTerminal::run()
 {
@@ -44,7 +50,7 @@ void PurchasingTerminal::run()
 
 void PurchasingTerminal::giveTicket()
 {
-    sleep(1);
+    adaPurchaseTicket(this->id);
 }
 
 void PurchasingTerminal::handleNewMessage()

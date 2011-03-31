@@ -23,7 +23,7 @@
 #include "PunchingTerminal.h"
 #include <QDebug>
 
-pthread_mutex_t mutexGlobalId = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexGlobalPunchId = PTHREAD_MUTEX_INITIALIZER;
 
 extern "C" {
     void adaPunchTicket(int);
@@ -33,20 +33,24 @@ int PunchingTerminal::globalId = 0;
 
 PunchingTerminal::PunchingTerminal() : ThreadWithMessages()
 {
-    pthread_mutex_lock(&mutexGlobalId);
+    pthread_mutex_lock(&mutexGlobalPunchId);
     globalId ++;
     Q_ASSERT(globalId < 10);
     this->id = globalId;
-    pthread_mutex_unlock(&mutexGlobalId);
+    pthread_mutex_unlock(&mutexGlobalPunchId);
 }
 
-// TODO créer un destructeur qui appelle une fonction deletePunchingTerminal(this->id)
 PunchingTerminal::~PunchingTerminal() {}
 
 void PunchingTerminal::run()
 {
     for(;;)
        sleep(1);
+}
+
+void PunchingTerminal::punchTicket()
+{
+    adaPunchTicket(this->id);
 }
 
 void PunchingTerminal::handleNewMessage()
@@ -65,9 +69,4 @@ void PunchingTerminal::handleNewMessage()
         }
         delete m;
     }
-}
-
-void PunchingTerminal::punchTicket()
-{
-    adaPunchTicket(this->id);
 }
