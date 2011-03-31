@@ -227,7 +227,7 @@ void Tram::slowDown()
 
 void Tram::openDoors()
 {
-    qDebug() << "ouverture de "<<NB_DOORS<<" portes";
+    qDebug() << "ouverture de"<<NB_DOORS<<"portes";
     for(int i = 0 ; i < NB_DOORS ; i++)
     {
         m_doors[i].open();
@@ -276,7 +276,7 @@ void Tram::makePeopleGetOn()
 
 void Tram::closeDoors()
 {
-    qDebug() << "fermeture de "<<NB_DOORS<<" portes";
+    qDebug() << "fermeture de"<<NB_DOORS<<"portes";
     for(int i = 0 ; i < NB_DOORS ; i++)
     {
         m_doors[i].close();
