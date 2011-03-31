@@ -51,6 +51,11 @@ Tram::Tram():Drawable(), Container()
     m_punchingTerminal->start();
     m_beforeOutOfOrder = Tram::OutOfOrder;
     m_generateProblem = false;
+    for(int i = 0 ; i < NB_DOORS ; i++)
+    {
+        Door d;
+        m_doors.append(d);
+    }
 }
 Tram::~Tram()
 {
@@ -222,7 +227,11 @@ void Tram::slowDown()
 
 void Tram::openDoors()
 {
-    qDebug() << "--ouverture des portes";
+    qDebug() << "ouverture de "<<NB_DOORS<<" portes";
+    for(int i = 0 ; i < NB_DOORS ; i++)
+    {
+        m_doors[i].open();
+    }
     makePeopleGetOff();
 }
 
@@ -267,7 +276,11 @@ void Tram::makePeopleGetOn()
 
 void Tram::closeDoors()
 {
-    qDebug() << "--fermeture des portes";
+    qDebug() << "fermeture de "<<NB_DOORS<<" portes";
+    for(int i = 0 ; i < NB_DOORS ; i++)
+    {
+        m_doors[i].close();
+    }
     Message* m = new Message(this,Message::DoorsClosed);
     m_obstacle->addMessage(m);
 }

@@ -34,8 +34,7 @@ public:
      */
     enum State {
         Open = 0,
-        Closed,
-        Blocked
+        Closed
     };
     /**
      * @brief Construit une porte.

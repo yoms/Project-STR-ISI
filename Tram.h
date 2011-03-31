@@ -33,6 +33,7 @@
 #include "Obstacle.h"
 #include "Person.h"
 #include "Container.h"
+#include "Door.h"
 
 #define NB_DOORS 4
 #define NB_COMPOSTER 4
@@ -186,6 +187,7 @@ private:
     int m_nbPeopleGettingOn;
     Tram::State m_beforeOutOfOrder;
     bool m_generateProblem;
+    QList<Door> m_doors;
 };
 
 #endif // TRAM_H
