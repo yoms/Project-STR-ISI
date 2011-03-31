@@ -43,7 +43,6 @@ Tram::Tram():Drawable(), Container()
         ,  m_velocity(VITESSE_MIN)
         , m_nbPeopleGettingOff(0)
         , m_nbPeopleGettingOn(0)
-        , m_isStopped(false)
 {
     m_obstacle = NULL;
     m_nbTick = 0;
@@ -68,7 +67,6 @@ void Tram::run()
             switch(m_state)
             {
             case Tram::Acceleration:
-                m_isStopped = false;
                 speedUp();
                 move();
                 break;
@@ -94,7 +92,6 @@ void Tram::run()
             case Tram::Off:
                 m_velocity = VITESSE_MIN;
                 // check this.nbPerson et
-                sendIsStoped();
                 break;
             }
         }
@@ -120,12 +117,11 @@ void Tram::obstacleTracking()
 
 void Tram::sendIsStoped()
 {
-    if(m_obstacle != NULL && !m_isStopped)
+    if(m_obstacle != NULL)
     {
-        qDebug() << "arret du tram";
+        qDebug() << "arret de" << name();
         Message* m = new Message(this,Message::IsStopped);
         m_obstacle->addMessage(m);
-        m_isStopped = true;
     }
 }
 
@@ -207,7 +203,7 @@ void Tram::slowDown()
 
 void Tram::openDoors()
 {
-    qDebug() << "ouverture des portes";
+    qDebug() << "--ouverture des portes";
     makePeopleGetOff();
 }
 
@@ -217,7 +213,7 @@ void Tram::makePeopleGetOff()
     m_nbPeopleGettingOff = persons().size(); // TODO : corriger avec le nb réél compte tenu de l'état
     if(m_nbPeopleGettingOff > 0)
     {
-        qDebug() << "--les passagers descendent";
+        qDebug() << "----les passagers descendent";
         for(int i = 0 ; i < m_nbPeopleGettingOff ; i++)
         {
             Message * m = new Message(stationLight->station(), Message::ReachingStation);
@@ -235,7 +231,7 @@ void Tram::makePeopleGetOn()
     m_nbPeopleGettingOn = stationPersons.size(); // TODO : corriger avec le nb réél compte tenu de l'état
     if(m_nbPeopleGettingOn > 0)
     {
-        qDebug() << "--les passagers montent";
+        qDebug() << "----les passagers montent";
         for(int i = 0 ; i < m_nbPeopleGettingOn ; i++)
         {
             Message * m = new Message(this, Message::TramIncoming);
@@ -248,7 +244,7 @@ void Tram::makePeopleGetOn()
 
 void Tram::closeDoors()
 {
-    qDebug() << "fermeture des portes";
+    qDebug() << "--fermeture des portes";
     Message* m = new Message(this,Message::DoorsClosed);
     m_obstacle->addMessage(m);
 }
@@ -265,6 +261,8 @@ void Tram::handleNewMessage()
                 m_state = Tram::Desceleration;
             break;
         case Message::LightToTramCross:
+            if(m_state == Tram::Off)
+                qDebug() << "depart de" << name();
             m_state = Tram::Acceleration;
             break;
         case Message::ManageStationStop:
