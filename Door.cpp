@@ -22,7 +22,7 @@
 
 #include "Door.h"
 
-Door::Door()
+Door::Door():m_state(Door::Closed)
 {
 }
 
