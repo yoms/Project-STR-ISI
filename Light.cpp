@@ -24,7 +24,6 @@
 #include <QPainter>
 #include <QBrush>
 #include <QDebug>
-#define SIZE_LIGHT 3
 Light::Light():m_state(Light::Green),m_previousLight(NULL)
 {}
 

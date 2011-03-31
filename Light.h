@@ -22,6 +22,7 @@
 
 #ifndef LIGHT_H
 #define LIGHT_H
+#define SIZE_LIGHT 3
 
 #include "Obstacle.h"
 #include "Drawable.h"

@@ -27,7 +27,7 @@
 
 #include <QPainter>
 #include <QDebug>
-#define SIZE 3
+#define SIZE 5
 #define SIZE_TRAM 4
 #define VITESSE_MIN 40
 #define VITESSE_MAX 5
@@ -49,6 +49,8 @@ Tram::Tram():Drawable(), Container()
     m_state = Tram::Acceleration;
     pthread_mutex_init(&m_mutexTram,NULL);
     m_punchingTerminal->start();
+    m_beforeOutOfOrder = Tram::OutOfOrder;
+    m_generateProblem = false;
 }
 Tram::~Tram()
 {
@@ -59,8 +61,8 @@ void Tram::run()
     for(;;)
     {
         pthread_mutex_lock(&m_mutexTram);
-
-        obstacleTracking();
+        if(m_state != Tram::OutOfOrder)
+            obstacleTracking();
         if(m_nbTick == m_velocity-1)
         {
             this->m_nbTick = ++m_nbTick%m_velocity;
@@ -71,6 +73,7 @@ void Tram::run()
                 move();
                 break;
             case Tram::OutOfOrder:
+                m_velocity = VITESSE_MIN;
                 break;
             case Tram::Desceleration:
                 slowDown();
@@ -91,7 +94,6 @@ void Tram::run()
                 break;
             case Tram::Off:
                 m_velocity = VITESSE_MIN;
-                // check this.nbPerson et
                 break;
             }
         }
@@ -107,10 +109,20 @@ void Tram::obstacleTracking()
     }
     else if(m_obstacle != NULL)
     {
-        m_obstacle->addMessage(new Message(this,Message::IsCrossed));
-        m_obstacle = NULL;
         m_state = Tram::Acceleration;
-//        m_security++;
+        bool isCrossed = false;
+        QPoint p = m_trip->previous(m_coordinate);
+        int i = 0;
+        int nbCase = SIZE+SIZE_LIGHT+1;
+        for(i = 0; i < nbCase && m_obstacle->place() != p; i++)
+        {
+            p = m_trip->previous(p);
+        }
+        isCrossed = i == nbCase -1;
+        if(isCrossed){
+            m_obstacle->addMessage(new Message(this,Message::IsCrossed));
+            m_obstacle = NULL;
+        }
     }
 
 }
@@ -140,10 +152,17 @@ void Tram::setTrip(Trip *t)
 
 void Tram::tick()
 {
-//    srand ( time(NULL) );
-//    int panne = (rand()+this->m_nbTick+10000) % 1000;
-//    int panne2 = (this->velocity()+this->threadid()+1) % 1000;
-//    this->m_generateProblem = (panne == panne2);
+    srand ( time(NULL) );
+    if(m_state != Tram::OutOfOrder && m_generateProblem)
+    {
+        int panne = (rand()+this->m_nbTick+10000) % 1000;
+        int panne2 = (this->velocity()+this->threadid()+1) % 1000;
+        if(panne == panne2)
+        {
+            this->m_beforeOutOfOrder = m_state;
+            this->m_state = Tram::OutOfOrder;
+        }
+    }
     this->m_nbTick = ++m_nbTick%m_velocity;
     pthread_mutex_unlock(&m_mutexTram);
 }
@@ -167,16 +186,16 @@ void Tram::draw(QPainter *painter)
     buff = this->m_coordinate;
     for(int i = 0; i < SIZE; i++)
     {
-//        if(m_problemDetected)
-//        {
-//            painter->setPen(QColor(255, 165, 0));
-//            painter->setBrush(QBrush(QColor(255, 165, 0)));
-//        }
-//        else
-//        {
+        if(m_state == Tram::OutOfOrder)
+        {
+            painter->setPen(QColor(255, 165, 0));
+            painter->setBrush(QBrush(QColor(255, 165, 0)));
+        }
+        else
+        {
             painter->setPen(Qt::red);
             painter->setBrush(QBrush(Qt::red));
-//        }
+        }
         drawElemScen(painter, buff.x(), buff.y(), SIZE_TRAM);
         buff = this->m_trip->previous(buff);
     }
@@ -194,10 +213,10 @@ void Tram::speedUp()
 }
 
 void Tram::slowDown()
-{
+{/*
     if(m_velocity >= VITESSE_MIN)
-        m_state = Tram::Off;
-    else
+        m_state = Tram::Off;*/
+    if(m_velocity < VITESSE_MIN)
         m_velocity += ACCELERATION;
 }
 
@@ -249,6 +268,17 @@ void Tram::closeDoors()
     m_obstacle->addMessage(m);
 }
 
+void Tram::restartAfterOutOfOrder()
+{
+    if(m_state == Tram::OutOfOrder)
+    {
+        this->m_state = this->m_beforeOutOfOrder;
+        if(m_state == Tram::On)
+            this->m_state = Tram::Acceleration;
+    }
+
+}
+
 void Tram::handleNewMessage()
 {
     while(!m_messageList.isEmpty())
@@ -257,7 +287,7 @@ void Tram::handleNewMessage()
         switch(m->type())
         {
         case Message::LightToTramStop:
-            if(m_state != Tram::Off && m_state != OutOfOrder)
+            if(m_state != Tram::Off)
                 m_state = Tram::Desceleration;
             break;
         case Message::LightToTramCross:
@@ -279,6 +309,16 @@ void Tram::handleNewMessage()
             m_nbPeopleGettingOff --;
             if(m_nbPeopleGettingOff == 0)
                 makePeopleGetOn();
+            break;
+        case Message::Solved:
+            restartAfterOutOfOrder();
+            break;
+        case Message::ProblemDetected:
+            if(m_state != Tram::OutOfOrder)
+            {
+                this->m_beforeOutOfOrder = this->m_state;
+                this->m_state = Tram::OutOfOrder;
+            }
             break;
         default:
             break;

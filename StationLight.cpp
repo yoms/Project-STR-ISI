@@ -55,7 +55,6 @@ void StationLight::handleNewMessage()
                 m->sender()->addMessage(new Message(this,Message::LightToTramCross));
             break;
         case Message::IsCrossed:
-            sleep(1);
             m_state = Light::Red;
             m_free = false;
             m_doorClosed = false;

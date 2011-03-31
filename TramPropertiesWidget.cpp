@@ -54,6 +54,10 @@ void TramPropertiesWidget::updateTramInformation()
     {
         nbPersons += m_tram->persons()[i]->nbPerson();
     }
+    if(m_tram->generateProblem())
+        this->ui->checkBox->setCheckState(Qt::Checked);
+    else
+        this->ui->checkBox->setCheckState(Qt::Unchecked);
     this->ui->m_nbPersons->setText(QString::number(nbPersons)+ " passager(s)");
     switch(m_tram->state())
     {
@@ -77,10 +81,18 @@ void TramPropertiesWidget::updateTramInformation()
 
 void TramPropertiesWidget::on_pushButton_clicked()
 {
-//    m_tram->addMessage(new Message(NULL, Message::Solved));
+    m_tram->addMessage(new Message(NULL, Message::Solved));
 }
 
 void TramPropertiesWidget::on_m_panne_clicked()
 {
-//    m_tram->changeProblem(true);
+    m_tram->addMessage(new Message(NULL, Message::ProblemDetected));
+}
+
+void TramPropertiesWidget::on_checkBox_stateChanged(int i)
+{
+    if(i == 0)
+        m_tram->setGenerateProblem(false);
+    else
+        m_tram->setGenerateProblem(true);
 }

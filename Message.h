@@ -111,7 +111,11 @@ public:
         /**
          * @brief Envoyé par le pcc à un tram pour lui indiquer que le problème est résolu.
          */
-        Solved
+        Solved,
+        /**
+         * @brief Envoyé par le pcc à un tram pour lui indiquer qu'un problème est détecté.
+         */
+        ProblemDetected
     };
     /**
      * @brief Construit un message.

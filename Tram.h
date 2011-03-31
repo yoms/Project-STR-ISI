@@ -101,6 +101,16 @@ public:
      */
     int velocity(){return m_velocity;}
     /**
+     * @brief Change la possibilité de génération d'anomalie.
+     * @param vrai si une anomalie est générée aléatoirement et faux sinon
+     */
+    void setGenerateProblem(bool b){m_generateProblem = b;}
+    /**
+     * @brief Retourne si une anomalie est générée aléatoirement.
+     * @return vrai si une anomalie est générée aléatoirement et faux sinon
+     */
+    bool generateProblem(){return m_generateProblem;}
+    /**
      * @brief Retourne l'état du tram.
      * @return l'état du tram
      */
@@ -156,7 +166,14 @@ private:
      * @brief Ferme les portes
      */
     void closeDoors();
+    /**
+     * @brief Traite le nouveau message.
+     */
     void handleNewMessage();
+    /**
+     * @brief Permet au tram de redémarrer après une panne.
+     */
+    void restartAfterOutOfOrder();
 private:
     PunchingTerminal* m_punchingTerminal;
     Obstacle* m_obstacle;
@@ -167,6 +184,8 @@ private:
     State m_state;
     int m_nbPeopleGettingOff;
     int m_nbPeopleGettingOn;
+    Tram::State m_beforeOutOfOrder;
+    bool m_generateProblem;
 };
 
 #endif // TRAM_H

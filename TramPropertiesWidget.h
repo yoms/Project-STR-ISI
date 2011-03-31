@@ -49,6 +49,7 @@ public:
      */
     virtual ~TramPropertiesWidget();
 private slots:
+    void on_checkBox_stateChanged(int );
     void on_m_panne_clicked();
     void on_pushButton_clicked();
     void updateTramInformation();
