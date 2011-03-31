@@ -91,6 +91,41 @@ public:
      */
     void draw(QPainter *);
     /**
+     * @brief Change le trajet.
+     * @param le nouveau trajet
+     */
+    void setTrip(Trip*);
+    /**
+     * @brief Retourne la vitesse du tram.
+     * @return la vitesse du tram
+     */
+    int velocity(){return m_velocity;}
+    /**
+     * @brief Retourne l'état du tram.
+     * @return l'état du tram
+     */
+    Tram::State state(){return m_state;}
+    /**
+     * @brief Retourne le nom de la classe.
+     * @return le nom de la classe
+     */
+    virtual QString className(){ return QString("Tram");}
+    /**
+     * @brief Retourne le composteur du tram.
+     * @return le composteur du tram
+     */
+    PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
+    /**
+     * @brief Modifie le fait qu'il y ait une anomalie de détectée.
+     * @param vrai s'il y a une anomalie de détectée et faux sinon
+     */
+    void changeProblem(bool b) {m_generateProblem = b;}
+private:
+    /**
+     * @brief Envoie un message pour signifier qu'il est arrété.
+     */
+    void sendIsStoped();
+    /**
      * @brief Représente le comportement d'un tram.
      */
     void run();
@@ -114,41 +149,6 @@ public:
      * @brief Gère l'arrêt en gare.
      */
     void manageStationStop();
-    /**
-     * @brief Change le trajet.
-     * @param le nouveau trajet
-     */
-    void setTrip(Trip*);
-    /**
-     * @brief Retourne la vitesse du tram.
-     * @return la vitesse du tram
-     */
-    int velocity(){return m_velocity;}
-    /**
-     * @brief Retourne l'état du tram.
-     * @return l'état du tram
-     */
-    Tram::State state(){return m_state;}
-    /**
-     * @brief Envoie un message pour signifier qu'il est arrété.
-     */
-    void sendIsStoped();
-    /**
-     * @brief Retourne le nom de la classe.
-     * @return le nom de la classe
-     */
-    virtual QString className(){ return QString("Tram");}
-    /**
-     * @brief Retourne le composteur du tram.
-     * @return le composteur du tram
-     */
-    PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
-    /**
-     * @brief Modifie le fait qu'il y ait une anomalie de détectée.
-     * @param vrai s'il y a une anomalie de détectée et faux sinon
-     */
-    void changeProblem(bool b) {m_generateProblem = b;}
-private:
     void handleNewMessage();
 private:
     PunchingTerminal* m_punchingTerminal;
