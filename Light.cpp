@@ -30,6 +30,12 @@ Light::Light():m_state(Light::Green),m_previousLight(NULL)
 void Light::draw(QPainter * painter)
 {
     painter->save();
+    if(isSelect())
+    {
+        painter->setPen(Qt::yellow);
+        painter->setBrush(QBrush(Qt::yellow));
+        drawElemScen(painter, m_coordinate.x()-1, m_coordinate.y()-1, SIZE_LIGHT+2);
+    }
     switch(this->m_state)
     {
     case Light::Red:

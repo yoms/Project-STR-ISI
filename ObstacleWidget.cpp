@@ -32,12 +32,18 @@ ObstacleWidget::ObstacleWidget(Obstacle *obstacle, QWidget *parent) :
     ui->setupUi(this);
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateObstacleInformation()));
+    connect(this->ui->m_name, SIGNAL(clicked()), this, SLOT(updateTramSelection()));
     m_timer->start(50);
 }
 
 ObstacleWidget::~ObstacleWidget()
 {
     delete ui;
+}
+
+void ObstacleWidget::updateTramSelection()
+{
+    m_obstacle->isSelect() ? m_obstacle->unSelect():m_obstacle->select();
 }
 
 void ObstacleWidget::updateObstacleInformation()

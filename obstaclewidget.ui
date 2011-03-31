@@ -23,15 +23,9 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QLabel" name="m_name">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>100</height>
-        </size>
-       </property>
+      <widget class="QPushButton" name="m_name">
        <property name="text">
-        <string/>
+        <string>PushButton</string>
        </property>
       </widget>
      </item>

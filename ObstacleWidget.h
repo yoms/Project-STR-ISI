@@ -52,6 +52,7 @@ public:
 private slots:
     void on_m_etat_clicked();
     void updateObstacleInformation();
+    void updateTramSelection();
 private:
     Ui::ObstacleWidget *ui;
     QTimer *m_timer;
