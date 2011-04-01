@@ -1,0 +1,7 @@
+Les dependances du projet sont les suivantes:
+- libqt4-dev
+- libgnat
+- libgnarl
+LibQt4 est la librairie qui permet de gerer l'interface graphique ainsi que les conteneur utilisé lors du projet.
+- QtCore, QtGui
+Les Libgnat et Libgnarl sont des dependance de l'ada est sont donc necessaires au bon fonctionnement de la partie ada du projet
