@@ -22,22 +22,25 @@
 
 #include "Message.h"
 
-Message::Message(ThreadWithMessages *t , TypeMessage type):m_sender(t), m_type(type), m_content(NULL)
+Message::Message(ThreadWithMessages *t , TypeMessage type): m_sender(t), m_type(type), m_content(NULL)
 {
 }
 
-Message::Message(ThreadWithMessages *t , TypeMessage type, void* content):m_sender(t), m_type(type), m_content(content)
+Message::Message(ThreadWithMessages *t , TypeMessage type, void* content): m_sender(t), m_type(type), m_content(content)
 {
 }
 
-void Message::setSender(ThreadWithMessages * t){
+void Message::setSender(ThreadWithMessages * t)
+{
     this->m_sender = t;
 }
 
-Message::TypeMessage Message::type(){
+Message::TypeMessage Message::type()
+{
     return this->m_type;
 }
 
-ThreadWithMessages * Message::sender(){
+ThreadWithMessages * Message::sender()
+{
     return this->m_sender;
 }

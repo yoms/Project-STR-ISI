@@ -43,18 +43,15 @@ ObstacleWidget::~ObstacleWidget()
 
 void ObstacleWidget::updateTramSelection()
 {
-    m_obstacle->isSelect() ? m_obstacle->unSelect():m_obstacle->select();
+    m_obstacle->isSelect() ? m_obstacle->unSelect() : m_obstacle->select();
 }
 
 void ObstacleWidget::updateObstacleInformation()
 {
     this->ui->m_name->setText(m_obstacle->name());
-    if(m_obstacle->indicateState())
-    {
+    if(m_obstacle->indicateState()) {
         this->ui->m_color->setStyleSheet("background-color: #00ff00");
-    }
-    else
-    {
+    } else {
         this->ui->m_color->setStyleSheet("background-color: #ff0000");
     }
 }

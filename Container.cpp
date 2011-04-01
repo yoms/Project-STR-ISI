@@ -2,14 +2,14 @@
 #include "Person.h"
 #include <QDebug>
 
-Container::Container():ThreadWithMessages()
+Container::Container(): ThreadWithMessages()
 {
-    pthread_mutex_init(&m_mutexContainer,NULL);
+    pthread_mutex_init(&m_mutexContainer, NULL);
 }
 
 Container::~Container()
 {
-    while(m_persons.size()){
+    while(m_persons.size()) {
         Person * p = m_persons.takeFirst();
         delete p;
     }

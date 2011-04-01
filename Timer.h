@@ -79,11 +79,13 @@ public:
      * @brief Indique la classe de l'objet.
      * @return Timer
      */
-    virtual QString className(){ return QString("Timer");}
+    virtual QString className() {
+        return QString("Timer");
+    }
 private:
     static void _alarmFunction(int sigNumb, siginfo_t *si, void *uc);
     static void _waitingFunction(int sigNumb, siginfo_t *si, void *uc);
-    Timer(){}
+    Timer() {}
 private:
     timer_t m_timerID;
     struct sigevent m_signalEvent;

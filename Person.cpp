@@ -27,7 +27,7 @@
 #include "PunchingTerminal.h"
 #include <QDebug>
 
-Person::Person(Person::State s):ThreadWithMessages(), m_nbPerson(5)
+Person::Person(Person::State s): ThreadWithMessages(), m_nbPerson(5)
 {
     m_container = NULL;
     m_state = s;
@@ -44,15 +44,15 @@ void Person::run()
 }
 void Person::buyTicket(PurchasingTerminal * purchasingTerm)
 {
-    for(int i=0; i<m_nbPerson; i++)
-        purchasingTerm->addMessage(new Message(this,Message::BuyTicket));
+    for(int i = 0; i < m_nbPerson; i++)
+        purchasingTerm->addMessage(new Message(this, Message::BuyTicket));
     m_nbTicketToBuy += m_nbPerson;
 }
 
 void Person::punchTicket(PunchingTerminal * punchingTerm)
 {
-    for(int i=0; i<m_nbPerson; i++)
-        punchingTerm->addMessage(new Message(this,Message::PunchTicket));
+    for(int i = 0; i < m_nbPerson; i++)
+        punchingTerm->addMessage(new Message(this, Message::PunchTicket));
     m_nbTicketToPunch += m_nbPerson;
 }
 
@@ -82,11 +82,9 @@ void Person::triggerEmergencyStop()
 
 void Person::handleNewMessage()
 {
-    while(m_messageList.size())
-    {
+    while(m_messageList.size()) {
         Message* m = m_messageList.takeFirst();
-        switch(m->type())
-        {
+        switch(m->type()) {
         case Message::TramIncoming:
             if(m_state == Person::NeedGetOnTheTram)
                 getOnTheTram((Tram*)m->sender());
@@ -97,16 +95,14 @@ void Person::handleNewMessage()
             break;
         case Message::TicketBought:
             m_nbTicketToBuy --;
-            if(m_nbTicketToBuy == 0)
-            {
+            if(m_nbTicketToBuy == 0) {
                 m_state = Person::NeedGetOnTheTram;
                 qDebug() << "------" << m_nbPerson << "personnes ont achete leur ticket";
             }
             break;
         case Message::TicketPunched:
             m_nbTicketToPunch --;
-            if(m_nbTicketToPunch == 0)
-            {
+            if(m_nbTicketToPunch == 0) {
                 m_state = Person::NeedGetOffTheTram;
                 qDebug() << "------" << m_nbPerson << "personnes ont composte leur ticket";
             }
@@ -121,7 +117,7 @@ void Person::handleNewMessage()
 QList<Person*> Person::personsReadyToGetOn(QList<Person*> all)
 {
     QList<Person*> personsReady;
-    for(int i=0 ; i<all.size() ; i++)
+    for(int i = 0 ; i < all.size() ; i++)
         if(all.at(i)->getState() == Person::NeedGetOnTheTram)
             personsReady.append(all.at(i));
     return personsReady;
@@ -130,7 +126,7 @@ QList<Person*> Person::personsReadyToGetOn(QList<Person*> all)
 QList<Person*> Person::personsReadyToGetOff(QList<Person*> all)
 {
     QList<Person*> personsReady;
-    for(int i=0 ; i<all.size() ; i++)
+    for(int i = 0 ; i < all.size() ; i++)
         if(all.at(i)->getState() == Person::NeedGetOffTheTram)
             personsReady.append(all.at(i));
     return personsReady;

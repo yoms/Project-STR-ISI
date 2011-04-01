@@ -33,8 +33,9 @@
 #include "TramPropertiesWidget.h"
 #include "StationWidget.h"
 
-namespace Ui {
-    class TramWindow;
+namespace Ui
+{
+class TramWindow;
 }
 
 /**

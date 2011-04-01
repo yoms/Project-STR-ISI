@@ -40,7 +40,7 @@ public:
     /**
      * @brief Détruit l'obstacle.
      */
-    virtual ~Obstacle(){}
+    virtual ~Obstacle() {}
     /**
      * @brief Indique l'état de l'obstacle.
      * @return vrai si le feu est rouge et faux sinon
@@ -54,17 +54,23 @@ public:
      * @brief Indique le lieu de l'obstacle.
      * @return le lieu
      */
-    QPoint place(){return m_place;}
+    QPoint place() {
+        return m_place;
+    }
     /**
      * @brief Change le lieu de l'obstacle.
      * @param le nouveau lieu
      */
-    void setPlace(QPoint l){m_place = l;}
+    void setPlace(QPoint l) {
+        m_place = l;
+    }
     /**
      * @brief Indique le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Obstacle");}
+    virtual QString className() {
+        return QString("Obstacle");
+    }
 private:
     QPoint m_place;
 };

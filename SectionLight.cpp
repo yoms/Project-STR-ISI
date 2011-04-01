@@ -31,10 +31,12 @@ SectionLight::~SectionLight()
 
 }
 
-void SectionLight::setOutdoorLight(OutdoorSectionLight* l){
+void SectionLight::setOutdoorLight(OutdoorSectionLight* l)
+{
     this->m_outdoorLight = l;
 }
 
-void SectionLight::setIndoorLight(IndoorSectionLight* l){
+void SectionLight::setIndoorLight(IndoorSectionLight* l)
+{
     this->m_indoorLight = l;
 }

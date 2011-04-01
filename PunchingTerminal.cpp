@@ -45,7 +45,7 @@ PunchingTerminal::~PunchingTerminal() {}
 void PunchingTerminal::run()
 {
     for(;;)
-       sleep(1);
+        sleep(1);
 }
 
 void PunchingTerminal::punchTicket()
@@ -55,14 +55,12 @@ void PunchingTerminal::punchTicket()
 
 void PunchingTerminal::handleNewMessage()
 {
-    while(!m_messageList.isEmpty())
-    {
+    while(!m_messageList.isEmpty()) {
         Message *m = m_messageList.takeFirst();
-        switch(m->type())
-        {
+        switch(m->type()) {
         case Message::PunchTicket:
             this->punchTicket();
-            m->sender()->addMessage(new Message(this,Message::TicketPunched));
+            m->sender()->addMessage(new Message(this, Message::TicketPunched));
             break;
         default:
             break;

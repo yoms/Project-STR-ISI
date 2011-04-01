@@ -36,7 +36,7 @@ class Station;
 class Person : public ThreadWithMessages
 {
 public:
-    enum State{
+    enum State {
         NeedTicket,
         NeedGetOnTheTram,
         NeedPunchTicket,
@@ -75,22 +75,30 @@ public:
      * @brief Change le conteneur. Le conteneur sera de type station ou tram.
      * @param le nouveau conteneur
      */
-    void setContainer(Container* c){m_container = c;}
+    void setContainer(Container* c) {
+        m_container = c;
+    }
     /**
      * @brief Indique l'état du groupe de passagers.
      * @return l'état du groupe de passagers
      */
-    int getState() const {return m_state;}
+    int getState() const {
+        return m_state;
+    }
     /**
      * @brief Retourne le nombre de personnes dans le groupe.
      * @return le nombre de personnes dans le groupe
      */
-    int nbPerson() const {return m_nbPerson;}
+    int nbPerson() const {
+        return m_nbPerson;
+    }
     /**
      * @brief Indique le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Person");}
+    virtual QString className() {
+        return QString("Person");
+    }
     /**
      * @brief Retourne les personnes qui sont prêtes à monter dans le tram.
      * @param personnes qu'on veut faire monter

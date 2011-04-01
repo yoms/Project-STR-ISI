@@ -25,8 +25,8 @@
 #include <QtCore/QTextCodec>
 
 extern "C" {
-extern void adainit (void);
-extern void adafinal (void);
+    extern void adainit(void);
+    extern void adafinal(void);
 }
 
 int main(int argc, char *argv[])

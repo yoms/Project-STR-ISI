@@ -46,7 +46,9 @@ public:
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("PunchingTerminal");}
+    virtual QString className() {
+        return QString("PunchingTerminal");
+    }
 private:
     /**
      * @brief Composte un ticket.

@@ -52,35 +52,49 @@ public:
      * @brief Indique la position de l'objet.
      * @return la position de l'objet
      */
-    QPoint coordinate(){return m_coordinate;}
+    QPoint coordinate() {
+        return m_coordinate;
+    }
     /**
      * @brief Change la position de l'objet.
      * @param la nouvelle position de l'objet
      */
-    void setCoordinate(QPoint p){m_coordinate = p;}
+    void setCoordinate(QPoint p) {
+        m_coordinate = p;
+    }
     /**
      * @brief Indique le nom de l'objet graphique.
      * @return le nom
      */
-    QString name(){return m_name;}
+    QString name() {
+        return m_name;
+    }
     /**
      * @brief Change le nom de l'objet graphique.
      * @param le nouveau nom
      */
-    void setName(QString n){m_name = n;}
+    void setName(QString n) {
+        m_name = n;
+    }
     /**
      * @brief Met en surbrillance l'objet.
      */
-    void select(){m_selected = true;}
+    void select() {
+        m_selected = true;
+    }
     /**
      * @brief Enleve la surbrillance de l'objet.
      */
-    void unSelect(){m_selected = false;}
+    void unSelect() {
+        m_selected = false;
+    }
     /**
      * @brief Retourne vrai si l'objet est en surbrillance ou pas.
      * @return Vrai si l'objet est en surbrillance, faut sinon.
      */
-    bool isSelect(){return m_selected;}
+    bool isSelect() {
+        return m_selected;
+    }
 
 protected:
     QPoint m_coordinate;

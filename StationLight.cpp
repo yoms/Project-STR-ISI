@@ -42,46 +42,41 @@ Station* StationLight::station()
 
 void StationLight::handleNewMessage()
 {
-    while(m_messageList.size())
-    {
+    while(m_messageList.size()) {
         Message* m = m_messageList.takeFirst();
-        switch(m->type()){
+        switch(m->type()) {
         case Message::TramToLightRequest:
-            if(m_state == Light::Red)
-            {
-                m->sender()->addMessage(new Message(this,Message::LightToTramStop));
+            if(m_state == Light::Red) {
+                m->sender()->addMessage(new Message(this, Message::LightToTramStop));
             }
             if(m_state == Light::Green)
-                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
+                m->sender()->addMessage(new Message(this, Message::LightToTramCross));
             break;
         case Message::IsCrossed:
             m_state = Light::Red;
             m_free = false;
             m_doorClosed = false;
-            if(m_previousLight != NULL)
-            {
+            if(m_previousLight != NULL) {
                 Message * m1 = new Message(this, Message::IsFree);
                 m_previousLight->addMessage(m1);
             }
             break;
         case Message::IsFree:
             m_free = true;
-            if(m_doorClosed && m_free)
-            {
+            if(m_doorClosed && m_free) {
                 m_state = Light::Green;
-                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
+                m->sender()->addMessage(new Message(this, Message::LightToTramCross));
             }
             break;
         case Message::DoorsClosed:
             m_doorClosed = true;
-            if(m_free && m_doorClosed)
-            {
+            if(m_free && m_doorClosed) {
                 m_state = Light::Green;
-                m->sender()->addMessage(new Message(this,Message::LightToTramCross));
+                m->sender()->addMessage(new Message(this, Message::LightToTramCross));
             }
             break;
         case Message::IsStopped:
-            m->sender()->addMessage(new Message(this,Message::ManageStationStop));
+            m->sender()->addMessage(new Message(this, Message::ManageStationStop));
             break;
         default:
             break;
@@ -93,8 +88,7 @@ void StationLight::handleNewMessage()
 void StationLight::setColor(Light::Color etat)
 {
     this->m_state = etat;
-    if(etat == Light::Red)
-    {
+    if(etat == Light::Red) {
         m_free = false;
         m_doorClosed = false;
     }

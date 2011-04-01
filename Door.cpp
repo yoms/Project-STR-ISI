@@ -22,18 +22,21 @@
 
 #include "Door.h"
 
-Door::Door():m_state(Door::Closed)
+Door::Door(): m_state(Door::Closed)
 {
 }
 
-void Door::open() {
+void Door::open()
+{
     this->m_state = Door::Open;
 }
 
-void Door::close() {
+void Door::close()
+{
     this->m_state = Door::Closed;
 }
 
-Door::State Door::state(){
+Door::State Door::state()
+{
     return this->m_state;
 }

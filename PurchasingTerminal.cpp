@@ -55,14 +55,12 @@ void PurchasingTerminal::giveTicket()
 
 void PurchasingTerminal::handleNewMessage()
 {
-    while(!m_messageList.isEmpty())
-    {
+    while(!m_messageList.isEmpty()) {
         Message *m = m_messageList.takeFirst();
-        switch(m->type())
-        {
+        switch(m->type()) {
         case Message::BuyTicket:
             this->giveTicket();
-            m->sender()->addMessage(new Message(this,Message::TicketBought));
+            m->sender()->addMessage(new Message(this, Message::TicketBought));
             break;
         default:
             break;

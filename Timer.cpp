@@ -25,9 +25,9 @@
 Timer::Timer(int sec, int mSec, int nSec): Thread()
 {
     this->m_timerSpecs.it_value.tv_sec = sec;
-    this->m_timerSpecs.it_value.tv_nsec = mSec*1000000 + nSec;
+    this->m_timerSpecs.it_value.tv_nsec = mSec * 1000000 + nSec;
     this->m_timerSpecs.it_interval.tv_sec = sec;
-    this->m_timerSpecs.it_interval.tv_nsec = mSec*1000000 + nSec;
+    this->m_timerSpecs.it_interval.tv_nsec = mSec * 1000000 + nSec;
 
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
@@ -37,13 +37,11 @@ Timer::Timer(int sec, int mSec, int nSec): Thread()
     this->m_signalEvent.sigev_value.sival_ptr = (void*) this;
     this->m_signalEvent.sigev_signo = SIGALRM;
 
-    if (timer_create(CLOCK_REALTIME, &this->m_signalEvent, &this->m_timerID)!= 0)
-    {
+    if(timer_create(CLOCK_REALTIME, &this->m_signalEvent, &this->m_timerID) != 0) {
         qDebug() << "Impossible de creer le timer";
         return;
     }
-    if (sigaction(SIGALRM, &this->m_signalAction, NULL))
-    {
+    if(sigaction(SIGALRM, &this->m_signalAction, NULL)) {
         qDebug() << "impossible de creer le handle";
     }
 }
@@ -58,13 +56,13 @@ void Timer::removeListener(TimerListener *tl)
 }
 void Timer::tick()
 {
-    for(int i =0 ; i < m_listenerList.size(); i++)
+    for(int i = 0 ; i < m_listenerList.size(); i++)
         m_listenerList[i]->tick();
 }
 
 void Timer::run()
 {
-    if (timer_settime(this->m_timerID, 0, &this->m_timerSpecs, NULL) == -1)
+    if(timer_settime(this->m_timerID, 0, &this->m_timerSpecs, NULL) == -1)
         qDebug() << "Erreur timer:";
 }
 void Timer::stop()
@@ -76,7 +74,7 @@ void Timer::stop()
 
 void Timer::_alarmFunction(int sigNumb, siginfo_t *si, void *uc)
 {
-    Timer * ptrTimer = reinterpret_cast<Timer *> (si->si_value.sival_ptr);
+    Timer * ptrTimer = reinterpret_cast<Timer *>(si->si_value.sival_ptr);
     ptrTimer->tick();
 }
 Timer::~Timer()

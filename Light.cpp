@@ -24,20 +24,18 @@
 #include <QPainter>
 #include <QBrush>
 #include <QDebug>
-Light::Light():m_state(Light::Green),m_previousLight(NULL)
+Light::Light(): m_state(Light::Green), m_previousLight(NULL)
 {}
 
 void Light::draw(QPainter * painter)
 {
     painter->save();
-    if(isSelect())
-    {
+    if(isSelect()) {
         painter->setPen(Qt::yellow);
         painter->setBrush(QBrush(Qt::yellow));
-        drawElemScen(painter, m_coordinate.x()-1, m_coordinate.y()-1, SIZE_LIGHT+2);
+        drawElemScen(painter, m_coordinate.x() - 1, m_coordinate.y() - 1, SIZE_LIGHT + 2);
     }
-    switch(this->m_state)
-    {
+    switch(this->m_state) {
     case Light::Red:
         painter->setPen(Qt::red);
         painter->setBrush(QBrush(Qt::red));
@@ -55,36 +53,32 @@ void Light::draw(QPainter * painter)
 
 void Light::run()
 {
-    for(;;)
-    {
+    for(;;) {
         // le sleep est arrété lorsqu'un nouveau message apparait
         sleep(1);
     }
 }
 void Light::handleNewMessage()
 {
-    while(m_messageList.size())
-    {
+    while(m_messageList.size()) {
         Message* m = m_messageList.takeFirst();
-        switch(m->type())
-        {
-            case Message::TramToLightRequest:
-                if(m_state == Light::Red)
-                    m->sender()->addMessage(new Message(this,Message::LightToTramStop));
-                else if(m_state == Light::Green)
-                    m->sender()->addMessage(new Message(this,Message::LightToTramCross));
-                break;
-            case Message::IsCrossed:
-                m_state = Light::Red;
-                if(m_previousLight != NULL)
-                {
-                    Message * m1 = new Message(this, Message::IsFree);
-                    m_previousLight->addMessage(m1);
-                }
-                break;
-            case Message::IsFree:
-                m_state = Light::Green;
-                break;
+        switch(m->type()) {
+        case Message::TramToLightRequest:
+            if(m_state == Light::Red)
+                m->sender()->addMessage(new Message(this, Message::LightToTramStop));
+            else if(m_state == Light::Green)
+                m->sender()->addMessage(new Message(this, Message::LightToTramCross));
+            break;
+        case Message::IsCrossed:
+            m_state = Light::Red;
+            if(m_previousLight != NULL) {
+                Message * m1 = new Message(this, Message::IsFree);
+                m_previousLight->addMessage(m1);
+            }
+            break;
+        case Message::IsFree:
+            m_state = Light::Green;
+            break;
         default:
             break;
         }
@@ -94,8 +88,7 @@ void Light::handleNewMessage()
 
 bool Light::indicateState()
 {
-    switch(this->m_state)
-    {
+    switch(this->m_state) {
     case Light::Red:
         return false;
     case Light::Green:
@@ -105,8 +98,7 @@ bool Light::indicateState()
 
 void Light::changeState()
 {
-    switch(this->m_state)
-    {
+    switch(this->m_state) {
     case Light::Red:
         this->m_state = Light::Green;
         break;

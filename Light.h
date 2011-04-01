@@ -49,7 +49,7 @@ public:
     /**
      * @brief Détruit le feu.
      */
-    virtual ~Light(){}
+    virtual ~Light() {}
     /**
      * @brief Indique l'état du feu.
      * @return vrai si le feu est rouge et faux sinon
@@ -76,11 +76,13 @@ public:
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Light");}
+    virtual QString className() {
+        return QString("Light");
+    }
     /**
      * @brief Représente un tour de timer.
      */
-    void tick(){}
+    void tick() {}
     /**
      * @brief Change la couleur d'un feu.
      * @param color la nouvelle couleur du feu

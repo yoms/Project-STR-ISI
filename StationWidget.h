@@ -26,8 +26,9 @@
 #include <QWidget>
 #include <QTimer>
 class Station;
-namespace Ui {
-    class StationWidget;
+namespace Ui
+{
+class StationWidget;
 }
 
 /**

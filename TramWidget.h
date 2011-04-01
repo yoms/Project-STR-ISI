@@ -31,33 +31,36 @@
 /**
  * @brief Représente un widget qui affiche le nom et l'état d'un tramway de l'application.
  */
-class TramWidget : public QWidget  {
-        Q_OBJECT
+class TramWidget : public QWidget
+{
+    Q_OBJECT
 
 public:
-        /**
-         * @brief Construit le widget.
-         * @param l'objet parent
-         */
-        explicit TramWidget(QWidget *parent = 0);
-        /**
-         * @brief Détruit le widget.
-         */
-        virtual ~TramWidget();
-        /**
-         * @brief Change la liste d'objets graphiques.
-         * @param la nouvelle liste
-         */
-        void setDrawableList(QList<Drawable* > &d){m_drawableList = d;}
+    /**
+     * @brief Construit le widget.
+     * @param l'objet parent
+     */
+    explicit TramWidget(QWidget *parent = 0);
+    /**
+     * @brief Détruit le widget.
+     */
+    virtual ~TramWidget();
+    /**
+     * @brief Change la liste d'objets graphiques.
+     * @param la nouvelle liste
+     */
+    void setDrawableList(QList<Drawable* > &d) {
+        m_drawableList = d;
+    }
 
 protected:
-        void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);
 private:
-        void setupTrip();
+    void setupTrip();
 
-        QTimer *m_timer;
-        QPixmap m_pixmap;
-        QList<Drawable* > m_drawableList;
+    QTimer *m_timer;
+    QPixmap m_pixmap;
+    QList<Drawable* > m_drawableList;
 };
 
 #endif /* TRAMWIDGET_H_ */

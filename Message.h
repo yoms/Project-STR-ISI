@@ -129,11 +129,11 @@ public:
     * @param Type du message
     * @param Contenu du message
     */
-   Message(ThreadWithMessages*, TypeMessage, void *);
+    Message(ThreadWithMessages*, TypeMessage, void *);
     /**
      * @brief Détruit un message.
      */
-    virtual ~Message(){}
+    virtual ~Message() {}
     /**
      * @brief Retourne l'émetteur du message.
      * @return L'émetteur du message
@@ -153,12 +153,14 @@ public:
      * @brief Retourne le contenu du message.
      * @return Le contenu du message
      */
-    void* content() {return this->m_content;}
+    void* content() {
+        return this->m_content;
+    }
 private:
     ThreadWithMessages * m_sender;
     TypeMessage m_type;
     void * m_content;
-    Message(){}
+    Message() {}
 };
 
 #endif // MESSAGE_H

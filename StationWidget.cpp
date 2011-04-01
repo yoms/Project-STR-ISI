@@ -43,9 +43,8 @@ void StationWidget::updateStationInformation()
 {
     this->ui->m_name->setText(m_station->name());
     int nbPersons =  0;
-    for(int i = 0 ; i< m_station->persons().size() ; i++)
-    {
+    for(int i = 0 ; i < m_station->persons().size() ; i++) {
         nbPersons += m_station->persons()[i]->nbPerson();
     }
-    this->ui->m_nbPersons->setText(QString::number(nbPersons)+ " passager(s)");
+    this->ui->m_nbPersons->setText(QString::number(nbPersons) + " passager(s)");
 }

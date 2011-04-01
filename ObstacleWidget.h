@@ -26,8 +26,9 @@
 #include <QWidget>
 #include "Obstacle.h"
 
-namespace Ui {
-    class ObstacleWidget;
+namespace Ui
+{
+class ObstacleWidget;
 }
 
 /**

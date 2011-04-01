@@ -26,7 +26,7 @@
 #include <QPainter>
 #include <QDebug>
 #define SIZE_STATION 5
-Station::Station():Container()
+Station::Station(): Container()
 {
     m_purchasingTerminal = new PurchasingTerminal;
     m_purchasingTerminal->start();
@@ -51,8 +51,7 @@ void Station::draw(QPainter *painter)
 
 void Station::run()
 {
-    for(;;)
-    {
+    for(;;) {
         // le sleep est arrété lorsqu'un nouveau message apparait
         sleep(1);
     }
@@ -63,11 +62,9 @@ void Station::addStationLight(StationLight *f)
 }
 void Station::handleNewMessage()
 {
-    while(!m_messageList.isEmpty())
-    {
+    while(!m_messageList.isEmpty()) {
         Message *m = m_messageList.takeFirst();
-        switch(m->type())
-        {
+        switch(m->type()) {
         case Message::EnterStation:
             this->enter((Person*)m->sender());
             break;

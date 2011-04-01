@@ -23,7 +23,7 @@
 #include "Obstacle.h"
 #include <QDebug>
 
-Obstacle::Obstacle():ThreadWithMessages()
+Obstacle::Obstacle(): ThreadWithMessages()
 {
 
 }

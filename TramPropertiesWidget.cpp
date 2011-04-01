@@ -42,25 +42,23 @@ TramPropertiesWidget::~TramPropertiesWidget()
 
 void TramPropertiesWidget::updateTramSelection()
 {
-    m_tram->isSelect() ? m_tram->unSelect():m_tram->select();;
+    m_tram->isSelect() ? m_tram->unSelect() : m_tram->select();;
 }
 
 void TramPropertiesWidget::updateTramInformation()
 {
     this->ui->m_name->setText(m_tram->name());
-    this->ui->m_velocity->setText(QString::number((40 - m_tram->velocity()))+" km/h");
+    this->ui->m_velocity->setText(QString::number((40 - m_tram->velocity())) + " km/h");
     int nbPersons =  0;
-    for(int i = 0 ; i< m_tram->persons().size() ; i++)
-    {
+    for(int i = 0 ; i < m_tram->persons().size() ; i++) {
         nbPersons += m_tram->persons()[i]->nbPerson();
     }
     if(m_tram->generateProblem())
         this->ui->checkBox->setCheckState(Qt::Checked);
     else
         this->ui->checkBox->setCheckState(Qt::Unchecked);
-    this->ui->m_nbPersons->setText(QString::number(nbPersons)+ " passager(s)");
-    switch(m_tram->state())
-    {
+    this->ui->m_nbPersons->setText(QString::number(nbPersons) + " passager(s)");
+    switch(m_tram->state()) {
     case Tram::On:
         this->ui->m_state->setText("Marche");
         break;

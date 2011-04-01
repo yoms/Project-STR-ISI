@@ -28,13 +28,12 @@ Thread* getThreadPointer(pthread_t p);
 
 ThreadWithMessages::ThreadWithMessages()
 {
-    pthread_mutex_init(&m_mutexThreadMessage,NULL);
+    pthread_mutex_init(&m_mutexThreadMessage, NULL);
     sigemptyset(&this->m_signalAction.sa_mask);
     this->m_signalAction.sa_flags = SA_SIGINFO;
     this->m_signalAction.sa_sigaction = ThreadWithMessages::_newmessage;
 
-    if (sigaction(THREAD_SIGNAL, &this->m_signalAction, NULL))
-    {
+    if(sigaction(THREAD_SIGNAL, &this->m_signalAction, NULL)) {
         qDebug() << "impossible de creer le handle";
     }
 }
@@ -53,7 +52,8 @@ void ThreadWithMessages::addMessage(Message* m)
     pthread_kill(this->threadid(), THREAD_SIGNAL);
 }
 
-void ThreadWithMessages::removeMessage(){
+void ThreadWithMessages::removeMessage()
+{
     if(!m_messageList.isEmpty())
         m_messageList.removeFirst();
 }

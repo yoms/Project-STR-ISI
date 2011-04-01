@@ -54,7 +54,7 @@ public:
     /**
      * @brief Représente les différents états d'un tram.
      */
-    enum State{
+    enum State {
         /**
          * @brief Le tram accélère.
          */
@@ -74,7 +74,8 @@ public:
         /**
          * @brief Le tram est en panne.
          */
-        OutOfOrder};
+        OutOfOrder
+    };
     /**
      * @brief Construit un tram.
      */
@@ -100,32 +101,44 @@ public:
      * @brief Retourne la vitesse du tram.
      * @return la vitesse du tram
      */
-    int velocity(){return m_velocity;}
+    int velocity() {
+        return m_velocity;
+    }
     /**
      * @brief Change la possibilité de génération d'anomalie.
      * @param vrai si une anomalie est générée aléatoirement et faux sinon
      */
-    void setGenerateProblem(bool b){m_generateProblem = b;}
+    void setGenerateProblem(bool b) {
+        m_generateProblem = b;
+    }
     /**
      * @brief Retourne si une anomalie est générée aléatoirement.
      * @return vrai si une anomalie est générée aléatoirement et faux sinon
      */
-    bool generateProblem(){return m_generateProblem;}
+    bool generateProblem() {
+        return m_generateProblem;
+    }
     /**
      * @brief Retourne l'état du tram.
      * @return l'état du tram
      */
-    Tram::State state(){return m_state;}
+    Tram::State state() {
+        return m_state;
+    }
     /**
      * @brief Retourne le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Tram");}
+    virtual QString className() {
+        return QString("Tram");
+    }
     /**
      * @brief Retourne le composteur du tram.
      * @return le composteur du tram
      */
-    PunchingTerminal* punchingTerminal() {return m_punchingTerminal;}
+    PunchingTerminal* punchingTerminal() {
+        return m_punchingTerminal;
+    }
 private:
     /**
      * @brief Envoie un message pour signifier qu'il est arrété.

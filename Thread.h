@@ -41,7 +41,7 @@ public:
     /**
      * @brief Détruit un thread.
      */
-    virtual ~Thread();    
+    virtual ~Thread();
     /**
      * @brief Démarre le thread.
      */
@@ -67,7 +67,9 @@ public:
      * @brief Indique le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Thread");}
+    virtual QString className() {
+        return QString("Thread");
+    }
     /**
      * @brief Indique l'id du thread.
      * @return l'id du thread

@@ -41,17 +41,21 @@ public:
     /**
      * @brief Détruit le trajet.
      */
-    virtual ~Trip(){}
+    virtual ~Trip() {}
     /**
      * @brief Change le trajet retour.
      * @param le nouveau trajet
      */
-    void setForward(Trip* t){m_forwardTrip = t;}
+    void setForward(Trip* t) {
+        m_forwardTrip = t;
+    }
     /**
      * @brief Indique le trajet retour
      * @return le trajet
      */
-    Trip* forward(){return m_forwardTrip;}
+    Trip* forward() {
+        return m_forwardTrip;
+    }
     /**
      * @brief Dessine le trajet.
      * @param

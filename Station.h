@@ -60,12 +60,16 @@ public:
      * @brief Indique le nom de la classe.
      * @return le nom de la classe
      */
-    virtual QString className(){ return QString("Station");}
+    virtual QString className() {
+        return QString("Station");
+    }
     /**
      * @brief Retourne la borne d'achat du tram.
      * @return la borne d'achat du tram
      */
-    PurchasingTerminal* purchasingTerminal() {return m_purchasingTerminal;}
+    PurchasingTerminal* purchasingTerminal() {
+        return m_purchasingTerminal;
+    }
     /**
      * @brief Représente le comportement du feu.
      */
